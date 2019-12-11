@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Shop.Data.Repositories;
 
 namespace Joobie
 {
@@ -29,7 +30,9 @@ namespace Joobie
             services.AddControllersWithViews();
             services.AddDbContext<ApplicationContext>(options =>
                  options.UseSqlServer(Configuration["Data:JoobieDb:connectionString"]));
-           // services.AddIdentity<IdentityUser, IdentityRole>();
+
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
+            // services.AddIdentity<IdentityUser, IdentityRole>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
