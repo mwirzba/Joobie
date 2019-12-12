@@ -62,7 +62,8 @@ namespace Joobie.Migrations
                 name: "Companies",
                 columns: table => new
                 {
-                    Id = table.Column<byte>(nullable: false),
+                    Id = table.Column<long>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -227,10 +228,8 @@ namespace Joobie.Migrations
                     CategoryId = table.Column<byte>(nullable: false),
                     TypeOfContractId = table.Column<byte>(nullable: false),
                     WorkingHoursId = table.Column<byte>(nullable: false),
-                    SalaryId = table.Column<int>(nullable: false),
-                    SalaryId1 = table.Column<long>(nullable: true),
-                    CompanyId = table.Column<int>(nullable: false),
-                    CompanyId1 = table.Column<byte>(nullable: true)
+                    SalaryId = table.Column<long>(nullable: false),
+                    CompanyId = table.Column<long>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -242,17 +241,17 @@ namespace Joobie.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Jobs_Companies_CompanyId1",
-                        column: x => x.CompanyId1,
+                        name: "FK_Jobs_Companies_CompanyId",
+                        column: x => x.CompanyId,
                         principalTable: "Companies",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Jobs_Salaries_SalaryId1",
-                        column: x => x.SalaryId1,
+                        name: "FK_Jobs_Salaries_SalaryId",
+                        column: x => x.SalaryId,
                         principalTable: "Salaries",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Jobs_TypeOfContracts_TypeOfContractId",
                         column: x => x.TypeOfContractId,
@@ -312,14 +311,14 @@ namespace Joobie.Migrations
                 column: "CategoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Jobs_CompanyId1",
+                name: "IX_Jobs_CompanyId",
                 table: "Jobs",
-                column: "CompanyId1");
+                column: "CompanyId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Jobs_SalaryId1",
+                name: "IX_Jobs_SalaryId",
                 table: "Jobs",
-                column: "SalaryId1");
+                column: "SalaryId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Jobs_TypeOfContractId",

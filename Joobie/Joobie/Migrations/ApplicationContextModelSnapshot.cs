@@ -21,8 +21,10 @@ namespace Joobie.Migrations
 
             modelBuilder.Entity("Joobie.Models.Company", b =>
                 {
-                    b.Property<byte>("Id")
-                        .HasColumnType("tinyint");
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -58,11 +60,8 @@ namespace Joobie.Migrations
                     b.Property<byte>("CategoryId")
                         .HasColumnType("tinyint");
 
-                    b.Property<int>("CompanyId")
-                        .HasColumnType("int");
-
-                    b.Property<byte?>("CompanyId1")
-                        .HasColumnType("tinyint");
+                    b.Property<long>("CompanyId")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
@@ -76,10 +75,7 @@ namespace Joobie.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("SalaryId")
-                        .HasColumnType("int");
-
-                    b.Property<long?>("SalaryId1")
+                    b.Property<long>("SalaryId")
                         .HasColumnType("bigint");
 
                     b.Property<byte>("TypeOfContractId")
@@ -92,9 +88,9 @@ namespace Joobie.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.HasIndex("CompanyId1");
+                    b.HasIndex("CompanyId");
 
-                    b.HasIndex("SalaryId1");
+                    b.HasIndex("SalaryId");
 
                     b.HasIndex("TypeOfContractId");
 
@@ -350,11 +346,15 @@ namespace Joobie.Migrations
 
                     b.HasOne("Joobie.Models.Company", "Company")
                         .WithMany()
-                        .HasForeignKey("CompanyId1");
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Joobie.Models.Salary", "Salary")
                         .WithMany()
-                        .HasForeignKey("SalaryId1");
+                        .HasForeignKey("SalaryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Joobie.Models.TypeOfContract", "TypeOfContract")
                         .WithMany()

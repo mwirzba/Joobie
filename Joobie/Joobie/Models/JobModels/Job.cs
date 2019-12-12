@@ -21,9 +21,9 @@ namespace Joobie.Models.JobModels
         public virtual TypeOfContract TypeOfContract { get; set; }
         public byte WorkingHoursId { get; set; }
         public virtual WorkingHours WorkingHours { get; set; }
-        public int SalaryId { get; set; }
+        public long SalaryId { get; set; }
         public virtual Salary Salary { get; set; }
-        public int CompanyId { get; set; }
+        public long CompanyId { get; set; }
         public virtual Company Company { get; set; }
     }
 }
