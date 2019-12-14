@@ -11,6 +11,6 @@ namespace Joobie.Data.Repositories.Interfaces
     {
         Task<IEnumerable<Job>> GetJobsWithAllPropertiesAsync();
         Task<Job> GetJobWithAllPropertiesAsync(long id);
-        Task<object> GetListsOfPropertiesAsync();
+        Task<dynamic> GetListsOfPropertiesAsync();
     }
 }

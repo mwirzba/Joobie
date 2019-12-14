@@ -1,4 +1,4 @@
-﻿@model Joobie.Models.JobModels.Job
+﻿@model Joobie.Models.JobModels.JobFormViewModel
 
  
 <h1>View</h1>
@@ -7,66 +7,68 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="View">
+        <form asp-action="Save" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="Job.Id" />
             <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
+                <label asp-for="Job.Name" class="control-label"></label>
+                <input asp-for="Job.Name" class="form-control" />
+                <span asp-validation-for="Job.Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
+                <label asp-for="Job.Description" class="control-label"></label>
+                <input asp-for="Job.Description" class="form-control" />
+                <span asp-validation-for="Job.Description" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Localization" class="control-label"></label>
-                <input asp-for="Localization" class="form-control" />
-                <span asp-validation-for="Localization" class="text-danger"></span>
+                <label asp-for="Job.Localization" class="control-label"></label>
+                <input asp-for="Job.Localization" class="form-control" />
+                <span asp-validation-for="Job.Localization" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="AddedDate" class="control-label"></label>
-                <input asp-for="AddedDate" class="form-control" />
-                <span asp-validation-for="AddedDate" class="text-danger"></span>
+                <label asp-for="Job.AddedDate" class="control-label"></label>
+                <input asp-for="Job.AddedDate" class="form-control" />
+                <span asp-validation-for="Job.AddedDate" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ExpirationDate" class="control-label"></label>
-                <input asp-for="ExpirationDate" class="form-control" />
-                <span asp-validation-for="ExpirationDate" class="text-danger"></span>
+                <label asp-for="Job.ExpirationDate" class="control-label"></label>
+                <input asp-for="Job.ExpirationDate" class="form-control" />
+                <span asp-validation-for="Job.ExpirationDate" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Salary" class="control-label"></label>
-                <input asp-for="Salary" class="form-control" />
-                <span asp-validation-for="Salary" class="text-danger"></span>
+                <label asp-for="Job.Salary" class="control-label"></label>
+                <input asp-for="Job.Salary" class="form-control" />
+                <span asp-validation-for="Job.Salary" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <select asp-for="CategoryId" asp-items="@(new SelectList(ViewBag.Info.Categories, "Id", "Name"))"></select>
+                <label asp-for="Job.Category" class="control-label"></label>
+                <select asp-for="Job.CategoryId" class="form-control" asp-items="@(new SelectList(Model.Categories,"Id","Name"))"></select>
+                <span asp-validation-for="Job.Category" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="TypeOfContractId" class="control-label"></label>
-                <select asp-for="TypeOfContractId" class="form-control" asp-items="ViewBag.TypeOfContractId"></select>
-                <span asp-validation-for="TypeOfContractId" class="text-danger"></span>
+                <label asp-for="Job.TypeOfContractId" class="control-label"></label>
+                <select asp-for="Job.TypeOfContractId" class="form-control" asp-items="@(new SelectList(Model.TypesOfContract,"Id","Name"))"></select>
+                <span asp-validation-for="Job.TypeOfContractId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="WorkingHoursId" class="control-label"></label>
-                <select asp-for="WorkingHoursId" class="form-control" asp-items="ViewBag.WorkingHoursId"></select>
-                <span asp-validation-for="WorkingHoursId" class="text-danger"></span>
+                <label asp-for="Job.WorkingHoursId" class="control-label"></label>
+                <select asp-for="Job.WorkingHoursId" class="form-control" asp-items="@(new SelectList(Model.WorkingHours,"Id","Name"))"></select>
+                <span asp-validation-for="Job.WorkingHoursId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="CompanyId" class="control-label"></label>
-                <select asp-for="CompanyId" class="form-control" asp-items="ViewBag.CompanyId"></select>
-                <span asp-validation-for="CompanyId" class="text-danger"></span>
+                <label asp-for="Job.Company" class="control-label"></label>
+                <input asp-for="Job.Company" class="form-control" />
+                <span asp-validation-for="Job.Company" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Zapisz" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="List">Powrot</a>
 </div>
 
 @section Scripts {

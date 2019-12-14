@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Joobie.Models.JobModels;
+using Microsoft.AspNetCore.Mvc;
 using Shop.Data.Repositories;
 using System.Threading.Tasks;
 
@@ -21,9 +22,50 @@ namespace Joobie.Controllers
         public async Task<IActionResult> EditAsync(long id)
         {
             var jobInDb = await _unitOfWork.Jobs.GetJobWithAllPropertiesAsync(id);
-            ViewBag.info = await _unitOfWork.Jobs.GetListsOfPropertiesAsync();
+            var listOfProperties = await _unitOfWork.Jobs.GetListsOfPropertiesAsync();
+            var jobFormInfo = new JobFormViewModel
+            {
+                Job = jobInDb,
+                Categories = listOfProperties.Categories,
+                WorkingHours = listOfProperties.WorkingHours,
+                TypesOfContract = listOfProperties.TypesOfContract
+            };
 
-            return View("JobForm",jobInDb);
+            return View("JobForm", jobFormInfo);
         }
+
+        public async void DeleteAsync(long id)
+        {
+            //TODO
+
+        }
+
+        public async void CreateAsync(long id)
+        {
+            //TODO
+        }
+
+        public async Task<IActionResult> SaveAsync(Job job)
+        {
+            var jobInDb = await _unitOfWork.Jobs.GetAsync(job.Id);
+            jobInDb.Name = job.Name;
+            jobInDb.Localization = job.Localization;
+            jobInDb.Salary = job.Salary;
+            jobInDb.Description = job.Description;
+            jobInDb.AddedDate = job.AddedDate;
+            jobInDb.ExpirationDate = job.ExpirationDate;
+            if (job.CategoryId != 0)
+                jobInDb.CategoryId = job.CategoryId;
+            if (job.TypeOfContractId != 0)
+                jobInDb.TypeOfContractId = job.TypeOfContractId;
+            if (job.WorkingHoursId != 0)
+                jobInDb.WorkingHoursId = job.WorkingHoursId;
+            if(job.CompanyId!=0)
+                jobInDb.CompanyId = job.CompanyId;
+            await _unitOfWork.CompleteAsync();
+            return RedirectToAction("list");
+        }
+
+       
     }
 }

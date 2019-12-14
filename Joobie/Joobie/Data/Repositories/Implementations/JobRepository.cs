@@ -32,8 +32,8 @@ namespace Joobie.Data.Repositories.Implementations
                   .Include(j => j.WorkingHours)
                   .FirstOrDefaultAsync(j => j.Id == id);
         }
-
-        public async Task<object> GetListsOfPropertiesAsync()
+        //this is temporary 
+        public async Task<dynamic> GetListsOfPropertiesAsync()
         {
             return new
             {
