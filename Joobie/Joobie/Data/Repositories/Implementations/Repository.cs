@@ -17,7 +17,7 @@ namespace Shop.Data.Repositories
             _entities = this.context.Set<TEntity>();
         }
 
-        public async Task<TEntity> GetAsync(int id)
+        public async Task<TEntity> GetAsync(long id)
         {
             return await _entities.FindAsync(id);
         }

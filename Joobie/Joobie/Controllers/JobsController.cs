@@ -14,8 +14,16 @@ namespace Joobie.Controllers
 
         public async Task<IActionResult> ListAsync()
         {
-            var jobs = await _unitOfWork.Jobs.GetAllAsync();
+            var jobs = await _unitOfWork.Jobs.GetJobsWithAllPropertiesAsync();
             return View("List", jobs);
+        }
+
+        public async Task<IActionResult> EditAsync(long id)
+        {
+            var jobInDb = await _unitOfWork.Jobs.GetJobWithAllPropertiesAsync(id);
+            ViewBag.info = await _unitOfWork.Jobs.GetListsOfPropertiesAsync();
+
+            return View("JobForm",jobInDb);
         }
     }
 }

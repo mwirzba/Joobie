@@ -10,5 +10,7 @@ namespace Joobie.Data.Repositories.Interfaces
     public interface IJobRepository : IRepository<Job>
     {
         Task<IEnumerable<Job>> GetJobsWithAllPropertiesAsync();
+        Task<Job> GetJobWithAllPropertiesAsync(long id);
+        Task<object> GetListsOfPropertiesAsync();
     }
 }
