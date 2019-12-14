@@ -21,6 +21,7 @@ namespace Joobie.Data.Repositories.Implementations
             return await ApplicationContext.Jobs
                  .Include(j => j.Category)
                  .Include(j => j.TypeOfContract)
+                 .Include(j => j.Company)
                  .Include(j => j.WorkingHours).ToListAsync();
         }
 
@@ -30,6 +31,7 @@ namespace Joobie.Data.Repositories.Implementations
                   .Include(j => j.Category)
                   .Include(j => j.TypeOfContract)
                   .Include(j => j.WorkingHours)
+                  .Include(j => j.Company)
                   .FirstOrDefaultAsync(j => j.Id == id);
         }
         //this is temporary 
