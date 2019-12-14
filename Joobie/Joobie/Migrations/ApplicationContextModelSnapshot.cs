@@ -19,7 +19,37 @@ namespace Joobie.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Joobie.Models.Company", b =>
+            modelBuilder.Entity("Joobie.Models.JobModels.Category", b =>
+                {
+                    b.Property<byte>("Id")
+                        .HasColumnType("tinyint");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Categories");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = (byte)1,
+                            Name = "IT-Software_Development"
+                        },
+                        new
+                        {
+                            Id = (byte)2,
+                            Name = "IT-Administration"
+                        },
+                        new
+                        {
+                            Id = (byte)3,
+                            Name = "Banking"
+                        });
+                });
+
+            modelBuilder.Entity("Joobie.Models.JobModels.Company", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -32,19 +62,18 @@ namespace Joobie.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Companies");
-                });
 
-            modelBuilder.Entity("Joobie.Models.JobModels.Category", b =>
-                {
-                    b.Property<byte>("Id")
-                        .HasColumnType("tinyint");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Categories");
+                    b.HasData(
+                        new
+                        {
+                            Id = 1L,
+                            Name = "IHS Markit"
+                        },
+                        new
+                        {
+                            Id = 2L,
+                            Name = "Solvit"
+                        });
                 });
 
             modelBuilder.Entity("Joobie.Models.JobModels.Job", b =>
@@ -54,7 +83,7 @@ namespace Joobie.Migrations
                         .HasColumnType("bigint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("AddedDate")
+                    b.Property<DateTime?>("AddedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<byte>("CategoryId")
@@ -66,7 +95,7 @@ namespace Joobie.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("ExpirationDate")
+                    b.Property<DateTime?>("ExpirationDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Localization")
@@ -75,8 +104,8 @@ namespace Joobie.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long>("SalaryId")
-                        .HasColumnType("bigint");
+                    b.Property<string>("Salary")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<byte>("TypeOfContractId")
                         .HasColumnType("tinyint");
@@ -90,31 +119,43 @@ namespace Joobie.Migrations
 
                     b.HasIndex("CompanyId");
 
-                    b.HasIndex("SalaryId");
-
                     b.HasIndex("TypeOfContractId");
 
                     b.HasIndex("WorkingHoursId");
 
                     b.ToTable("Jobs");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1L,
+                            CategoryId = (byte)1,
+                            CompanyId = 1L,
+                            Name = ".NET Developer",
+                            TypeOfContractId = (byte)1,
+                            WorkingHoursId = (byte)1
+                        },
+                        new
+                        {
+                            Id = 2L,
+                            CategoryId = (byte)1,
+                            CompanyId = 2L,
+                            Name = "Junior .NET Developer",
+                            TypeOfContractId = (byte)1,
+                            WorkingHoursId = (byte)2
+                        },
+                        new
+                        {
+                            Id = 3L,
+                            CategoryId = (byte)1,
+                            CompanyId = 2L,
+                            Name = "Senior .NET Developer",
+                            TypeOfContractId = (byte)1,
+                            WorkingHoursId = (byte)2
+                        });
                 });
 
-            modelBuilder.Entity("Joobie.Models.Salary", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("PayRange")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Salaries");
-                });
-
-            modelBuilder.Entity("Joobie.Models.TypeOfContract", b =>
+            modelBuilder.Entity("Joobie.Models.JobModels.TypeOfContract", b =>
                 {
                     b.Property<byte>("Id")
                         .HasColumnType("tinyint");
@@ -125,9 +166,31 @@ namespace Joobie.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("TypeOfContracts");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = (byte)1,
+                            Name = "Contract_Of_Employment"
+                        },
+                        new
+                        {
+                            Id = (byte)2,
+                            Name = "Contract_Of_Mandate"
+                        },
+                        new
+                        {
+                            Id = (byte)3,
+                            Name = "Contract_Of_Commission"
+                        },
+                        new
+                        {
+                            Id = (byte)4,
+                            Name = "B2B_Contract"
+                        });
                 });
 
-            modelBuilder.Entity("Joobie.Models.WorkingHours", b =>
+            modelBuilder.Entity("Joobie.Models.JobModels.WorkingHours", b =>
                 {
                     b.Property<byte>("Id")
                         .HasColumnType("tinyint");
@@ -138,6 +201,18 @@ namespace Joobie.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("WorkingHours");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = (byte)1,
+                            Name = "Full_Time"
+                        },
+                        new
+                        {
+                            Id = (byte)2,
+                            Name = "Part_Time"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -344,25 +419,19 @@ namespace Joobie.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Joobie.Models.Company", "Company")
+                    b.HasOne("Joobie.Models.JobModels.Company", "Company")
                         .WithMany()
                         .HasForeignKey("CompanyId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Joobie.Models.Salary", "Salary")
-                        .WithMany()
-                        .HasForeignKey("SalaryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Joobie.Models.TypeOfContract", "TypeOfContract")
+                    b.HasOne("Joobie.Models.JobModels.TypeOfContract", "TypeOfContract")
                         .WithMany()
                         .HasForeignKey("TypeOfContractId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Joobie.Models.WorkingHours", "WorkingHours")
+                    b.HasOne("Joobie.Models.JobModels.WorkingHours", "WorkingHours")
                         .WithMany()
                         .HasForeignKey("WorkingHoursId")
                         .OnDelete(DeleteBehavior.Cascade)

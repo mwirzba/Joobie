@@ -1,4 +1,4 @@
-﻿namespace Joobie.Models
+﻿namespace Joobie.Models.JobModels
 {
     public class WorkingHours
     {

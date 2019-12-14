@@ -28,7 +28,7 @@ namespace Joobie
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-            services.AddDbContext<ApplicationContext>(options =>
+            services.AddDbContextPool<ApplicationContext>(options =>
                  options.UseSqlServer(Configuration["Data:JoobieDb:connectionString"]));
 
             services.AddTransient<IUnitOfWork, UnitOfWork>();
@@ -62,6 +62,7 @@ namespace Joobie
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+
         }
     }
 }

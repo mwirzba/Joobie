@@ -72,19 +72,6 @@ namespace Joobie.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Salaries",
-                columns: table => new
-                {
-                    Id = table.Column<long>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    PayRange = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Salaries", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "TypeOfContracts",
                 columns: table => new
                 {
@@ -223,12 +210,12 @@ namespace Joobie.Migrations
                     Name = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true),
                     Localization = table.Column<string>(nullable: true),
-                    AddedDate = table.Column<DateTime>(nullable: false),
-                    ExpirationDate = table.Column<DateTime>(nullable: false),
+                    AddedDate = table.Column<DateTime>(nullable: true),
+                    ExpirationDate = table.Column<DateTime>(nullable: true),
+                    Salary = table.Column<string>(nullable: true),
                     CategoryId = table.Column<byte>(nullable: false),
                     TypeOfContractId = table.Column<byte>(nullable: false),
                     WorkingHoursId = table.Column<byte>(nullable: false),
-                    SalaryId = table.Column<long>(nullable: false),
                     CompanyId = table.Column<long>(nullable: false)
                 },
                 constraints: table =>
@@ -247,12 +234,6 @@ namespace Joobie.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Jobs_Salaries_SalaryId",
-                        column: x => x.SalaryId,
-                        principalTable: "Salaries",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
                         name: "FK_Jobs_TypeOfContracts_TypeOfContractId",
                         column: x => x.TypeOfContractId,
                         principalTable: "TypeOfContracts",
@@ -265,6 +246,60 @@ namespace Joobie.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.InsertData(
+                table: "Categories",
+                columns: new[] { "Id", "Name" },
+                values: new object[,]
+                {
+                    { (byte)1, "IT-Software_Development" },
+                    { (byte)2, "IT-Administration" },
+                    { (byte)3, "Banking" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Companies",
+                columns: new[] { "Id", "Name" },
+                values: new object[,]
+                {
+                    { 1L, "IHS Markit" },
+                    { 2L, "Solvit" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "TypeOfContracts",
+                columns: new[] { "Id", "Name" },
+                values: new object[,]
+                {
+                    { (byte)1, "Contract_Of_Employment" },
+                    { (byte)2, "Contract_Of_Mandate" },
+                    { (byte)3, "Contract_Of_Commission" },
+                    { (byte)4, "B2B_Contract" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "WorkingHours",
+                columns: new[] { "Id", "Name" },
+                values: new object[,]
+                {
+                    { (byte)1, "Full_Time" },
+                    { (byte)2, "Part_Time" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Jobs",
+                columns: new[] { "Id", "AddedDate", "CategoryId", "CompanyId", "Description", "ExpirationDate", "Localization", "Name", "Salary", "TypeOfContractId", "WorkingHoursId" },
+                values: new object[] { 1L, null, (byte)1, 1L, null, null, null, ".NET Developer", null, (byte)1, (byte)1 });
+
+            migrationBuilder.InsertData(
+                table: "Jobs",
+                columns: new[] { "Id", "AddedDate", "CategoryId", "CompanyId", "Description", "ExpirationDate", "Localization", "Name", "Salary", "TypeOfContractId", "WorkingHoursId" },
+                values: new object[] { 2L, null, (byte)1, 2L, null, null, null, "Junior .NET Developer", null, (byte)1, (byte)2 });
+
+            migrationBuilder.InsertData(
+                table: "Jobs",
+                columns: new[] { "Id", "AddedDate", "CategoryId", "CompanyId", "Description", "ExpirationDate", "Localization", "Name", "Salary", "TypeOfContractId", "WorkingHoursId" },
+                values: new object[] { 3L, null, (byte)1, 2L, null, null, null, "Senior .NET Developer", null, (byte)1, (byte)2 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -316,11 +351,6 @@ namespace Joobie.Migrations
                 column: "CompanyId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Jobs_SalaryId",
-                table: "Jobs",
-                column: "SalaryId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Jobs_TypeOfContractId",
                 table: "Jobs",
                 column: "TypeOfContractId");
@@ -362,9 +392,6 @@ namespace Joobie.Migrations
 
             migrationBuilder.DropTable(
                 name: "Companies");
-
-            migrationBuilder.DropTable(
-                name: "Salaries");
 
             migrationBuilder.DropTable(
                 name: "TypeOfContracts");
