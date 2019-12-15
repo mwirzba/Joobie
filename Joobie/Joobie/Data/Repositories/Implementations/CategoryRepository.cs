@@ -17,11 +17,5 @@ namespace Joobie.Data.Repositories.Implementations
         {
             get { return context as ApplicationContext; }
         }
-        public async Task<Category> GetCategoryAsync(long id)
-        {
-            return await ApplicationContext.Categories
-                .FirstOrDefaultAsync(j => j.Id == id);
-        }
-
     }
 }

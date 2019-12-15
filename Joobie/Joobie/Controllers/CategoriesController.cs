@@ -23,13 +23,13 @@ namespace Joobie.Controllers
         
          public async Task<IActionResult> EditAsync(long id)
          {
-             var categoryInDb = await _unitOfWork.Categories.GetCategoryAsync(id);      
+             var categoryInDb = await _unitOfWork.Categories.SingleOrDefaultAsync(c=>c.Id==id);      
              return View("CategoryForm", categoryInDb);
          }
         
          public async Task<IActionResult> DeleteAsync(long id)
          {
-             var categoryInDb = await _unitOfWork.Categories.GetCategoryAsync(id);        
+             var categoryInDb = await _unitOfWork.Categories.SingleOrDefaultAsync(c => c.Id == id);        
              return View("DeleteCategoryForm", categoryInDb);
          }
         
@@ -37,7 +37,7 @@ namespace Joobie.Controllers
          [ValidateAntiForgeryToken]
          public async Task<IActionResult> DeleteConfirmedAsync(Category category)
          {
-             var categoryInDb = await _unitOfWork.Categories.GetCategoryAsync(category.Id);
+             var categoryInDb = await _unitOfWork.Categories.SingleOrDefaultAsync(c => c.Id == category.Id);
             _unitOfWork.Categories.Remove(categoryInDb);
              await _unitOfWork.CompleteAsync();
              return RedirectToAction("List");
@@ -50,7 +50,7 @@ namespace Joobie.Controllers
 
         public async Task<IActionResult> SaveAsync(Category category)
         {
-            var jobInDb = await _unitOfWork.Categories.GetCategoryAsync(category.Id);
+            var jobInDb = await _unitOfWork.Categories.SingleOrDefaultAsync(c => c.Id == category.Id);
             if (jobInDb != null)
             {
                 jobInDb.Name = category.Name;
