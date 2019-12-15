@@ -5,7 +5,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
-namespace Shop.Data.Repositories
+namespace Shop.Data.Repositories.Implementations
 {
     public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
     {

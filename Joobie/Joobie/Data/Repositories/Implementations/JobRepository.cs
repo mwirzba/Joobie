@@ -4,7 +4,7 @@ using Joobie.Data.Repositories.Interfaces;
 using Joobie.Models.JobModels;
 using Microsoft.EntityFrameworkCore;
 using Shop.Data.Repositories;
-
+using Shop.Data.Repositories.Implementations;
 
 namespace Joobie.Data.Repositories.Implementations
 {

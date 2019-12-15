@@ -70,21 +70,29 @@ namespace Joobie.Controllers
                     jobInDb.TypeOfContractId = job.TypeOfContractId;
                 if (job.WorkingHoursId != 0)
                     jobInDb.WorkingHoursId = job.WorkingHoursId;
-                if (job.CompanyId != 0)
-                    jobInDb.CompanyId = job.CompanyId;
+                 await GetOrCreateIfNullCompanyJob(job);
+                jobInDb.CompanyId = job.CompanyId;
             }
             else
-            {
-                //job id cannot be empty but we dont wat to get all companies
-                //must create company repository
-                if (job.CompanyId == 0)
-                    job.CompanyId = 1;
+            {              
+                await GetOrCreateIfNullCompanyJob(job);
                 await _unitOfWork.Jobs.AddAsync(job);
             }
             await _unitOfWork.CompleteAsync();
             return RedirectToAction("list");
         }
 
-       
+        private async Task GetOrCreateIfNullCompanyJob(Job job)
+        {
+            var findJobResult = await _unitOfWork.Companies.SingleOrDefaultAsync(c => c.Name == job.Company.Name);
+            if (findJobResult == null)
+            {
+                await _unitOfWork.Companies.AddAsync(job.Company);
+                await _unitOfWork.CompleteAsync();
+                findJobResult = await _unitOfWork.Companies.SingleOrDefaultAsync(c => c.Name == job.Company.Name);
+            }
+            job.CompanyId = findJobResult.Id; 
+        }
+
     }
 }
