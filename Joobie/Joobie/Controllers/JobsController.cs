@@ -40,28 +40,47 @@ namespace Joobie.Controllers
 
         }
 
-        public async void CreateAsync(long id)
+        public async Task<IActionResult> CreateAsync()
         {
-            //TODO
+            var listOfProperties = await _unitOfWork.Jobs.GetListsOfPropertiesAsync();
+            var jobFormInfo = new JobFormViewModel
+            {
+                Job = new Job(),
+                Categories = listOfProperties.Categories,
+                WorkingHours = listOfProperties.WorkingHours,
+                TypesOfContract = listOfProperties.TypesOfContract
+            };
+            return View("JobForm", jobFormInfo);
         }
 
         public async Task<IActionResult> SaveAsync(Job job)
         {
-            var jobInDb = await _unitOfWork.Jobs.GetAsync(job.Id);
-            jobInDb.Name = job.Name;
-            jobInDb.Localization = job.Localization;
-            jobInDb.Salary = job.Salary;
-            jobInDb.Description = job.Description;
-            jobInDb.AddedDate = job.AddedDate;
-            jobInDb.ExpirationDate = job.ExpirationDate;
-            if (job.CategoryId != 0)
-                jobInDb.CategoryId = job.CategoryId;
-            if (job.TypeOfContractId != 0)
-                jobInDb.TypeOfContractId = job.TypeOfContractId;
-            if (job.WorkingHoursId != 0)
-                jobInDb.WorkingHoursId = job.WorkingHoursId;
-            if(job.CompanyId!=0)
-                jobInDb.CompanyId = job.CompanyId;
+            var jobInDb = await _unitOfWork.Jobs.GetJobWithAllPropertiesAsync(job.Id);
+            if (jobInDb != null)
+            {
+                jobInDb.Name = job.Name;
+                jobInDb.Localization = job.Localization;
+                jobInDb.Salary = job.Salary;
+                jobInDb.Description = job.Description;
+                jobInDb.AddedDate = job.AddedDate;
+                jobInDb.ExpirationDate = job.ExpirationDate;
+                if (job.CategoryId != 0)
+                    jobInDb.CategoryId = job.CategoryId;
+                if (job.TypeOfContractId != 0)
+                    jobInDb.TypeOfContractId = job.TypeOfContractId;
+                if (job.WorkingHoursId != 0)
+                    jobInDb.WorkingHoursId = job.WorkingHoursId;
+                if (job.CompanyId != 0)
+                    jobInDb.CompanyId = job.CompanyId;
+            }
+            else
+            {
+                //job id cannot be empty but we dont wat to get all companies
+                //must create company repository
+                if (job.CompanyId == 0)
+                    job.CompanyId = 1;
+                await _unitOfWork.Jobs.AddAsync(job);
+            }
             await _unitOfWork.CompleteAsync();
             return RedirectToAction("list");
         }
