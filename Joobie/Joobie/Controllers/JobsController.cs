@@ -38,10 +38,29 @@ namespace Joobie.Controllers
             return View("JobForm", jobFormInfo);
         }
 
-        public async void DeleteAsync(long id)
+        public async Task<IActionResult> DeleteAsync(long id)
         {
-            //TODO
+            var jobInDb = await _unitOfWork.Jobs.GetJobWithAllPropertiesAsync(id);
+            var listOfProperties = await _unitOfWork.Jobs.GetListsOfPropertiesAsync();
 
+            var jobFormInfo = new JobFormViewModel
+            {
+                Job = jobInDb,
+                Categories = listOfProperties.Categories,
+                WorkingHours = listOfProperties.WorkingHours,
+                TypesOfContract = listOfProperties.TypesOfContract
+            };
+            return View("DeleteJobForm", jobFormInfo);
+        }
+
+        [HttpPost, ActionName("DeleteAsync")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmedAsync(Job job)
+        {
+            var jobInDb = await _unitOfWork.Jobs.GetJobWithAllPropertiesAsync(job.Id);
+            _unitOfWork.Jobs.Remove(jobInDb);
+            await _unitOfWork.CompleteAsync();
+            return RedirectToAction("list");
         }
 
         public async Task<IActionResult> CreateAsync()

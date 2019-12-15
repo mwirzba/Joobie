@@ -11,11 +11,14 @@ namespace Shop.Data.Repositories
         private readonly ApplicationContext _context;
         public IJobRepository Jobs { get; }
         public ICompanyRepository Companies { get; }
+        public ICategoryRepository Categories { get; }
+
         public UnitOfWork(ApplicationContext context)
         {
             _context = context;
             Jobs = new JobRepository(_context);
             Companies = new CompanyRepository(_context);
+            Categories = new CategoryRepository(_context);
         }
 
         public async Task<int> CompleteAsync()

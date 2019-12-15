@@ -8,6 +8,7 @@ namespace Shop.Data.Repositories
     {
         IJobRepository Jobs { get; }
         ICompanyRepository Companies { get; }
+        ICategoryRepository Categories { get; }
         Task<int> CompleteAsync();
     }
 }
