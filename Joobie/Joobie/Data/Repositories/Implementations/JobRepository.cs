@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Joobie.Data.Repositories.Interfaces;
 using Joobie.Models.JobModels;
@@ -23,6 +26,17 @@ namespace Joobie.Data.Repositories.Implementations
                  .Include(j => j.TypeOfContract)
                  .Include(j => j.Company)
                  .Include(j => j.WorkingHours).ToListAsync();
+        }
+
+        public async Task<IEnumerable<Job>> GetJobsWithAllPropertiesByFilterAsync(Expression<Func<Job, bool>> predicate)
+        {
+            return await ApplicationContext.Jobs
+                  .Where(predicate)
+                  .Include(j => j.Category)
+                  .Include(j => j.TypeOfContract)
+                  .Include(j => j.Company)
+                  .Include(j => j.WorkingHours)
+                  .ToListAsync();
         }
 
         public async Task<Job> GetJobWithAllPropertiesAsync(long id)

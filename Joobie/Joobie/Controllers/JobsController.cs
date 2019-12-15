@@ -1,6 +1,8 @@
 ﻿using Joobie.Models.JobModels;
 using Microsoft.AspNetCore.Mvc;
 using Shop.Data.Repositories;
+using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Joobie.Controllers
@@ -13,9 +15,19 @@ namespace Joobie.Controllers
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<IActionResult> ListAsync()
+        public async Task<IActionResult> ListAsync(string searchString)
         {
-            var jobs = await _unitOfWork.Jobs.GetJobsWithAllPropertiesAsync();
+            ViewData["CurrentFilter"] = searchString;
+            IEnumerable<Job> jobs = null;
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                jobs = await _unitOfWork.Jobs
+                    .GetJobsWithAllPropertiesByFilterAsync(j => j.Name.Contains(searchString));
+            }
+            else
+            {
+                jobs = await _unitOfWork.Jobs.GetJobsWithAllPropertiesAsync();
+            }
             return View("List", jobs);
         }
 
@@ -93,6 +105,11 @@ namespace Joobie.Controllers
             }
             job.CompanyId = findJobResult.Id; 
         }
+
+        //private IEnumerable<Job> GetSortedAndFilteredJobList()
+        //{
+        ////TODO
+        //}
 
     }
 }

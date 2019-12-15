@@ -1,0 +1,14 @@
+﻿
+@{
+    ViewData["Title"] = "SearchForm";
+}
+
+    <form asp-action="List" method="get">
+        <div class="form-actions no-color">
+            <p>
+                Find by name: <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" />
+                <input type="submit" value="Search" class="btn btn-default" /> |
+                <a asp-action="List" class="btn-success">Back to Full List</a>
+            </p>
+        </div>
+    </form>
