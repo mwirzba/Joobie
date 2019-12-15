@@ -9,18 +9,6 @@ using Microsoft.AspNetCore.Mvc;
 namespace Joobie.Controllers
 { public class CategoriesController : Controller
     {
-
-        public IActionResult Index()
-        {
-            return View();
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-
         private readonly IUnitOfWork _unitOfWork;
         public CategoriesController(IUnitOfWork unitOfWork)
         {
