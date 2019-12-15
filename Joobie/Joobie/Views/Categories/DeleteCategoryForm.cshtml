@@ -1,19 +1,19 @@
-﻿@model Joobie.Models.JobModels.CategoryFormViewModel
+﻿@model Joobie.Models.JobModels.Category
 
 
 <h1>View</h1>
 
-<h4>Category</h4>
+<h4>Delete</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="DeleteAsync" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Category.Id" />
+            <input type="hidden" asp-for="Id" />
             <div class="form-group">
-                <label asp-for="Category.Name" class="control-label" readonly></label>
-                <input asp-for="Category.Name" class="form-control" readonly />
-                <span asp-validation-for="Category.Name" class="text-danger"></span>
+                <label asp-for="Name" class="control-label" readonly></label>
+                <input asp-for="Name" class="form-control" readonly />
+                <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Usuń" class="btn btn-danger form-control" />

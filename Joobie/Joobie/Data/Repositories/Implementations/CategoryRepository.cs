@@ -1,10 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using Joobie.Data.Repositories.Interfaces;
+﻿using Joobie.Data.Repositories.Interfaces;
 using Joobie.Models.JobModels;
 using Microsoft.EntityFrameworkCore;
-using Shop.Data.Repositories;
 using Shop.Data.Repositories.Implementations;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Joobie.Data.Repositories.Implementations
 {
@@ -16,16 +17,11 @@ namespace Joobie.Data.Repositories.Implementations
         {
             get { return context as ApplicationContext; }
         }
-        public async Task<IEnumerable<Category>> GetCategoriesAsync()
-        {
-            return await ApplicationContext.Categories
-                .ToListAsync();
-        }
-
         public async Task<Category> GetCategoryAsync(long id)
         {
             return await ApplicationContext.Categories
-                  .FirstOrDefaultAsync(j => j.Id == id);
+                .FirstOrDefaultAsync(j => j.Id == id);
         }
+
     }
 }

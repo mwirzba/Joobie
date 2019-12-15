@@ -9,7 +9,6 @@ namespace Joobie.Data.Repositories.Interfaces
 {
     public interface ICategoryRepository : IRepository<Category>
     {
-        Task<IEnumerable<Category>> GetCategoriesAsync();
         Task<Category> GetCategoryAsync(long id);
     }
 }
