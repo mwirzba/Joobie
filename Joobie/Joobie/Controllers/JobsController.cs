@@ -15,19 +15,11 @@ namespace Joobie.Controllers
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<IActionResult> ListAsync(string searchString)
+        public async Task<IActionResult> ListAsync(string searchString,string citySearchString)
         {
             ViewData["CurrentFilter"] = searchString;
-            IEnumerable<Job> jobs = null;
-            if (!string.IsNullOrEmpty(searchString))
-            {
-                jobs = await _unitOfWork.Jobs
-                    .GetJobsWithAllPropertiesByFilterAsync(j => j.Name.Contains(searchString));
-            }
-            else
-            {
-                jobs = await _unitOfWork.Jobs.GetJobsWithAllPropertiesAsync();
-            }
+            ViewData["CurrentCityFilter"] = citySearchString;
+            IEnumerable<Job> jobs = await GetSortedAndFilteredJobList(searchString, citySearchString);
             return View("List", jobs);
         }
 
@@ -106,10 +98,27 @@ namespace Joobie.Controllers
             job.CompanyId = findJobResult.Id; 
         }
 
-        //private IEnumerable<Job> GetSortedAndFilteredJobList()
-        //{
-        ////TODO
-        //}
+        private async  Task<IEnumerable<Job>> GetSortedAndFilteredJobList(string jobNameSearchString, string citySearchString)
+        {
+            IEnumerable<Job> jobs = null;
+            if (!string.IsNullOrEmpty(jobNameSearchString) && !string.IsNullOrEmpty(citySearchString))
+            {
+                jobs = await _unitOfWork.Jobs
+                    .GetJobsWithAllPropertiesByFilterAsync(j => j.Name.Contains(jobNameSearchString) && j.Localization.Contains(citySearchString));
+            }
+            else if (!string.IsNullOrEmpty(jobNameSearchString))
+            {
+                jobs = await _unitOfWork.Jobs
+                    .GetJobsWithAllPropertiesByFilterAsync(j => j.Name.Contains(jobNameSearchString));
+            }
+            else
+            {
+                jobs = await _unitOfWork.Jobs.GetJobsWithAllPropertiesAsync();
+            }
+
+            return jobs;
+
+        }
 
     }
 }
