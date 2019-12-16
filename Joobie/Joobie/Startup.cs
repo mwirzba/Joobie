@@ -32,7 +32,10 @@ namespace Joobie
                  options.UseSqlServer(Configuration["Data:JoobieDb:connectionString"]));
 
             services.AddTransient<IUnitOfWork, UnitOfWork>();
-            // services.AddIdentity<IdentityUser, IdentityRole>();
+            services.AddIdentity<IdentityUser, IdentityRole>()
+        .AddEntityFrameworkStores<ApplicationContext>()
+        .AddDefaultTokenProviders();
+            //services.AddIdentity<IdentityUser, IdentityRole>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
