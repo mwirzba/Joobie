@@ -8,7 +8,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Joobie.Models
 {
-    public class User : IdentityUser
+    public class UserModel 
     {
         [Required]
         public string Name { get; set; }
@@ -19,6 +19,7 @@ namespace Joobie.Models
         [Required]
         public string SurName { get; set; }
         [Required]
-        public string YOB { get; set; }
+        public string YearOfBirth { get; set; }
+        public string ReturnUrl { get; set; } = "/";
     }
 }
