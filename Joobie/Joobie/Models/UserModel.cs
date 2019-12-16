@@ -8,7 +8,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Joobie.Models
 {
-    public class UserModel 
+    public class UserModel : IdentityUser
     {
         [Required]
         public string Name { get; set; }
@@ -16,10 +16,10 @@ namespace Joobie.Models
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         public string Password { get; set; }
-        [Required]
-        public string SurName { get; set; }
-        [Required]
-        public string YearOfBirth { get; set; }
+        //[Required]
+        //public string SurName { get; set; }
+        //[Required]
+        //public string YearOfBirth { get; set; }
         public string ReturnUrl { get; set; } = "/";
     }
 }
