@@ -15,11 +15,13 @@ namespace Joobie.Controllers
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<IActionResult> ListAsync(string searchString,string citySearchString)
+        public async Task<IActionResult> ListAsync(string searchString,string citySearchString,int[] categories)
         {
+            var listOfProperties = await _unitOfWork.Jobs.GetListsOfPropertiesAsync();
+            ViewData["Categories"] = listOfProperties.Categories;
             ViewData["CurrentFilter"] = searchString;
             ViewData["CurrentCityFilter"] = citySearchString;
-            IEnumerable<Job> jobs = await GetSortedAndFilteredJobList(searchString, citySearchString);
+            IEnumerable<Job> jobs = await GetSortedAndFilteredJobList(searchString, citySearchString,new List<int>(categories));
             return View("List", jobs);
         }
 
@@ -117,26 +119,46 @@ namespace Joobie.Controllers
             job.CompanyId = findJobResult.Id; 
         }
 
-        private async  Task<IEnumerable<Job>> GetSortedAndFilteredJobList(string jobNameSearchString, string citySearchString)
+
+        //has to be changed  - too many options and posible situations???
+        private async Task<IEnumerable<Job>> GetSortedAndFilteredJobList(string jobNameSearchString, string citySearchString,List<int> categories)
         {
             IEnumerable<Job> jobs = null;
-            if (!string.IsNullOrEmpty(jobNameSearchString) && !string.IsNullOrEmpty(citySearchString))
+            System.Linq.Expressions.Expression<Func<Job, bool>> predicate = null;
+            if (!string.IsNullOrEmpty(jobNameSearchString) && !string.IsNullOrEmpty(citySearchString) && categories.Count > 0)
             {
-                jobs = await _unitOfWork.Jobs
-                    .GetJobsWithAllPropertiesByFilterAsync(j => j.Name.Contains(jobNameSearchString) && j.Localization.Contains(citySearchString));
+                predicate = j => j.Name.Contains(jobNameSearchString) 
+                    && j.Localization.Contains(citySearchString) 
+                    && categories.Contains(j.CategoryId);
+            }
+            else if (!string.IsNullOrEmpty(jobNameSearchString) && !string.IsNullOrEmpty(citySearchString))
+            {
+                 predicate = j => j.Name.Contains(jobNameSearchString)
+                        && j.Localization.Contains(citySearchString);
+            }
+            else if (!string.IsNullOrEmpty(jobNameSearchString) && categories.Count > 0)
+            {
+                predicate = j => j.Name.Contains(jobNameSearchString)
+                       && categories.Contains(j.CategoryId);
             }
             else if (!string.IsNullOrEmpty(jobNameSearchString))
             {
-                jobs = await _unitOfWork.Jobs
-                    .GetJobsWithAllPropertiesByFilterAsync(j => j.Name.Contains(jobNameSearchString));
+                predicate = j => j.Name.Contains(jobNameSearchString);
+            }
+            else if (!string.IsNullOrEmpty(citySearchString))
+            {
+                predicate = j => j.Localization.Contains(citySearchString);
+            }
+            else if (categories.Count > 0)
+            {
+                predicate = j => categories.Contains(j.CategoryId);
             }
             else
             {
-                jobs = await _unitOfWork.Jobs.GetJobsWithAllPropertiesAsync();
+                predicate = j => !string.IsNullOrEmpty(j.Name);
             }
-
+            jobs = await _unitOfWork.Jobs.GetJobsWithAllPropertiesByFilterAsync(predicate);
             return jobs;
-
         }
 
     }

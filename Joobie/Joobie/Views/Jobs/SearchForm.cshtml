@@ -14,4 +14,27 @@
             <input type="submit" value="Search" class="btn btn-default" /> |
             <a asp-action="List" class="btn-success">Back to Full List</a>
         </div>
-</form>
+        <div class="form-row">
+                <div class="col">
+                    <ul>
+                        <li class="dropdown">
+                            <a href="#" data-toggle="dropdown" class="dropdown-toggle">Kategorie<b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                @foreach (var item in @ViewData["Categories"] as IEnumerable<Joobie.Models.JobModels.Category>)
+                                {
+                                    <li>
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox" name="categories" value="@item.Id">@item.Name
+                                            </label>
+                                        </div>
+                                    </li>
+                                }
+                            </ul>   
+                        </li>
+                    </ul>
+                </div>
+            <div class="col">
+            </div>
+        </div>
+    </form>
