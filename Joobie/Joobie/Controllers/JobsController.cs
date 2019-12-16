@@ -121,7 +121,8 @@ namespace Joobie.Controllers
 
         private async Task<IEnumerable<Job>> GetSortedAndFilteredJobListAsync(string jobNameSearchString, string citySearchString,List<int> categories)
         {
-            var predicate = PredicateBuilder.New<Job>();          
+            var predicate = PredicateBuilder.New<Job>();
+            predicate.DefaultExpression = j => true; 
             if (!string.IsNullOrEmpty(jobNameSearchString))
             {
                  predicate = predicate.And(j => j.Name.Contains(jobNameSearchString));

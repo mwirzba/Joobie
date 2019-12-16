@@ -10,14 +10,14 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Joobie.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20191214173534_Initial")]
+    [Migration("20191216130155_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.0.0")
+                .HasAnnotation("ProductVersion", "3.1.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -37,17 +37,177 @@ namespace Joobie.Migrations
                         new
                         {
                             Id = (byte)1,
-                            Name = "IT-Software_Development"
+                            Name = "Administracja biurowa"
                         },
                         new
                         {
                             Id = (byte)2,
-                            Name = "IT-Administration"
+                            Name = "Doradztwo / Konsulting"
                         },
                         new
                         {
                             Id = (byte)3,
-                            Name = "Banking"
+                            Name = "Badania i rozwój"
+                        },
+                        new
+                        {
+                            Id = (byte)4,
+                            Name = "Bankowość"
+                        },
+                        new
+                        {
+                            Id = (byte)5,
+                            Name = "BHP / Ochrona środowiska"
+                        },
+                        new
+                        {
+                            Id = (byte)6,
+                            Name = "Budownictwo"
+                        },
+                        new
+                        {
+                            Id = (byte)7,
+                            Name = "Call Center"
+                        },
+                        new
+                        {
+                            Id = (byte)8,
+                            Name = "Edukacja / Szkolenia"
+                        },
+                        new
+                        {
+                            Id = (byte)9,
+                            Name = "Finanse / Ekonomia"
+                        },
+                        new
+                        {
+                            Id = (byte)10,
+                            Name = "Franczyzna / Własny biznes"
+                        },
+                        new
+                        {
+                            Id = (byte)11,
+                            Name = "Hotelarstwo / Gastronomia / Turystyka"
+                        },
+                        new
+                        {
+                            Id = (byte)12,
+                            Name = "Human Resources / Zasoby ludzkie"
+                        },
+                        new
+                        {
+                            Id = (byte)13,
+                            Name = "Internet / e-Commerce / Nowe media"
+                        },
+                        new
+                        {
+                            Id = (byte)14,
+                            Name = "Inżynieria"
+                        },
+                        new
+                        {
+                            Id = (byte)15,
+                            Name = "IT - Administracja"
+                        },
+                        new
+                        {
+                            Id = (byte)16,
+                            Name = "IT - Rozwój oprogramowania"
+                        },
+                        new
+                        {
+                            Id = (byte)17,
+                            Name = "Łańcuch dostaw"
+                        },
+                        new
+                        {
+                            Id = (byte)18,
+                            Name = "Marketing"
+                        },
+                        new
+                        {
+                            Id = (byte)19,
+                            Name = "Media / Sztuka / Rozrywka"
+                        },
+                        new
+                        {
+                            Id = (byte)20,
+                            Name = "Nieruchomości"
+                        },
+                        new
+                        {
+                            Id = (byte)21,
+                            Name = "Obsługa klienta"
+                        },
+                        new
+                        {
+                            Id = (byte)22,
+                            Name = "Praca fizyczna"
+                        },
+                        new
+                        {
+                            Id = (byte)23,
+                            Name = "Prawo"
+                        },
+                        new
+                        {
+                            Id = (byte)24,
+                            Name = "Produkcja"
+                        },
+                        new
+                        {
+                            Id = (byte)25,
+                            Name = "Public Relations"
+                        },
+                        new
+                        {
+                            Id = (byte)26,
+                            Name = "Reklama / Grafika / Kreacja / Fotografia"
+                        },
+                        new
+                        {
+                            Id = (byte)27,
+                            Name = "Sektor publiczny"
+                        },
+                        new
+                        {
+                            Id = (byte)28,
+                            Name = "Sprzedaż"
+                        },
+                        new
+                        {
+                            Id = (byte)29,
+                            Name = "Transport / Spedycja"
+                        },
+                        new
+                        {
+                            Id = (byte)30,
+                            Name = "Ubezpieczenia"
+                        },
+                        new
+                        {
+                            Id = (byte)31,
+                            Name = "Zakupy"
+                        },
+                        new
+                        {
+                            Id = (byte)32,
+                            Name = "Kontrola jakości"
+                        },
+                        new
+                        {
+                            Id = (byte)33,
+                            Name = "Zdrowie / Uroda / Rekreacja"
+                        },
+                        new
+                        {
+                            Id = (byte)34,
+                            Name = "Energetyka"
+                        },
+                        new
+                        {
+                            Id = (byte)35,
+                            Name = "Inne"
                         });
                 });
 
@@ -75,6 +235,51 @@ namespace Joobie.Migrations
                         {
                             Id = 2L,
                             Name = "Solvit"
+                        },
+                        new
+                        {
+                            Id = 3L,
+                            Name = "Capgemini Software Solutions Center"
+                        },
+                        new
+                        {
+                            Id = 4L,
+                            Name = "EcoVadis Polska Sp. z o. o."
+                        },
+                        new
+                        {
+                            Id = 5L,
+                            Name = "CBG International Sp. z o.o."
+                        },
+                        new
+                        {
+                            Id = 6L,
+                            Name = "ING Tech Poland"
+                        },
+                        new
+                        {
+                            Id = 7L,
+                            Name = "Ericsson"
+                        },
+                        new
+                        {
+                            Id = 8L,
+                            Name = "Tronel Sp. z o.o."
+                        },
+                        new
+                        {
+                            Id = 9L,
+                            Name = "PwC"
+                        },
+                        new
+                        {
+                            Id = 10L,
+                            Name = "OPONEO.PL S.A."
+                        },
+                        new
+                        {
+                            Id = 11L,
+                            Name = "Nokia Networks"
                         });
                 });
 
@@ -131,7 +336,7 @@ namespace Joobie.Migrations
                         new
                         {
                             Id = 1L,
-                            CategoryId = (byte)1,
+                            CategoryId = (byte)16,
                             CompanyId = 1L,
                             Name = ".NET Developer",
                             TypeOfContractId = (byte)1,
@@ -153,7 +358,97 @@ namespace Joobie.Migrations
                             CompanyId = 2L,
                             Name = "Senior .NET Developer",
                             TypeOfContractId = (byte)1,
+                            WorkingHoursId = (byte)1
+                        },
+                        new
+                        {
+                            Id = 4L,
+                            CategoryId = (byte)16,
+                            CompanyId = 3L,
+                            Name = "Starszy Inżynier Oprogramowania .NET",
+                            TypeOfContractId = (byte)1,
+                            WorkingHoursId = (byte)1
+                        },
+                        new
+                        {
+                            Id = 5L,
+                            CategoryId = (byte)16,
+                            CompanyId = 2L,
+                            Name = "Programista .NET",
+                            TypeOfContractId = (byte)1,
+                            WorkingHoursId = (byte)3
+                        },
+                        new
+                        {
+                            Id = 6L,
+                            CategoryId = (byte)16,
+                            CompanyId = 5L,
+                            Name = "C# .Net developer",
+                            TypeOfContractId = (byte)3,
+                            WorkingHoursId = (byte)1
+                        },
+                        new
+                        {
+                            Id = 7L,
+                            CategoryId = (byte)15,
+                            CompanyId = 6L,
+                            Name = ".NET Developer",
+                            TypeOfContractId = (byte)5,
+                            WorkingHoursId = (byte)1
+                        },
+                        new
+                        {
+                            Id = 8L,
+                            CategoryId = (byte)12,
+                            CompanyId = 7L,
+                            Name = ".NET Developer",
+                            TypeOfContractId = (byte)3,
+                            WorkingHoursId = (byte)1
+                        },
+                        new
+                        {
+                            Id = 9L,
+                            CategoryId = (byte)13,
+                            CompanyId = 8L,
+                            Name = "Software Engineer C#",
+                            TypeOfContractId = (byte)3,
+                            WorkingHoursId = (byte)3
+                        },
+                        new
+                        {
+                            Id = 10L,
+                            CategoryId = (byte)11,
+                            CompanyId = 7L,
+                            Name = "Quality Assurance",
+                            TypeOfContractId = (byte)1,
+                            WorkingHoursId = (byte)3
+                        },
+                        new
+                        {
+                            Id = 11L,
+                            CategoryId = (byte)15,
+                            CompanyId = 9L,
+                            Name = "Programista .NET",
+                            TypeOfContractId = (byte)5,
+                            WorkingHoursId = (byte)1
+                        },
+                        new
+                        {
+                            Id = 12L,
+                            CategoryId = (byte)16,
+                            CompanyId = 10L,
+                            Name = "Junior .NET Developer",
+                            TypeOfContractId = (byte)5,
                             WorkingHoursId = (byte)2
+                        },
+                        new
+                        {
+                            Id = 13L,
+                            CategoryId = (byte)16,
+                            CompanyId = 11L,
+                            Name = "Azure DevOps",
+                            TypeOfContractId = (byte)1,
+                            WorkingHoursId = (byte)3
                         });
                 });
 
@@ -173,22 +468,32 @@ namespace Joobie.Migrations
                         new
                         {
                             Id = (byte)1,
-                            Name = "Contract_Of_Employment"
+                            Name = "Umowa o pracę"
                         },
                         new
                         {
                             Id = (byte)2,
-                            Name = "Contract_Of_Mandate"
+                            Name = "Umowa o dzieło"
                         },
                         new
                         {
                             Id = (byte)3,
-                            Name = "Contract_Of_Commission"
+                            Name = "Umowa zlecenie"
                         },
                         new
                         {
-                            Id = (byte)4,
-                            Name = "B2B_Contract"
+                            Id = (byte)5,
+                            Name = "Kontrakt B2B"
+                        },
+                        new
+                        {
+                            Id = (byte)6,
+                            Name = "Umowa na zastępstwo"
+                        },
+                        new
+                        {
+                            Id = (byte)7,
+                            Name = "Umowa agencyjna"
                         });
                 });
 
@@ -208,12 +513,17 @@ namespace Joobie.Migrations
                         new
                         {
                             Id = (byte)1,
-                            Name = "Full_Time"
+                            Name = "Pełny etat"
                         },
                         new
                         {
                             Id = (byte)2,
-                            Name = "Part_Time"
+                            Name = "Część etatu"
+                        },
+                        new
+                        {
+                            Id = (byte)3,
+                            Name = "Tymczasowa"
                         });
                 });
 

@@ -85,16 +85,16 @@ namespace Joobie.Data
 
             modelBuilder.Entity<Job>().HasData(
                 new Job { Id=1, Name = ".NET Developer", TypeOfContractId = 1, CompanyId = 1, WorkingHoursId = 1 , CategoryId =16},
-                new Job { Id=2, Name = "Junior .NET Developer", TypeOfContractId = 1, CompanyId = 2, WorkingHoursId = 2 , CategoryId =16},
-                new Job { Id = 3, Name = "Senior .NET Developer", TypeOfContractId = 1, CompanyId = 2, WorkingHoursId = 1, CategoryId = 16 },
+                new Job { Id=2, Name = "Junior .NET Developer", TypeOfContractId = 1, CompanyId = 2, WorkingHoursId = 2 , CategoryId =1},
+                new Job { Id = 3, Name = "Senior .NET Developer", TypeOfContractId = 1, CompanyId = 2, WorkingHoursId = 1, CategoryId = 1 },
                 new Job { Id = 4, Name = "Starszy Inżynier Oprogramowania .NET", TypeOfContractId = 1, CompanyId = 3, WorkingHoursId = 1, CategoryId = 16 },
-                new Job { Id = 5, Name = "Programista .NET", TypeOfContractId = 1, CompanyId = 2, WorkingHoursId = 4, CategoryId = 16 },
+                new Job { Id = 5, Name = "Programista .NET", TypeOfContractId = 1, CompanyId = 2, WorkingHoursId = 3, CategoryId = 16 },
                 new Job { Id = 6, Name = "C# .Net developer", TypeOfContractId = 3, CompanyId = 5, WorkingHoursId = 1, CategoryId = 16 },
-                new Job { Id = 7, Name = ".NET Developer", TypeOfContractId = 5, CompanyId = 6, WorkingHoursId = 1, CategoryId = 16 },
-                new Job { Id = 8, Name = ".NET Developer", TypeOfContractId = 3, CompanyId = 7, WorkingHoursId = 1, CategoryId = 16 },
-                new Job { Id = 9, Name = "Software Engineer C#", TypeOfContractId = 3, CompanyId = 8, WorkingHoursId = 3, CategoryId = 16 },
-                new Job { Id = 10, Name = "Quality Assurance", TypeOfContractId = 1, CompanyId = 7, WorkingHoursId = 3, CategoryId = 16 },
-                new Job { Id = 11, Name = "Programista .NET", TypeOfContractId = 5, CompanyId = 9, WorkingHoursId = 1, CategoryId = 16 },
+                new Job { Id = 7, Name = ".NET Developer", TypeOfContractId = 5, CompanyId = 6, WorkingHoursId = 1, CategoryId = 15 },
+                new Job { Id = 8, Name = ".NET Developer", TypeOfContractId = 3, CompanyId = 7, WorkingHoursId = 1, CategoryId = 12 },
+                new Job { Id = 9, Name = "Software Engineer C#", TypeOfContractId = 3, CompanyId = 8, WorkingHoursId = 3, CategoryId = 13 },
+                new Job { Id = 10, Name = "Quality Assurance", TypeOfContractId = 1, CompanyId = 7, WorkingHoursId = 3, CategoryId = 11 },
+                new Job { Id = 11, Name = "Programista .NET", TypeOfContractId = 5, CompanyId = 9, WorkingHoursId = 1, CategoryId = 15 },
                 new Job { Id = 12, Name = "Junior .NET Developer", TypeOfContractId = 5, CompanyId = 10, WorkingHoursId = 2, CategoryId = 16 },
                 new Job { Id = 13, Name = "Azure DevOps", TypeOfContractId = 1, CompanyId = 11, WorkingHoursId = 3, CategoryId = 16 }
            );
