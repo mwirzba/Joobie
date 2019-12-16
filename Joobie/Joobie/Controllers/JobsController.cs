@@ -1,7 +1,7 @@
 ﻿using Joobie.Models.JobModels;
+using LinqKit;
 using Microsoft.AspNetCore.Mvc;
 using Shop.Data.Repositories;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -21,7 +21,7 @@ namespace Joobie.Controllers
             ViewData["Categories"] = listOfProperties.Categories;
             ViewData["CurrentFilter"] = searchString;
             ViewData["CurrentCityFilter"] = citySearchString;
-            IEnumerable<Job> jobs = await GetSortedAndFilteredJobList(searchString, citySearchString,new List<int>(categories));
+            IEnumerable<Job> jobs = await GetSortedAndFilteredJobListAsync(searchString, citySearchString,new List<int>(categories));
             return View("List", jobs);
         }
 
@@ -95,19 +95,19 @@ namespace Joobie.Controllers
                     jobInDb.TypeOfContractId = job.TypeOfContractId;
                 if (job.WorkingHoursId != 0)
                     jobInDb.WorkingHoursId = job.WorkingHoursId;
-                 await GetOrCreateIfNullCompanyJob(job);
+                 await GetOrCreateIfNullCompanyJobAsync(job);
                 jobInDb.CompanyId = job.CompanyId;
             }
             else
             {              
-                await GetOrCreateIfNullCompanyJob(job);
+                await GetOrCreateIfNullCompanyJobAsync(job);
                 await _unitOfWork.Jobs.AddAsync(job);
             }
             await _unitOfWork.CompleteAsync();
             return RedirectToAction("list");
         }
 
-        private async Task GetOrCreateIfNullCompanyJob(Job job)
+        private async Task GetOrCreateIfNullCompanyJobAsync(Job job)
         {
             var findJobResult = await _unitOfWork.Companies.SingleOrDefaultAsync(c => c.Name == job.Company.Name);
             if (findJobResult == null)
@@ -119,47 +119,23 @@ namespace Joobie.Controllers
             job.CompanyId = findJobResult.Id; 
         }
 
-
-        //has to be changed  - too many options and posible situations???
-        private async Task<IEnumerable<Job>> GetSortedAndFilteredJobList(string jobNameSearchString, string citySearchString,List<int> categories)
+        private async Task<IEnumerable<Job>> GetSortedAndFilteredJobListAsync(string jobNameSearchString, string citySearchString,List<int> categories)
         {
-            IEnumerable<Job> jobs = null;
-            System.Linq.Expressions.Expression<Func<Job, bool>> predicate = null;
-            if (!string.IsNullOrEmpty(jobNameSearchString) && !string.IsNullOrEmpty(citySearchString) && categories.Count > 0)
+            var predicate = PredicateBuilder.New<Job>();          
+            if (!string.IsNullOrEmpty(jobNameSearchString))
             {
-                predicate = j => j.Name.Contains(jobNameSearchString) 
-                    && j.Localization.Contains(citySearchString) 
-                    && categories.Contains(j.CategoryId);
+                 predicate = predicate.And(j => j.Name.Contains(jobNameSearchString));
             }
-            else if (!string.IsNullOrEmpty(jobNameSearchString) && !string.IsNullOrEmpty(citySearchString))
+            if (!string.IsNullOrEmpty(citySearchString))
             {
-                 predicate = j => j.Name.Contains(jobNameSearchString)
-                        && j.Localization.Contains(citySearchString);
+                 predicate = predicate.And(j => j.Localization.Contains(citySearchString));
             }
-            else if (!string.IsNullOrEmpty(jobNameSearchString) && categories.Count > 0)
+            if (categories.Count>0)
             {
-                predicate = j => j.Name.Contains(jobNameSearchString)
-                       && categories.Contains(j.CategoryId);
+                 predicate = predicate.And(j => categories.Contains(j.CategoryId));
             }
-            else if (!string.IsNullOrEmpty(jobNameSearchString))
-            {
-                predicate = j => j.Name.Contains(jobNameSearchString);
-            }
-            else if (!string.IsNullOrEmpty(citySearchString))
-            {
-                predicate = j => j.Localization.Contains(citySearchString);
-            }
-            else if (categories.Count > 0)
-            {
-                predicate = j => categories.Contains(j.CategoryId);
-            }
-            else
-            {
-                predicate = j => !string.IsNullOrEmpty(j.Name);
-            }
-            jobs = await _unitOfWork.Jobs.GetJobsWithAllPropertiesByFilterAsync(predicate);
+            var jobs = await _unitOfWork.Jobs.GetJobsWithAllPropertiesByFilterAsync(predicate);
             return jobs;
         }
-
     }
 }
