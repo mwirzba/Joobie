@@ -4,6 +4,12 @@ using Microsoft.AspNetCore.Mvc;
 using Shop.Data.Repositories;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System;
+using System.Linq;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 
 namespace Joobie.Controllers
 {
@@ -27,6 +33,7 @@ namespace Joobie.Controllers
             return View("List", jobs);
         }
 
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> EditAsync(long id)
         {
             var jobInDb = await _unitOfWork.Jobs.GetJobWithAllPropertiesAsync(id);

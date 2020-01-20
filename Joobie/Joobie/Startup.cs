@@ -39,14 +39,22 @@ namespace Joobie
             services.AddTransient<IUnitOfWork, UnitOfWork>();
 
 
-            services.AddIdentity<IdentityUser, IdentityRole>()
-                            .AddDefaultTokenProviders()
-                            .AddEntityFrameworkStores<ApplicationDbContext>();
-
+            services.AddDefaultIdentity<IdentityUser>().AddRoles<IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
 
 
             services.AddSingleton<IEmailSender, EmailSender>();
 
+            services.Configure<IdentityOptions>(options =>
+            {
+                // Default SignIn settings.
+                options.Password.RequireDigit = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequiredLength = 4;
+                options.SignIn.RequireConfirmedEmail = false;
+                options.SignIn.RequireConfirmedPhoneNumber = false;
+            });
 
             services.AddControllersWithViews()
                 .AddRazorRuntimeCompilation();
