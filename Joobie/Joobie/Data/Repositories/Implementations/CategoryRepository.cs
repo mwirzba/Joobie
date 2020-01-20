@@ -11,11 +11,11 @@ namespace Joobie.Data.Repositories.Implementations
 {
     public class CategoryRepository : Repository<Category>, ICategoryRepository
     {
-        public CategoryRepository(ApplicationContext context) : base(context) { }
+        public CategoryRepository(ApplicationDbContext context) : base(context) { }
 
-        public ApplicationContext ApplicationContext
+        public ApplicationDbContext ApplicationDbContext
         {
-            get { return context as ApplicationContext; }
+            get { return context as ApplicationDbContext; }
         }
     }
 }

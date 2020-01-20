@@ -10,11 +10,11 @@ namespace Joobie.Data.Repositories.Implementations
 {
     public class CompanyRepository : Repository<Company>, ICompanyRepository
     {
-        public CompanyRepository(ApplicationContext context) : base(context) { }
+        public CompanyRepository(ApplicationDbContext context) : base(context) { }
 
-        public ApplicationContext ApplicationContext
+        public ApplicationDbContext ApplicationDbContext
         {
-            get { return context as ApplicationContext; }
+            get { return context as ApplicationDbContext; }
         }
     }
 }

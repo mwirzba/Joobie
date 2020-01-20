@@ -3,15 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Joobie.Data;
+using Joobie.Services;
+
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Shop.Data.Repositories;
+
 
 namespace Joobie
 {
@@ -27,15 +32,35 @@ namespace Joobie
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
-            services.AddDbContextPool<ApplicationContext>(options =>
+            services.AddDbContextPool<ApplicationDbContext>(options =>
                  options.UseSqlServer(Configuration["Data:JoobieDb:connectionString"]));
 
+
             services.AddTransient<IUnitOfWork, UnitOfWork>();
+
+
             services.AddIdentity<IdentityUser, IdentityRole>()
-        .AddEntityFrameworkStores<ApplicationContext>()
-        .AddDefaultTokenProviders();
-            //services.AddIdentity<IdentityUser, IdentityRole>();
+                            .AddDefaultTokenProviders()
+                            .AddEntityFrameworkStores<ApplicationDbContext>();
+
+
+
+            services.AddSingleton<IEmailSender, EmailSender>();
+
+
+            services.AddControllersWithViews()
+                .AddRazorRuntimeCompilation();
+
+
+            services.AddRazorPages();
+
+            services.ConfigureApplicationCookie(options =>
+
+            {
+                options.LoginPath = $"/Identity/Account/Login";
+                options.LogoutPath = $"/Identity/Account/Logout";
+                options.AccessDeniedPath = $"/Identity/Account/AccessDenied";
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -44,6 +69,7 @@ namespace Joobie
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseDatabaseErrorPage();
             }
             else
             {
@@ -56,16 +82,16 @@ namespace Joobie
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
-
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapRazorPages();
             });
-
         }
     }
 }

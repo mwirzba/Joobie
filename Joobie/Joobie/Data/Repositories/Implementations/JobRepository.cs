@@ -13,15 +13,15 @@ namespace Joobie.Data.Repositories.Implementations
 {
     public class JobRepository : Repository<Job>, IJobRepository
     {
-        public JobRepository(ApplicationContext context) : base(context) { }
+        public JobRepository(ApplicationDbContext context) : base(context) { }
 
-        public ApplicationContext ApplicationContext
+        public ApplicationDbContext ApplicationDbContext
         {
-            get { return context as ApplicationContext; }
+            get { return context as ApplicationDbContext; }
         }
         public async Task<IEnumerable<Job>> GetJobsWithAllPropertiesAsync()
         {
-            return await ApplicationContext.Jobs
+            return await ApplicationDbContext.Jobs
                  .Include(j => j.Category)
                  .Include(j => j.TypeOfContract)
                  .Include(j => j.Company)
@@ -30,7 +30,7 @@ namespace Joobie.Data.Repositories.Implementations
 
         public async Task<IEnumerable<Job>> GetJobsWithAllPropertiesByFilterAsync(Expression<Func<Job, bool>> predicate)
         {
-            return await ApplicationContext.Jobs
+            return await ApplicationDbContext.Jobs
                   .Where(predicate)
                   .Include(j => j.Category)
                   .Include(j => j.TypeOfContract)
@@ -41,7 +41,7 @@ namespace Joobie.Data.Repositories.Implementations
 
         public async Task<Job> GetJobWithAllPropertiesAsync(long id)
         {
-            return await ApplicationContext.Jobs
+            return await ApplicationDbContext.Jobs
                   .Include(j => j.Category)
                   .Include(j => j.TypeOfContract)
                   .Include(j => j.WorkingHours)
@@ -53,9 +53,9 @@ namespace Joobie.Data.Repositories.Implementations
         {
             return new
             {
-                Categories = await ApplicationContext.Categories.ToListAsync(),
-                TypesOfContract = await ApplicationContext.TypeOfContracts.ToListAsync(),
-                WorkingHours = await ApplicationContext.WorkingHours.ToListAsync()
+                Categories = await ApplicationDbContext.Categories.ToListAsync(),
+                TypesOfContract = await ApplicationDbContext.TypeOfContracts.ToListAsync(),
+                WorkingHours = await ApplicationDbContext.WorkingHours.ToListAsync()
             }; 
         }       
     }

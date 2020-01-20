@@ -8,12 +8,12 @@ namespace Shop.Data.Repositories
 {
     public class UnitOfWork : IUnitOfWork, IDisposable
     {
-        private readonly ApplicationContext _context;
+        private readonly ApplicationDbContext _context;
         public IJobRepository Jobs { get; }
         public ICompanyRepository Companies { get; }
         public ICategoryRepository Categories { get; }
 
-        public UnitOfWork(ApplicationContext context)
+        public UnitOfWork(ApplicationDbContext context)
         {
             _context = context;
             Jobs = new JobRepository(_context);
