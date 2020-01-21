@@ -10,22 +10,22 @@ using Joobie.Models.JobModels;
 
 namespace Joobie.Controllers
 {
-    public class CategoriesController : Controller
+    public class TypeOfContractsController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public CategoriesController(ApplicationDbContext context)
+        public TypeOfContractsController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Categories
+        // GET: TypeOfContracts
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Category.ToListAsync());
+            return View(await _context.TypeOfContract.ToListAsync());
         }
 
-        // GET: Categories/Details/5
+        // GET: TypeOfContracts/Details/5
         public async Task<IActionResult> Details(byte? id)
         {
             if (id == null)
@@ -33,39 +33,39 @@ namespace Joobie.Controllers
                 return NotFound();
             }
 
-            var category = await _context.Category
+            var typeOfContract = await _context.TypeOfContract
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (category == null)
+            if (typeOfContract == null)
             {
                 return NotFound();
             }
 
-            return View(category);
+            return View(typeOfContract);
         }
 
-        // GET: Categories/Create
+        // GET: TypeOfContracts/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Categories/Create
+        // POST: TypeOfContracts/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name")] Category category)
+        public async Task<IActionResult> Create([Bind("Id,Name")] TypeOfContract typeOfContract)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(category);
+                _context.Add(typeOfContract);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(category);
+            return View(typeOfContract);
         }
 
-        // GET: Categories/Edit/5
+        // GET: TypeOfContracts/Edit/5
         public async Task<IActionResult> Edit(byte? id)
         {
             if (id == null)
@@ -73,22 +73,22 @@ namespace Joobie.Controllers
                 return NotFound();
             }
 
-            var category = await _context.Category.FindAsync(id);
-            if (category == null)
+            var typeOfContract = await _context.TypeOfContract.FindAsync(id);
+            if (typeOfContract == null)
             {
                 return NotFound();
             }
-            return View(category);
+            return View(typeOfContract);
         }
 
-        // POST: Categories/Edit/5
+        // POST: TypeOfContracts/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(byte id, [Bind("Id,Name")] Category category)
+        public async Task<IActionResult> Edit(byte id, [Bind("Id,Name")] TypeOfContract typeOfContract)
         {
-            if (id != category.Id)
+            if (id != typeOfContract.Id)
             {
                 return NotFound();
             }
@@ -97,12 +97,12 @@ namespace Joobie.Controllers
             {
                 try
                 {
-                    _context.Update(category);
+                    _context.Update(typeOfContract);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!CategoryExists(category.Id))
+                    if (!TypeOfContractExists(typeOfContract.Id))
                     {
                         return NotFound();
                     }
@@ -113,10 +113,10 @@ namespace Joobie.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(category);
+            return View(typeOfContract);
         }
 
-        // GET: Categories/Delete/5
+        // GET: TypeOfContracts/Delete/5
         public async Task<IActionResult> Delete(byte? id)
         {
             if (id == null)
@@ -124,30 +124,30 @@ namespace Joobie.Controllers
                 return NotFound();
             }
 
-            var category = await _context.Category
+            var typeOfContract = await _context.TypeOfContract
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (category == null)
+            if (typeOfContract == null)
             {
                 return NotFound();
             }
 
-            return View(category);
+            return View(typeOfContract);
         }
 
-        // POST: Categories/Delete/5
+        // POST: TypeOfContracts/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(byte id)
         {
-            var category = await _context.Category.FindAsync(id);
-            _context.Category.Remove(category);
+            var typeOfContract = await _context.TypeOfContract.FindAsync(id);
+            _context.TypeOfContract.Remove(typeOfContract);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool CategoryExists(byte id)
+        private bool TypeOfContractExists(byte id)
         {
-            return _context.Category.Any(e => e.Id == id);
+            return _context.TypeOfContract.Any(e => e.Id == id);
         }
     }
 }

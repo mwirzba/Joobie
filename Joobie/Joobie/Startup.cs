@@ -15,7 +15,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Shop.Data.Repositories;
 
 
 namespace Joobie
@@ -35,8 +34,6 @@ namespace Joobie
             services.AddDbContextPool<ApplicationDbContext>(options =>
                  options.UseSqlServer(Configuration["Data:JoobieDb:connectionString"]));
 
-
-            services.AddTransient<IUnitOfWork, UnitOfWork>();
 
 
             services.AddDefaultIdentity<IdentityUser>().AddRoles<IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();

@@ -10,85 +10,85 @@ using Joobie.Models.JobModels;
 
 namespace Joobie.Controllers
 {
-    public class CategoriesController : Controller
+    public class CompaniesController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public CategoriesController(ApplicationDbContext context)
+        public CompaniesController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Categories
+        // GET: Companies
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Category.ToListAsync());
+            return View(await _context.Company.ToListAsync());
         }
 
-        // GET: Categories/Details/5
-        public async Task<IActionResult> Details(byte? id)
+        // GET: Companies/Details/5
+        public async Task<IActionResult> Details(long? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var category = await _context.Category
+            var company = await _context.Company
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (category == null)
+            if (company == null)
             {
                 return NotFound();
             }
 
-            return View(category);
+            return View(company);
         }
 
-        // GET: Categories/Create
+        // GET: Companies/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Categories/Create
+        // POST: Companies/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name")] Category category)
+        public async Task<IActionResult> Create([Bind("Id,Name")] Company company)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(category);
+                _context.Add(company);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(category);
+            return View(company);
         }
 
-        // GET: Categories/Edit/5
-        public async Task<IActionResult> Edit(byte? id)
+        // GET: Companies/Edit/5
+        public async Task<IActionResult> Edit(long? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var category = await _context.Category.FindAsync(id);
-            if (category == null)
+            var company = await _context.Company.FindAsync(id);
+            if (company == null)
             {
                 return NotFound();
             }
-            return View(category);
+            return View(company);
         }
 
-        // POST: Categories/Edit/5
+        // POST: Companies/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(byte id, [Bind("Id,Name")] Category category)
+        public async Task<IActionResult> Edit(long id, [Bind("Id,Name")] Company company)
         {
-            if (id != category.Id)
+            if (id != company.Id)
             {
                 return NotFound();
             }
@@ -97,12 +97,12 @@ namespace Joobie.Controllers
             {
                 try
                 {
-                    _context.Update(category);
+                    _context.Update(company);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!CategoryExists(category.Id))
+                    if (!CompanyExists(company.Id))
                     {
                         return NotFound();
                     }
@@ -113,41 +113,41 @@ namespace Joobie.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(category);
+            return View(company);
         }
 
-        // GET: Categories/Delete/5
-        public async Task<IActionResult> Delete(byte? id)
+        // GET: Companies/Delete/5
+        public async Task<IActionResult> Delete(long? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var category = await _context.Category
+            var company = await _context.Company
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (category == null)
+            if (company == null)
             {
                 return NotFound();
             }
 
-            return View(category);
+            return View(company);
         }
 
-        // POST: Categories/Delete/5
+        // POST: Companies/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(byte id)
+        public async Task<IActionResult> DeleteConfirmed(long id)
         {
-            var category = await _context.Category.FindAsync(id);
-            _context.Category.Remove(category);
+            var company = await _context.Company.FindAsync(id);
+            _context.Company.Remove(company);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool CategoryExists(byte id)
+        private bool CompanyExists(long id)
         {
-            return _context.Category.Any(e => e.Id == id);
+            return _context.Company.Any(e => e.Id == id);
         }
     }
 }

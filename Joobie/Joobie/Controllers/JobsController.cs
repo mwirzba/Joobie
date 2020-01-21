@@ -1,159 +1,178 @@
-﻿using Joobie.Models.JobModels;
-using LinqKit;
-using Microsoft.AspNetCore.Mvc;
-using Shop.Data.Repositories;
+﻿using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using System;
 using System.Linq;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Joobie.Data;
+using Joobie.Models.JobModels;
 
 namespace Joobie.Controllers
 {
     public class JobsController : Controller
     {
-        private readonly IUnitOfWork _unitOfWork;
-        public JobsController(IUnitOfWork unitOfWork)
+        private readonly ApplicationDbContext _context;
+
+        public JobsController(ApplicationDbContext context)
         {
-            _unitOfWork = unitOfWork;
+            _context = context;
         }
 
-        public async Task<IActionResult> ListAsync(string searchString,string citySearchString,int[] categories,int[] typesOfContracts, int[] workingHours)
+        // GET: Jobs
+        public async Task<IActionResult> Index()
         {
-            var listOfProperties = await _unitOfWork.Jobs.GetListsOfPropertiesAsync();
-            ViewData["Categories"] = listOfProperties.Categories;
-            ViewData["TypesOfContracts"] = listOfProperties.TypesOfContract;
-            ViewData["WorkingHours"] = listOfProperties.WorkingHours; 
-            ViewData["CurrentFilter"] = searchString;
-            ViewData["CurrentCityFilter"] = citySearchString;
-            IEnumerable<Job> jobs = await GetSortedAndFilteredJobListAsync(searchString, citySearchString,new List<int>(categories), new List<int>(typesOfContracts), new List<int>(workingHours));
-            return View("List", jobs);
+            var applicationDbContext = _context.Job.Include(j => j.Category).Include(j => j.Company).Include(j => j.TypeOfContract).Include(j => j.WorkingHours);
+            return View(await applicationDbContext.ToListAsync());
         }
 
-        [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> EditAsync(long id)
+        // GET: Jobs/Details/5
+        public async Task<IActionResult> Details(long? id)
         {
-            var jobInDb = await _unitOfWork.Jobs.GetJobWithAllPropertiesAsync(id);
-            var listOfProperties = await _unitOfWork.Jobs.GetListsOfPropertiesAsync();
-            var jobFormInfo = new JobFormViewModel
+            if (id == null)
             {
-                Job = jobInDb,
-                Categories = listOfProperties.Categories,
-                WorkingHours = listOfProperties.WorkingHours,
-                TypesOfContract = listOfProperties.TypesOfContract
-            };
+                return NotFound();
+            }
 
-            return View("JobForm", jobFormInfo);
-        }
-
-        public async Task<IActionResult> DeleteAsync(long id)
-        {
-            var jobInDb = await _unitOfWork.Jobs.GetJobWithAllPropertiesAsync(id);
-            var listOfProperties = await _unitOfWork.Jobs.GetListsOfPropertiesAsync();
-
-            var jobFormInfo = new JobFormViewModel
+            var job = await _context.Job
+                .Include(j => j.Category)
+                .Include(j => j.Company)
+                .Include(j => j.TypeOfContract)
+                .Include(j => j.WorkingHours)
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (job == null)
             {
-                Job = jobInDb,
-                Categories = listOfProperties.Categories,
-                WorkingHours = listOfProperties.WorkingHours,
-                TypesOfContract = listOfProperties.TypesOfContract
-            };
-            return View("DeleteJobForm", jobFormInfo);
+                return NotFound();
+            }
+
+            return View(job);
         }
 
-        [HttpPost, ActionName("DeleteAsync")]
+        // GET: Jobs/Create
+        public IActionResult Create()
+        {
+            ViewData["CategoryId"] = new SelectList(_context.Category, "Id", "Name");
+            ViewData["CompanyId"] = new SelectList(_context.Company, "Id", "Name");
+            ViewData["TypeOfContractId"] = new SelectList(_context.TypeOfContract, "Id", "Name");
+            ViewData["WorkingHoursId"] = new SelectList(_context.WorkingHours, "Id", "Name");
+            return View();
+        }
+
+        // POST: Jobs/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmedAsync(Job job)
+        public async Task<IActionResult> Create([Bind("Id,Name,Description,Localization,AddedDate,ExpirationDate,Salary,CategoryId,TypeOfContractId,WorkingHoursId,CompanyId")] Job job)
         {
-            var jobInDb = await _unitOfWork.Jobs.GetJobWithAllPropertiesAsync(job.Id);
-            _unitOfWork.Jobs.Remove(jobInDb);
-            await _unitOfWork.CompleteAsync();
-            return RedirectToAction("list");
+            if (ModelState.IsValid)
+            {
+                _context.Add(job);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            ViewData["CategoryId"] = new SelectList(_context.Category, "Id", "Name", job.CategoryId);
+            ViewData["CompanyId"] = new SelectList(_context.Company, "Id", "Name", job.CompanyId);
+            ViewData["TypeOfContractId"] = new SelectList(_context.TypeOfContract, "Id", "Name", job.TypeOfContractId);
+            ViewData["WorkingHoursId"] = new SelectList(_context.WorkingHours, "Id", "Name", job.WorkingHoursId);
+            return View(job);
         }
 
-        public async Task<IActionResult> CreateAsync()
+        // GET: Jobs/Edit/5
+        public async Task<IActionResult> Edit(long? id)
         {
-            var listOfProperties = await _unitOfWork.Jobs.GetListsOfPropertiesAsync();
-            var jobFormInfo = new JobFormViewModel
+            if (id == null)
             {
-                Job = new Job(),
-                Categories = listOfProperties.Categories,
-                WorkingHours = listOfProperties.WorkingHours,
-                TypesOfContract = listOfProperties.TypesOfContract
-            };
-            return View("JobForm", jobFormInfo);
+                return NotFound();
+            }
+
+            var job = await _context.Job.FindAsync(id);
+            if (job == null)
+            {
+                return NotFound();
+            }
+            ViewData["CategoryId"] = new SelectList(_context.Category, "Id", "Name", job.CategoryId);
+            ViewData["CompanyId"] = new SelectList(_context.Company, "Id", "Name", job.CompanyId);
+            ViewData["TypeOfContractId"] = new SelectList(_context.TypeOfContract, "Id", "Name", job.TypeOfContractId);
+            ViewData["WorkingHoursId"] = new SelectList(_context.WorkingHours, "Id", "Name", job.WorkingHoursId);
+            return View(job);
         }
 
-        public async Task<IActionResult> SaveAsync(Job job)
+        // POST: Jobs/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(long id, [Bind("Id,Name,Description,Localization,AddedDate,ExpirationDate,Salary,CategoryId,TypeOfContractId,WorkingHoursId,CompanyId")] Job job)
         {
-            var jobInDb = await _unitOfWork.Jobs.GetJobWithAllPropertiesAsync(job.Id);
-            if (jobInDb != null)
+            if (id != job.Id)
             {
-                jobInDb.Name = job.Name;
-                jobInDb.Localization = job.Localization;
-                jobInDb.Salary = job.Salary;
-                jobInDb.Description = job.Description;
-                jobInDb.AddedDate = job.AddedDate;
-                jobInDb.ExpirationDate = job.ExpirationDate;
-                if (job.CategoryId != 0)
-                    jobInDb.CategoryId = job.CategoryId;
-                if (job.TypeOfContractId != 0)
-                    jobInDb.TypeOfContractId = job.TypeOfContractId;
-                if (job.WorkingHoursId != 0)
-                    jobInDb.WorkingHoursId = job.WorkingHoursId;
-                 await GetOrCreateIfNullCompanyJobAsync(job);
-                jobInDb.CompanyId = job.CompanyId;
+                return NotFound();
             }
-            else
-            {              
-                await GetOrCreateIfNullCompanyJobAsync(job);
-                await _unitOfWork.Jobs.AddAsync(job);
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(job);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!JobExists(job.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
             }
-            await _unitOfWork.CompleteAsync();
-            return RedirectToAction("list");
+            ViewData["CategoryId"] = new SelectList(_context.Category, "Id", "Name", job.CategoryId);
+            ViewData["CompanyId"] = new SelectList(_context.Company, "Id", "Name", job.CompanyId);
+            ViewData["TypeOfContractId"] = new SelectList(_context.TypeOfContract, "Id", "Name", job.TypeOfContractId);
+            ViewData["WorkingHoursId"] = new SelectList(_context.WorkingHours, "Id", "Name", job.WorkingHoursId);
+            return View(job);
         }
 
-        private async Task GetOrCreateIfNullCompanyJobAsync(Job job)
+        // GET: Jobs/Delete/5
+        public async Task<IActionResult> Delete(long? id)
         {
-            var findJobResult = await _unitOfWork.Companies.SingleOrDefaultAsync(c => c.Name == job.Company.Name);
-            if (findJobResult == null)
+            if (id == null)
             {
-                await _unitOfWork.Companies.AddAsync(job.Company);
-                await _unitOfWork.CompleteAsync();
-                findJobResult = await _unitOfWork.Companies.SingleOrDefaultAsync(c => c.Name == job.Company.Name);
+                return NotFound();
             }
-            job.CompanyId = findJobResult.Id; 
+
+            var job = await _context.Job
+                .Include(j => j.Category)
+                .Include(j => j.Company)
+                .Include(j => j.TypeOfContract)
+                .Include(j => j.WorkingHours)
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (job == null)
+            {
+                return NotFound();
+            }
+
+            return View(job);
         }
 
-        private async Task<IEnumerable<Job>> GetSortedAndFilteredJobListAsync(string jobNameSearchString, string citySearchString,List<int> categories,List<int> typesOfContracts, List<int> workingHours)
+        // POST: Jobs/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(long id)
         {
-            var predicate = PredicateBuilder.New<Job>();
-            predicate.DefaultExpression = j => true; 
-            if (!string.IsNullOrEmpty(jobNameSearchString))
-            {
-                 predicate = predicate.And(j => j.Name.Contains(jobNameSearchString));
-            }
-            if (!string.IsNullOrEmpty(citySearchString))
-            {
-                 predicate = predicate.And(j => j.Localization.Contains(citySearchString));
-            }
-            if (categories.Count>0)
-            {
-                 predicate = predicate.And(j => categories.Contains(j.CategoryId));
-            }
-            if (typesOfContracts.Count > 0)
-            {
-                predicate = predicate.And(j => typesOfContracts.Contains(j.TypeOfContractId));
-            }
-            if (workingHours.Count > 0)
-            {
-                predicate = predicate.And(j => workingHours.Contains(j.WorkingHoursId));
-            }
-            var jobs = await _unitOfWork.Jobs.GetJobsWithAllPropertiesByFilterAsync(predicate);
-            return jobs;
+            var job = await _context.Job.FindAsync(id);
+            _context.Job.Remove(job);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
+        private bool JobExists(long id)
+        {
+            return _context.Job.Any(e => e.Id == id);
         }
     }
 }

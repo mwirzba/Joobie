@@ -10,22 +10,22 @@ using Joobie.Models.JobModels;
 
 namespace Joobie.Controllers
 {
-    public class CategoriesController : Controller
+    public class WorkingHoursController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public CategoriesController(ApplicationDbContext context)
+        public WorkingHoursController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Categories
+        // GET: WorkingHours
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Category.ToListAsync());
+            return View(await _context.WorkingHours.ToListAsync());
         }
 
-        // GET: Categories/Details/5
+        // GET: WorkingHours/Details/5
         public async Task<IActionResult> Details(byte? id)
         {
             if (id == null)
@@ -33,39 +33,39 @@ namespace Joobie.Controllers
                 return NotFound();
             }
 
-            var category = await _context.Category
+            var workingHours = await _context.WorkingHours
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (category == null)
+            if (workingHours == null)
             {
                 return NotFound();
             }
 
-            return View(category);
+            return View(workingHours);
         }
 
-        // GET: Categories/Create
+        // GET: WorkingHours/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Categories/Create
+        // POST: WorkingHours/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name")] Category category)
+        public async Task<IActionResult> Create([Bind("Id,Name")] WorkingHours workingHours)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(category);
+                _context.Add(workingHours);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(category);
+            return View(workingHours);
         }
 
-        // GET: Categories/Edit/5
+        // GET: WorkingHours/Edit/5
         public async Task<IActionResult> Edit(byte? id)
         {
             if (id == null)
@@ -73,22 +73,22 @@ namespace Joobie.Controllers
                 return NotFound();
             }
 
-            var category = await _context.Category.FindAsync(id);
-            if (category == null)
+            var workingHours = await _context.WorkingHours.FindAsync(id);
+            if (workingHours == null)
             {
                 return NotFound();
             }
-            return View(category);
+            return View(workingHours);
         }
 
-        // POST: Categories/Edit/5
+        // POST: WorkingHours/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(byte id, [Bind("Id,Name")] Category category)
+        public async Task<IActionResult> Edit(byte id, [Bind("Id,Name")] WorkingHours workingHours)
         {
-            if (id != category.Id)
+            if (id != workingHours.Id)
             {
                 return NotFound();
             }
@@ -97,12 +97,12 @@ namespace Joobie.Controllers
             {
                 try
                 {
-                    _context.Update(category);
+                    _context.Update(workingHours);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!CategoryExists(category.Id))
+                    if (!WorkingHoursExists(workingHours.Id))
                     {
                         return NotFound();
                     }
@@ -113,10 +113,10 @@ namespace Joobie.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(category);
+            return View(workingHours);
         }
 
-        // GET: Categories/Delete/5
+        // GET: WorkingHours/Delete/5
         public async Task<IActionResult> Delete(byte? id)
         {
             if (id == null)
@@ -124,30 +124,30 @@ namespace Joobie.Controllers
                 return NotFound();
             }
 
-            var category = await _context.Category
+            var workingHours = await _context.WorkingHours
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (category == null)
+            if (workingHours == null)
             {
                 return NotFound();
             }
 
-            return View(category);
+            return View(workingHours);
         }
 
-        // POST: Categories/Delete/5
+        // POST: WorkingHours/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(byte id)
         {
-            var category = await _context.Category.FindAsync(id);
-            _context.Category.Remove(category);
+            var workingHours = await _context.WorkingHours.FindAsync(id);
+            _context.WorkingHours.Remove(workingHours);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool CategoryExists(byte id)
+        private bool WorkingHoursExists(byte id)
         {
-            return _context.Category.Any(e => e.Id == id);
+            return _context.WorkingHours.Any(e => e.Id == id);
         }
     }
 }

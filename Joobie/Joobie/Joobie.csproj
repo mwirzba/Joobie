@@ -5,6 +5,13 @@
     <UserSecretsId>aspnet-Joobie-5378F9BB-C52D-4B76-8963-A918B5B31E8D</UserSecretsId>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Migrations\20200121092448_Initial.cs" />
+    <Compile Remove="Migrations\20200121092448_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20200121093127_Initial.cs" />
+    <Compile Remove="Migrations\20200121093127_Initial.Designer.cs" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="LinqKit" Version="1.1.17" />
@@ -14,6 +21,8 @@
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.0.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.0.0" />
     <PackageReference Include="NUnit" Version="3.12.0" />
     <PackageReference Include="NUnit3TestAdapter" Version="3.16.1">
       <PrivateAssets>all</PrivateAssets>

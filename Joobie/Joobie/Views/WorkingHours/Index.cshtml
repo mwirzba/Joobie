@@ -1,10 +1,11 @@
-﻿@model IEnumerable<Joobie.Models.JobModels.Category>
+﻿@model IEnumerable<Joobie.Models.JobModels.WorkingHours>
 
 @{
-    ViewData["Title"] = "List";
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>List</h1>
+<h1>Index</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -19,7 +20,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model) {
+@foreach (var item in Model) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
@@ -30,6 +31,6 @@
                 <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
             </td>
         </tr>
-        }
+}
     </tbody>
 </table>
