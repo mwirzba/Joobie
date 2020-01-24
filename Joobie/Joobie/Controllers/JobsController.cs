@@ -22,7 +22,7 @@ namespace Joobie.Controllers
         // GET: Jobs
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Job.Include(j => j.Category).Include(j => j.Company).Include(j => j.TypeOfContract).Include(j => j.WorkingHours);
+            var applicationDbContext = _context.Job.Include(j => j.ApplicationUser).Include(j => j.Category).Include(j => j.TypeOfContract).Include(j => j.WorkingHours);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -35,8 +35,8 @@ namespace Joobie.Controllers
             }
 
             var job = await _context.Job
+                .Include(j => j.ApplicationUser)
                 .Include(j => j.Category)
-                .Include(j => j.Company)
                 .Include(j => j.TypeOfContract)
                 .Include(j => j.WorkingHours)
                 .FirstOrDefaultAsync(m => m.Id == id);
@@ -51,8 +51,8 @@ namespace Joobie.Controllers
         // GET: Jobs/Create
         public IActionResult Create()
         {
+            ViewData["UserId"] = new SelectList(_context.ApplicationUser, "Id", "Id");
             ViewData["CategoryId"] = new SelectList(_context.Category, "Id", "Name");
-            ViewData["CompanyId"] = new SelectList(_context.Company, "Id", "Name");
             ViewData["TypeOfContractId"] = new SelectList(_context.TypeOfContract, "Id", "Name");
             ViewData["WorkingHoursId"] = new SelectList(_context.WorkingHours, "Id", "Name");
             return View();
@@ -63,7 +63,7 @@ namespace Joobie.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Description,Localization,AddedDate,ExpirationDate,Salary,CategoryId,TypeOfContractId,WorkingHoursId,CompanyId")] Job job)
+        public async Task<IActionResult> Create([Bind("Id,Name,Description,Localization,AddedDate,ExpirationDate,Salary,CategoryId,TypeOfContractId,WorkingHoursId,UserId")] Job job)
         {
             if (ModelState.IsValid)
             {
@@ -71,8 +71,8 @@ namespace Joobie.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["UserId"] = new SelectList(_context.ApplicationUser, "Id", "Id", job.UserId);
             ViewData["CategoryId"] = new SelectList(_context.Category, "Id", "Name", job.CategoryId);
-            ViewData["CompanyId"] = new SelectList(_context.Company, "Id", "Name", job.CompanyId);
             ViewData["TypeOfContractId"] = new SelectList(_context.TypeOfContract, "Id", "Name", job.TypeOfContractId);
             ViewData["WorkingHoursId"] = new SelectList(_context.WorkingHours, "Id", "Name", job.WorkingHoursId);
             return View(job);
@@ -91,8 +91,8 @@ namespace Joobie.Controllers
             {
                 return NotFound();
             }
+            ViewData["UserId"] = new SelectList(_context.ApplicationUser, "Id", "Id", job.UserId);
             ViewData["CategoryId"] = new SelectList(_context.Category, "Id", "Name", job.CategoryId);
-            ViewData["CompanyId"] = new SelectList(_context.Company, "Id", "Name", job.CompanyId);
             ViewData["TypeOfContractId"] = new SelectList(_context.TypeOfContract, "Id", "Name", job.TypeOfContractId);
             ViewData["WorkingHoursId"] = new SelectList(_context.WorkingHours, "Id", "Name", job.WorkingHoursId);
             return View(job);
@@ -103,7 +103,7 @@ namespace Joobie.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(long id, [Bind("Id,Name,Description,Localization,AddedDate,ExpirationDate,Salary,CategoryId,TypeOfContractId,WorkingHoursId,CompanyId")] Job job)
+        public async Task<IActionResult> Edit(long id, [Bind("Id,Name,Description,Localization,AddedDate,ExpirationDate,Salary,CategoryId,TypeOfContractId,WorkingHoursId,UserId")] Job job)
         {
             if (id != job.Id)
             {
@@ -130,8 +130,8 @@ namespace Joobie.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["UserId"] = new SelectList(_context.ApplicationUser, "Id", "Id", job.UserId);
             ViewData["CategoryId"] = new SelectList(_context.Category, "Id", "Name", job.CategoryId);
-            ViewData["CompanyId"] = new SelectList(_context.Company, "Id", "Name", job.CompanyId);
             ViewData["TypeOfContractId"] = new SelectList(_context.TypeOfContract, "Id", "Name", job.TypeOfContractId);
             ViewData["WorkingHoursId"] = new SelectList(_context.WorkingHours, "Id", "Name", job.WorkingHoursId);
             return View(job);
@@ -146,8 +146,8 @@ namespace Joobie.Controllers
             }
 
             var job = await _context.Job
+                .Include(j => j.ApplicationUser)
                 .Include(j => j.Category)
-                .Include(j => j.Company)
                 .Include(j => j.TypeOfContract)
                 .Include(j => j.WorkingHours)
                 .FirstOrDefaultAsync(m => m.Id == id);

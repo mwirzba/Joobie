@@ -4,14 +4,16 @@ using Joobie.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Joobie.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200124083210_todo")]
+    partial class todo
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -210,6 +212,84 @@ namespace Joobie.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Joobie.Models.JobModels.Company", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Company");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1L,
+                            Name = "IHS Markit"
+                        },
+                        new
+                        {
+                            Id = 2L,
+                            Name = "Solvit"
+                        },
+                        new
+                        {
+                            Id = 3L,
+                            Name = "Capgemini Software Solutions Center"
+                        },
+                        new
+                        {
+                            Id = 4L,
+                            Name = "EcoVadis Polska Sp. z o. o."
+                        },
+                        new
+                        {
+                            Id = 5L,
+                            Name = "CBG International Sp. z o.o."
+                        },
+                        new
+                        {
+                            Id = 6L,
+                            Name = "ING Tech Poland"
+                        },
+                        new
+                        {
+                            Id = 7L,
+                            Name = "Ericsson"
+                        },
+                        new
+                        {
+                            Id = 8L,
+                            Name = "Tronel Sp. z o.o."
+                        },
+                        new
+                        {
+                            Id = 9L,
+                            Name = "PwC"
+                        },
+                        new
+                        {
+                            Id = 10L,
+                            Name = "OPONEO.PL S.A."
+                        },
+                        new
+                        {
+                            Id = 11L,
+                            Name = "Nokia Networks"
+                        });
+                });
+
             modelBuilder.Entity("Joobie.Models.JobModels.Job", b =>
                 {
                     b.Property<long>("Id")
@@ -222,6 +302,9 @@ namespace Joobie.Migrations
 
                     b.Property<byte>("CategoryId")
                         .HasColumnType("tinyint");
+
+                    b.Property<long>("CompanyId")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
@@ -241,9 +324,6 @@ namespace Joobie.Migrations
                     b.Property<byte>("TypeOfContractId")
                         .HasColumnType("tinyint");
 
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<byte>("WorkingHoursId")
                         .HasColumnType("tinyint");
 
@@ -251,9 +331,9 @@ namespace Joobie.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.HasIndex("TypeOfContractId");
+                    b.HasIndex("CompanyId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("TypeOfContractId");
 
                     b.HasIndex("WorkingHoursId");
 
@@ -264,6 +344,7 @@ namespace Joobie.Migrations
                         {
                             Id = 1L,
                             CategoryId = (byte)16,
+                            CompanyId = 1L,
                             Name = ".NET Developer",
                             TypeOfContractId = (byte)1,
                             WorkingHoursId = (byte)1
@@ -272,6 +353,7 @@ namespace Joobie.Migrations
                         {
                             Id = 2L,
                             CategoryId = (byte)1,
+                            CompanyId = 2L,
                             Name = "Junior .NET Developer",
                             TypeOfContractId = (byte)1,
                             WorkingHoursId = (byte)2
@@ -280,6 +362,7 @@ namespace Joobie.Migrations
                         {
                             Id = 3L,
                             CategoryId = (byte)1,
+                            CompanyId = 2L,
                             Name = "Senior .NET Developer",
                             TypeOfContractId = (byte)1,
                             WorkingHoursId = (byte)1
@@ -288,6 +371,7 @@ namespace Joobie.Migrations
                         {
                             Id = 4L,
                             CategoryId = (byte)16,
+                            CompanyId = 3L,
                             Name = "Starszy Inżynier Oprogramowania .NET",
                             TypeOfContractId = (byte)1,
                             WorkingHoursId = (byte)1
@@ -296,6 +380,7 @@ namespace Joobie.Migrations
                         {
                             Id = 5L,
                             CategoryId = (byte)16,
+                            CompanyId = 2L,
                             Name = "Programista .NET",
                             TypeOfContractId = (byte)1,
                             WorkingHoursId = (byte)3
@@ -304,6 +389,7 @@ namespace Joobie.Migrations
                         {
                             Id = 6L,
                             CategoryId = (byte)16,
+                            CompanyId = 5L,
                             Name = "C# .Net developer",
                             TypeOfContractId = (byte)3,
                             WorkingHoursId = (byte)1
@@ -312,6 +398,7 @@ namespace Joobie.Migrations
                         {
                             Id = 7L,
                             CategoryId = (byte)15,
+                            CompanyId = 6L,
                             Name = ".NET Developer",
                             TypeOfContractId = (byte)5,
                             WorkingHoursId = (byte)1
@@ -320,6 +407,7 @@ namespace Joobie.Migrations
                         {
                             Id = 8L,
                             CategoryId = (byte)12,
+                            CompanyId = 7L,
                             Name = ".NET Developer",
                             TypeOfContractId = (byte)3,
                             WorkingHoursId = (byte)1
@@ -328,6 +416,7 @@ namespace Joobie.Migrations
                         {
                             Id = 9L,
                             CategoryId = (byte)13,
+                            CompanyId = 8L,
                             Name = "Software Engineer C#",
                             TypeOfContractId = (byte)3,
                             WorkingHoursId = (byte)3
@@ -336,6 +425,7 @@ namespace Joobie.Migrations
                         {
                             Id = 10L,
                             CategoryId = (byte)11,
+                            CompanyId = 7L,
                             Name = "Quality Assurance",
                             TypeOfContractId = (byte)1,
                             WorkingHoursId = (byte)3
@@ -344,6 +434,7 @@ namespace Joobie.Migrations
                         {
                             Id = 11L,
                             CategoryId = (byte)15,
+                            CompanyId = 9L,
                             Name = "Programista .NET",
                             TypeOfContractId = (byte)5,
                             WorkingHoursId = (byte)1
@@ -352,6 +443,7 @@ namespace Joobie.Migrations
                         {
                             Id = 12L,
                             CategoryId = (byte)16,
+                            CompanyId = 10L,
                             Name = "Junior .NET Developer",
                             TypeOfContractId = (byte)5,
                             WorkingHoursId = (byte)2
@@ -360,6 +452,7 @@ namespace Joobie.Migrations
                         {
                             Id = 13L,
                             CategoryId = (byte)16,
+                            CompanyId = 11L,
                             Name = "Azure DevOps",
                             TypeOfContractId = (byte)1,
                             WorkingHoursId = (byte)3
@@ -653,13 +746,14 @@ namespace Joobie.Migrations
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
 
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Nip")
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasDiscriminator().HasValue("ApplicationUser");
+                });
+
+            modelBuilder.Entity("Joobie.Models.JobModels.Company", b =>
+                {
+                    b.HasOne("Joobie.Models.JobModels.ApplicationUser", "ApplicationUser")
+                        .WithMany()
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("Joobie.Models.JobModels.Job", b =>
@@ -670,15 +764,17 @@ namespace Joobie.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Joobie.Models.JobModels.Company", "Company")
+                        .WithMany()
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Joobie.Models.JobModels.TypeOfContract", "TypeOfContract")
                         .WithMany()
                         .HasForeignKey("TypeOfContractId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("Joobie.Models.JobModels.ApplicationUser", "ApplicationUser")
-                        .WithMany()
-                        .HasForeignKey("UserId");
 
                     b.HasOne("Joobie.Models.JobModels.WorkingHours", "WorkingHours")
                         .WithMany()

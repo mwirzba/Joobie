@@ -14,5 +14,6 @@ namespace Joobie.Models.JobModels
         [Required]
         [Display(Name = "Kategoria")]
         public string Name { get; set; }
+
     }
 }

@@ -64,12 +64,12 @@ namespace Joobie.Models.JobModels
         [Display(Name = "Godziny pracy")]
         public virtual WorkingHours WorkingHours { get; set; }
 
-        [Required]
-        [Display(Name = "Firma")]
-        public long CompanyId { get; set; }
 
-        [ForeignKey("CompanyId")]
-        [Display(Name = "Firma")]
-        public virtual Company Company { get; set; }
+        [Display(Name = "Użytkownik")]
+        public string UserId { get; set; }
+
+        [ForeignKey("UserId")]
+        [Display(Name = "Użytkownik")]
+        public virtual ApplicationUser ApplicationUser { get; set; }
     }
 }

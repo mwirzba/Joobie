@@ -4,14 +4,16 @@ using Joobie.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Joobie.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200124090929_todo5")]
+    partial class todo5
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -241,9 +243,6 @@ namespace Joobie.Migrations
                     b.Property<byte>("TypeOfContractId")
                         .HasColumnType("tinyint");
 
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<byte>("WorkingHoursId")
                         .HasColumnType("tinyint");
 
@@ -252,8 +251,6 @@ namespace Joobie.Migrations
                     b.HasIndex("CategoryId");
 
                     b.HasIndex("TypeOfContractId");
-
-                    b.HasIndex("UserId");
 
                     b.HasIndex("WorkingHoursId");
 
@@ -656,9 +653,6 @@ namespace Joobie.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Nip")
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasDiscriminator().HasValue("ApplicationUser");
                 });
 
@@ -675,10 +669,6 @@ namespace Joobie.Migrations
                         .HasForeignKey("TypeOfContractId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("Joobie.Models.JobModels.ApplicationUser", "ApplicationUser")
-                        .WithMany()
-                        .HasForeignKey("UserId");
 
                     b.HasOne("Joobie.Models.JobModels.WorkingHours", "WorkingHours")
                         .WithMany()
