@@ -240,7 +240,7 @@ namespace Joobie.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Discriminator", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName", "Name", "Nip" },
-                values: new object[] { "31d98481-9339-4e36-b3d4-c8f7e7ab3206", 0, "e5fbd409-c106-4492-8ed1-deeb2da3a7af", "ApplicationUser", "DefaultUser@gmail.com", false, true, null, null, "DEFAULTUSER@GMAIL.COM", "AQAAAAEAACcQAAAAEKQK0227340I7E9mRrWOJJwBpOyDx6zuZ9iN06nmNGJZkEyHl7ZZdBgxhtulSzn69Q==", null, false, "PBSCMSVSUTGUUIVILSKHSXF2HIQ2OXW6", false, "DefaultUser@gmail.com", "DefaultCompany", "DefaultNip" });
+                values: new object[] { "31d98481-9339-4e36-b3d4-c8f7e7ab3256", 0, "e5fbd409-c106-4492-8ed1-deeb2da3a7af", "ApplicationUser", "DefaultUser@gmail.com", false, true, null, null, "DEFAULTUSER@GMAIL.COM", "AQAAAAEAACcQAAAAEKQK0227340I7E9mRrWOJJwBpOyDx6zuZ9iN06nmNGJZkEyHl7ZZdBgxhtulSzn69Q==", null, false, "PBSCMSVSUTGUUIVILSKHSXF2HIQ2OXW6", false, "DefaultUser@gmail.com", "DefaultCompany", "DefaultNip" });
 
             migrationBuilder.InsertData(
                 table: "Category",
@@ -312,19 +312,19 @@ namespace Joobie.Migrations
                 columns: new[] { "Id", "AddedDate", "CategoryId", "Description", "ExpirationDate", "Localization", "Name", "Salary", "TypeOfContractId", "UserId", "WorkingHoursId" },
                 values: new object[,]
                 {
-                    { 1L, null, (byte)16, null, null, null, ".NET Developer", null, (byte)1, null, (byte)1 },
-                    { 3L, null, (byte)1, null, null, null, "Senior .NET Developer", null, (byte)1, null, (byte)1 },
-                    { 4L, null, (byte)16, null, null, null, "Starszy Inżynier Oprogramowania .NET", null, (byte)1, null, (byte)1 },
-                    { 6L, null, (byte)16, null, null, null, "C# .Net developer", null, (byte)3, null, (byte)1 },
-                    { 7L, null, (byte)15, null, null, null, ".NET Developer", null, (byte)5, null, (byte)1 },
-                    { 8L, null, (byte)12, null, null, null, ".NET Developer", null, (byte)3, null, (byte)1 },
-                    { 11L, null, (byte)15, null, null, null, "Programista .NET", null, (byte)5, null, (byte)1 },
-                    { 2L, null, (byte)1, null, null, null, "Junior .NET Developer", null, (byte)1, null, (byte)2 },
-                    { 12L, null, (byte)16, null, null, null, "Junior .NET Developer", null, (byte)5, null, (byte)2 },
-                    { 5L, null, (byte)16, null, null, null, "Programista .NET", null, (byte)1, null, (byte)3 },
-                    { 9L, null, (byte)13, null, null, null, "Software Engineer C#", null, (byte)3, null, (byte)3 },
-                    { 10L, null, (byte)11, null, null, null, "Quality Assurance", null, (byte)1, null, (byte)3 },
-                    { 13L, null, (byte)16, null, null, null, "Azure DevOps", null, (byte)1, null, (byte)3 }
+                    { 1L, null, (byte)16, null, null, null, ".NET Developer", null, (byte)1, "31d98481-9339-4e36-b3d4-c8f7e7ab3256", (byte)1 },
+                    { 3L, null, (byte)1, null, null, null, "Senior .NET Developer", null, (byte)1, "31d98481-9339-4e36-b3d4-c8f7e7ab3256", (byte)1 },
+                    { 4L, null, (byte)16, null, null, null, "Starszy Inżynier Oprogramowania .NET", null, (byte)1, "31d98481-9339-4e36-b3d4-c8f7e7ab3256", (byte)1 },
+                    { 6L, null, (byte)16, null, null, null, "C# .Net developer", null, (byte)3, "31d98481-9339-4e36-b3d4-c8f7e7ab3256", (byte)1 },
+                    { 7L, null, (byte)15, null, null, null, ".NET Developer", null, (byte)5, "31d98481-9339-4e36-b3d4-c8f7e7ab3256", (byte)1 },
+                    { 8L, null, (byte)12, null, null, null, ".NET Developer", null, (byte)3, "31d98481-9339-4e36-b3d4-c8f7e7ab3256", (byte)1 },
+                    { 11L, null, (byte)15, null, null, null, "Programista .NET", null, (byte)5, "31d98481-9339-4e36-b3d4-c8f7e7ab3256", (byte)1 },
+                    { 2L, null, (byte)1, null, null, null, "Junior .NET Developer", null, (byte)1, "31d98481-9339-4e36-b3d4-c8f7e7ab3256", (byte)2 },
+                    { 12L, null, (byte)16, null, null, null, "Junior .NET Developer", null, (byte)5, "31d98481-9339-4e36-b3d4-c8f7e7ab3256", (byte)2 },
+                    { 5L, null, (byte)16, null, null, null, "Programista .NET", null, (byte)1, "31d98481-9339-4e36-b3d4-c8f7e7ab3256", (byte)3 },
+                    { 9L, null, (byte)13, null, null, null, "Software Engineer C#", null, (byte)3, "31d98481-9339-4e36-b3d4-c8f7e7ab3256", (byte)3 },
+                    { 10L, null, (byte)11, null, null, null, "Quality Assurance", null, (byte)1, "31d98481-9339-4e36-b3d4-c8f7e7ab3256", (byte)3 },
+                    { 13L, null, (byte)16, null, null, null, "Azure DevOps", null, (byte)1, "31d98481-9339-4e36-b3d4-c8f7e7ab3256", (byte)3 }
                 });
 
             migrationBuilder.CreateIndex(

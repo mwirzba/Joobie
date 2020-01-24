@@ -32,6 +32,16 @@
     <Compile Remove="Migrations\20200124110515_Initial.Designer.cs" />
     <Compile Remove="Migrations\20200124110727_JobDataPopulation.cs" />
     <Compile Remove="Migrations\20200124110727_JobDataPopulation.Designer.cs" />
+    <Compile Remove="Migrations\20200124111628_initial.cs" />
+    <Compile Remove="Migrations\20200124111628_initial.Designer.cs" />
+    <Compile Remove="Migrations\20200124112104_initialtest.cs" />
+    <Compile Remove="Migrations\20200124112104_initialtest.Designer.cs" />
+    <Compile Remove="Migrations\20200124112223_initialtest2.cs" />
+    <Compile Remove="Migrations\20200124112223_initialtest2.Designer.cs" />
+    <Compile Remove="Migrations\20200124112425_initial.cs" />
+    <Compile Remove="Migrations\20200124112425_initial.Designer.cs" />
+    <Compile Remove="Migrations\20200124112617_initial.cs" />
+    <Compile Remove="Migrations\20200124112617_initial.Designer.cs" />
   </ItemGroup>
 
 

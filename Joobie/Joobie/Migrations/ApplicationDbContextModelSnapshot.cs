@@ -266,6 +266,7 @@ namespace Joobie.Migrations
                             CategoryId = (byte)16,
                             Name = ".NET Developer",
                             TypeOfContractId = (byte)1,
+                            UserId = "31d98481-9339-4e36-b3d4-c8f7e7ab3256",
                             WorkingHoursId = (byte)1
                         },
                         new
@@ -274,6 +275,7 @@ namespace Joobie.Migrations
                             CategoryId = (byte)1,
                             Name = "Junior .NET Developer",
                             TypeOfContractId = (byte)1,
+                            UserId = "31d98481-9339-4e36-b3d4-c8f7e7ab3256",
                             WorkingHoursId = (byte)2
                         },
                         new
@@ -282,6 +284,7 @@ namespace Joobie.Migrations
                             CategoryId = (byte)1,
                             Name = "Senior .NET Developer",
                             TypeOfContractId = (byte)1,
+                            UserId = "31d98481-9339-4e36-b3d4-c8f7e7ab3256",
                             WorkingHoursId = (byte)1
                         },
                         new
@@ -290,6 +293,7 @@ namespace Joobie.Migrations
                             CategoryId = (byte)16,
                             Name = "Starszy Inżynier Oprogramowania .NET",
                             TypeOfContractId = (byte)1,
+                            UserId = "31d98481-9339-4e36-b3d4-c8f7e7ab3256",
                             WorkingHoursId = (byte)1
                         },
                         new
@@ -298,6 +302,7 @@ namespace Joobie.Migrations
                             CategoryId = (byte)16,
                             Name = "Programista .NET",
                             TypeOfContractId = (byte)1,
+                            UserId = "31d98481-9339-4e36-b3d4-c8f7e7ab3256",
                             WorkingHoursId = (byte)3
                         },
                         new
@@ -306,6 +311,7 @@ namespace Joobie.Migrations
                             CategoryId = (byte)16,
                             Name = "C# .Net developer",
                             TypeOfContractId = (byte)3,
+                            UserId = "31d98481-9339-4e36-b3d4-c8f7e7ab3256",
                             WorkingHoursId = (byte)1
                         },
                         new
@@ -314,6 +320,7 @@ namespace Joobie.Migrations
                             CategoryId = (byte)15,
                             Name = ".NET Developer",
                             TypeOfContractId = (byte)5,
+                            UserId = "31d98481-9339-4e36-b3d4-c8f7e7ab3256",
                             WorkingHoursId = (byte)1
                         },
                         new
@@ -322,6 +329,7 @@ namespace Joobie.Migrations
                             CategoryId = (byte)12,
                             Name = ".NET Developer",
                             TypeOfContractId = (byte)3,
+                            UserId = "31d98481-9339-4e36-b3d4-c8f7e7ab3256",
                             WorkingHoursId = (byte)1
                         },
                         new
@@ -330,6 +338,7 @@ namespace Joobie.Migrations
                             CategoryId = (byte)13,
                             Name = "Software Engineer C#",
                             TypeOfContractId = (byte)3,
+                            UserId = "31d98481-9339-4e36-b3d4-c8f7e7ab3256",
                             WorkingHoursId = (byte)3
                         },
                         new
@@ -338,6 +347,7 @@ namespace Joobie.Migrations
                             CategoryId = (byte)11,
                             Name = "Quality Assurance",
                             TypeOfContractId = (byte)1,
+                            UserId = "31d98481-9339-4e36-b3d4-c8f7e7ab3256",
                             WorkingHoursId = (byte)3
                         },
                         new
@@ -346,6 +356,7 @@ namespace Joobie.Migrations
                             CategoryId = (byte)15,
                             Name = "Programista .NET",
                             TypeOfContractId = (byte)5,
+                            UserId = "31d98481-9339-4e36-b3d4-c8f7e7ab3256",
                             WorkingHoursId = (byte)1
                         },
                         new
@@ -354,6 +365,7 @@ namespace Joobie.Migrations
                             CategoryId = (byte)16,
                             Name = "Junior .NET Developer",
                             TypeOfContractId = (byte)5,
+                            UserId = "31d98481-9339-4e36-b3d4-c8f7e7ab3256",
                             WorkingHoursId = (byte)2
                         },
                         new
@@ -362,6 +374,7 @@ namespace Joobie.Migrations
                             CategoryId = (byte)16,
                             Name = "Azure DevOps",
                             TypeOfContractId = (byte)1,
+                            UserId = "31d98481-9339-4e36-b3d4-c8f7e7ab3256",
                             WorkingHoursId = (byte)3
                         });
                 });
@@ -665,7 +678,7 @@ namespace Joobie.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "31d98481-9339-4e36-b3d4-c8f7e7ab3206",
+                            Id = "31d98481-9339-4e36-b3d4-c8f7e7ab3256",
                             AccessFailedCount = 0,
                             ConcurrencyStamp = "e5fbd409-c106-4492-8ed1-deeb2da3a7af",
                             Email = "DefaultUser@gmail.com",
