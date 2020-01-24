@@ -22,7 +22,7 @@ namespace Joobie.Controllers
         // GET: Jobs
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Job.Include(j => j.ApplicationUser).Include(j => j.Category).Include(j => j.TypeOfContract).Include(j => j.WorkingHours);
+            var applicationDbContext = _context.Job.Include(j => j.ApplicationUser).Where(j=>j.ApplicationUser.Name!=null).Include(j => j.Category).Include(j => j.TypeOfContract).Include(j => j.WorkingHours);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -36,6 +36,7 @@ namespace Joobie.Controllers
 
             var job = await _context.Job
                 .Include(j => j.ApplicationUser)
+                .Where(j => j.ApplicationUser.Name != null)
                 .Include(j => j.Category)
                 .Include(j => j.TypeOfContract)
                 .Include(j => j.WorkingHours)
@@ -51,7 +52,7 @@ namespace Joobie.Controllers
         // GET: Jobs/Create
         public IActionResult Create()
         {
-            ViewData["UserId"] = new SelectList(_context.ApplicationUser, "Id", "Id");
+            ViewData["UserId"] = new SelectList(_context.ApplicationUser.Where(j => j.Name != null), "Id", "Name");
             ViewData["CategoryId"] = new SelectList(_context.Category, "Id", "Name");
             ViewData["TypeOfContractId"] = new SelectList(_context.TypeOfContract, "Id", "Name");
             ViewData["WorkingHoursId"] = new SelectList(_context.WorkingHours, "Id", "Name");
@@ -71,7 +72,7 @@ namespace Joobie.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UserId"] = new SelectList(_context.ApplicationUser, "Id", "Id", job.UserId);
+            ViewData["UserId"] = new SelectList(_context.ApplicationUser.Where(j => j.Name != null), "Id", "Name", job.UserId);
             ViewData["CategoryId"] = new SelectList(_context.Category, "Id", "Name", job.CategoryId);
             ViewData["TypeOfContractId"] = new SelectList(_context.TypeOfContract, "Id", "Name", job.TypeOfContractId);
             ViewData["WorkingHoursId"] = new SelectList(_context.WorkingHours, "Id", "Name", job.WorkingHoursId);
@@ -91,7 +92,7 @@ namespace Joobie.Controllers
             {
                 return NotFound();
             }
-            ViewData["UserId"] = new SelectList(_context.ApplicationUser, "Id", "Id", job.UserId);
+            ViewData["UserId"] = new SelectList(_context.ApplicationUser.Where(j => j.Name != null), "Id", "Name", job.UserId);
             ViewData["CategoryId"] = new SelectList(_context.Category, "Id", "Name", job.CategoryId);
             ViewData["TypeOfContractId"] = new SelectList(_context.TypeOfContract, "Id", "Name", job.TypeOfContractId);
             ViewData["WorkingHoursId"] = new SelectList(_context.WorkingHours, "Id", "Name", job.WorkingHoursId);
@@ -130,7 +131,7 @@ namespace Joobie.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UserId"] = new SelectList(_context.ApplicationUser, "Id", "Id", job.UserId);
+            ViewData["UserId"] = new SelectList(_context.ApplicationUser.Where(j => j.Name != null), "Id", "Name", job.UserId);
             ViewData["CategoryId"] = new SelectList(_context.Category, "Id", "Name", job.CategoryId);
             ViewData["TypeOfContractId"] = new SelectList(_context.TypeOfContract, "Id", "Name", job.TypeOfContractId);
             ViewData["WorkingHoursId"] = new SelectList(_context.WorkingHours, "Id", "Name", job.WorkingHoursId);

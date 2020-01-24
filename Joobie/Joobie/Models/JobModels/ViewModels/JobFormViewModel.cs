@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Joobie.Models.JobModels
+namespace Joobie.Models.JobModels.ViewModels
 {
     public class JobFormViewModel
     {
@@ -11,5 +11,6 @@ namespace Joobie.Models.JobModels
         public IEnumerable<Category> Categories { get; set; }
         public IEnumerable<TypeOfContract> TypesOfContract { get; set; }
         public IEnumerable<WorkingHours> WorkingHours { get; set; }
+        public IEnumerable<ApplicationUser> ApplicationUser { get; set; }
     }
 }

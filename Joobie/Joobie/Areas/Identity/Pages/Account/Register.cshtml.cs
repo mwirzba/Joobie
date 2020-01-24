@@ -62,7 +62,7 @@ namespace Joobie.Areas.Identity.Pages.Account
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
 
-            [Required]
+            
             [Display(Name = "Nazwa Firmy")]
             public string Name { get; set; }
             public string Nip { get; set; }

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Joobie.Migrations
 {
-    public partial class Initial : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -39,7 +39,10 @@ namespace Joobie.Migrations
                     TwoFactorEnabled = table.Column<bool>(nullable: false),
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
-                    AccessFailedCount = table.Column<int>(nullable: false)
+                    AccessFailedCount = table.Column<int>(nullable: false),
+                    Discriminator = table.Column<string>(nullable: false),
+                    Name = table.Column<string>(nullable: true),
+                    Nip = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -56,19 +59,6 @@ namespace Joobie.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Category", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Company",
-                columns: table => new
-                {
-                    Id = table.Column<long>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Company", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -216,7 +206,7 @@ namespace Joobie.Migrations
                     CategoryId = table.Column<byte>(nullable: false),
                     TypeOfContractId = table.Column<byte>(nullable: false),
                     WorkingHoursId = table.Column<byte>(nullable: false),
-                    CompanyId = table.Column<long>(nullable: false)
+                    UserId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -228,17 +218,17 @@ namespace Joobie.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Job_Company_CompanyId",
-                        column: x => x.CompanyId,
-                        principalTable: "Company",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
                         name: "FK_Job_TypeOfContract_TypeOfContractId",
                         column: x => x.TypeOfContractId,
                         principalTable: "TypeOfContract",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Job_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Job_WorkingHours_WorkingHoursId",
                         column: x => x.WorkingHoursId,
@@ -248,63 +238,50 @@ namespace Joobie.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "AspNetUsers",
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Discriminator", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName", "Name", "Nip" },
+                values: new object[] { "31d98481-9339-4e36-b3d4-c8f7e7ab3206", 0, "e5fbd409-c106-4492-8ed1-deeb2da3a7af", "ApplicationUser", "DefaultUser@gmail.com", false, true, null, null, "DEFAULTUSER@GMAIL.COM", "AQAAAAEAACcQAAAAEKQK0227340I7E9mRrWOJJwBpOyDx6zuZ9iN06nmNGJZkEyHl7ZZdBgxhtulSzn69Q==", null, false, "PBSCMSVSUTGUUIVILSKHSXF2HIQ2OXW6", false, "DefaultUser@gmail.com", "DefaultCompany", "DefaultNip" });
+
+            migrationBuilder.InsertData(
                 table: "Category",
                 columns: new[] { "Id", "Name" },
                 values: new object[,]
                 {
-                    { (byte)1, "Administracja biurowa" },
+                    { (byte)20, "Nieruchomości" },
                     { (byte)21, "Obsługa klienta" },
-                    { (byte)22, "Praca fizyczna" },
                     { (byte)23, "Prawo" },
                     { (byte)24, "Produkcja" },
                     { (byte)25, "Public Relations" },
                     { (byte)26, "Reklama / Grafika / Kreacja / Fotografia" },
-                    { (byte)20, "Nieruchomości" },
                     { (byte)27, "Sektor publiczny" },
+                    { (byte)28, "Sprzedaż" },
+                    { (byte)29, "Transport / Spedycja" },
                     { (byte)30, "Ubezpieczenia" },
                     { (byte)31, "Zakupy" },
                     { (byte)32, "Kontrola jakości" },
                     { (byte)33, "Zdrowie / Uroda / Rekreacja" },
                     { (byte)34, "Energetyka" },
                     { (byte)35, "Inne" },
-                    { (byte)29, "Transport / Spedycja" },
                     { (byte)19, "Media / Sztuka / Rozrywka" },
-                    { (byte)28, "Sprzedaż" },
-                    { (byte)17, "Łańcuch dostaw" },
                     { (byte)18, "Marketing" },
+                    { (byte)22, "Praca fizyczna" },
+                    { (byte)16, "IT - Rozwój oprogramowania" },
+                    { (byte)1, "Administracja biurowa" },
                     { (byte)2, "Doradztwo / Konsulting" },
                     { (byte)3, "Badania i rozwój" },
                     { (byte)4, "Bankowość" },
-                    { (byte)5, "BHP / Ochrona środowiska" },
+                    { (byte)17, "Łańcuch dostaw" },
                     { (byte)6, "Budownictwo" },
                     { (byte)7, "Call Center" },
                     { (byte)8, "Edukacja / Szkolenia" },
+                    { (byte)5, "BHP / Ochrona środowiska" },
                     { (byte)10, "Franczyzna / Własny biznes" },
                     { (byte)11, "Hotelarstwo / Gastronomia / Turystyka" },
                     { (byte)12, "Human Resources / Zasoby ludzkie" },
                     { (byte)13, "Internet / e-Commerce / Nowe media" },
                     { (byte)14, "Inżynieria" },
                     { (byte)15, "IT - Administracja" },
-                    { (byte)16, "IT - Rozwój oprogramowania" },
                     { (byte)9, "Finanse / Ekonomia" }
-                });
-
-            migrationBuilder.InsertData(
-                table: "Company",
-                columns: new[] { "Id", "Name" },
-                values: new object[,]
-                {
-                    { 11L, "Nokia Networks" },
-                    { 8L, "Tronel Sp. z o.o." },
-                    { 10L, "OPONEO.PL S.A." },
-                    { 9L, "PwC" },
-                    { 7L, "Ericsson" },
-                    { 2L, "Solvit" },
-                    { 5L, "CBG International Sp. z o.o." },
-                    { 4L, "EcoVadis Polska Sp. z o. o." },
-                    { 3L, "Capgemini Software Solutions Center" },
-                    { 1L, "IHS Markit" },
-                    { 6L, "ING Tech Poland" }
                 });
 
             migrationBuilder.InsertData(
@@ -332,22 +309,22 @@ namespace Joobie.Migrations
 
             migrationBuilder.InsertData(
                 table: "Job",
-                columns: new[] { "Id", "AddedDate", "CategoryId", "CompanyId", "Description", "ExpirationDate", "Localization", "Name", "Salary", "TypeOfContractId", "WorkingHoursId" },
+                columns: new[] { "Id", "AddedDate", "CategoryId", "Description", "ExpirationDate", "Localization", "Name", "Salary", "TypeOfContractId", "UserId", "WorkingHoursId" },
                 values: new object[,]
                 {
-                    { 1L, null, (byte)16, 1L, null, null, null, ".NET Developer", null, (byte)1, (byte)1 },
-                    { 3L, null, (byte)1, 2L, null, null, null, "Senior .NET Developer", null, (byte)1, (byte)1 },
-                    { 4L, null, (byte)16, 3L, null, null, null, "Starszy Inżynier Oprogramowania .NET", null, (byte)1, (byte)1 },
-                    { 6L, null, (byte)16, 5L, null, null, null, "C# .Net developer", null, (byte)3, (byte)1 },
-                    { 7L, null, (byte)15, 6L, null, null, null, ".NET Developer", null, (byte)5, (byte)1 },
-                    { 8L, null, (byte)12, 7L, null, null, null, ".NET Developer", null, (byte)3, (byte)1 },
-                    { 11L, null, (byte)15, 9L, null, null, null, "Programista .NET", null, (byte)5, (byte)1 },
-                    { 2L, null, (byte)1, 2L, null, null, null, "Junior .NET Developer", null, (byte)1, (byte)2 },
-                    { 12L, null, (byte)16, 10L, null, null, null, "Junior .NET Developer", null, (byte)5, (byte)2 },
-                    { 5L, null, (byte)16, 2L, null, null, null, "Programista .NET", null, (byte)1, (byte)3 },
-                    { 9L, null, (byte)13, 8L, null, null, null, "Software Engineer C#", null, (byte)3, (byte)3 },
-                    { 10L, null, (byte)11, 7L, null, null, null, "Quality Assurance", null, (byte)1, (byte)3 },
-                    { 13L, null, (byte)16, 11L, null, null, null, "Azure DevOps", null, (byte)1, (byte)3 }
+                    { 1L, null, (byte)16, null, null, null, ".NET Developer", null, (byte)1, null, (byte)1 },
+                    { 3L, null, (byte)1, null, null, null, "Senior .NET Developer", null, (byte)1, null, (byte)1 },
+                    { 4L, null, (byte)16, null, null, null, "Starszy Inżynier Oprogramowania .NET", null, (byte)1, null, (byte)1 },
+                    { 6L, null, (byte)16, null, null, null, "C# .Net developer", null, (byte)3, null, (byte)1 },
+                    { 7L, null, (byte)15, null, null, null, ".NET Developer", null, (byte)5, null, (byte)1 },
+                    { 8L, null, (byte)12, null, null, null, ".NET Developer", null, (byte)3, null, (byte)1 },
+                    { 11L, null, (byte)15, null, null, null, "Programista .NET", null, (byte)5, null, (byte)1 },
+                    { 2L, null, (byte)1, null, null, null, "Junior .NET Developer", null, (byte)1, null, (byte)2 },
+                    { 12L, null, (byte)16, null, null, null, "Junior .NET Developer", null, (byte)5, null, (byte)2 },
+                    { 5L, null, (byte)16, null, null, null, "Programista .NET", null, (byte)1, null, (byte)3 },
+                    { 9L, null, (byte)13, null, null, null, "Software Engineer C#", null, (byte)3, null, (byte)3 },
+                    { 10L, null, (byte)11, null, null, null, "Quality Assurance", null, (byte)1, null, (byte)3 },
+                    { 13L, null, (byte)16, null, null, null, "Azure DevOps", null, (byte)1, null, (byte)3 }
                 });
 
             migrationBuilder.CreateIndex(
@@ -395,14 +372,14 @@ namespace Joobie.Migrations
                 column: "CategoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Job_CompanyId",
-                table: "Job",
-                column: "CompanyId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Job_TypeOfContractId",
                 table: "Job",
                 column: "TypeOfContractId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Job_UserId",
+                table: "Job",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Job_WorkingHoursId",
@@ -434,16 +411,13 @@ namespace Joobie.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
                 name: "Category");
 
             migrationBuilder.DropTable(
-                name: "Company");
+                name: "TypeOfContract");
 
             migrationBuilder.DropTable(
-                name: "TypeOfContract");
+                name: "AspNetUsers");
 
             migrationBuilder.DropTable(
                 name: "WorkingHours");

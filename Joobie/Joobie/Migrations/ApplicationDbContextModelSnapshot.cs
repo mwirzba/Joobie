@@ -657,9 +657,29 @@ namespace Joobie.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Nip")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasDiscriminator().HasValue("ApplicationUser");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "31d98481-9339-4e36-b3d4-c8f7e7ab3206",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "e5fbd409-c106-4492-8ed1-deeb2da3a7af",
+                            Email = "DefaultUser@gmail.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = true,
+                            NormalizedUserName = "DEFAULTUSER@GMAIL.COM",
+                            PasswordHash = "AQAAAAEAACcQAAAAEKQK0227340I7E9mRrWOJJwBpOyDx6zuZ9iN06nmNGJZkEyHl7ZZdBgxhtulSzn69Q==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "PBSCMSVSUTGUUIVILSKHSXF2HIQ2OXW6",
+                            TwoFactorEnabled = false,
+                            UserName = "DefaultUser@gmail.com",
+                            Name = "DefaultCompany",
+                            Nip = "DefaultNip"
+                        });
                 });
 
             modelBuilder.Entity("Joobie.Models.JobModels.Job", b =>

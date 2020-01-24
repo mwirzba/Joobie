@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Joobie.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200124091409_todo45")]
-    partial class todo45
+    [Migration("20200124111628_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -243,6 +243,9 @@ namespace Joobie.Migrations
                     b.Property<byte>("TypeOfContractId")
                         .HasColumnType("tinyint");
 
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<byte>("WorkingHoursId")
                         .HasColumnType("tinyint");
 
@@ -251,6 +254,8 @@ namespace Joobie.Migrations
                     b.HasIndex("CategoryId");
 
                     b.HasIndex("TypeOfContractId");
+
+                    b.HasIndex("UserId");
 
                     b.HasIndex("WorkingHoursId");
 
@@ -654,9 +659,29 @@ namespace Joobie.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Nip")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasDiscriminator().HasValue("ApplicationUser");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "31d98481-9339-4e36-b3d4-c8f7e7ab3206",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "e5fbd409-c106-4492-8ed1-deeb2da3a7af",
+                            Email = "DefaultUser@gmail.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = true,
+                            NormalizedUserName = "DEFAULTUSER@GMAIL.COM",
+                            PasswordHash = "AQAAAAEAACcQAAAAEKQK0227340I7E9mRrWOJJwBpOyDx6zuZ9iN06nmNGJZkEyHl7ZZdBgxhtulSzn69Q==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "PBSCMSVSUTGUUIVILSKHSXF2HIQ2OXW6",
+                            TwoFactorEnabled = false,
+                            UserName = "DefaultUser@gmail.com",
+                            Name = "DefaultCompany",
+                            Nip = "DefaultNip"
+                        });
                 });
 
             modelBuilder.Entity("Joobie.Models.JobModels.Job", b =>
@@ -672,6 +697,10 @@ namespace Joobie.Migrations
                         .HasForeignKey("TypeOfContractId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("Joobie.Models.JobModels.ApplicationUser", "ApplicationUser")
+                        .WithMany()
+                        .HasForeignKey("UserId");
 
                     b.HasOne("Joobie.Models.JobModels.WorkingHours", "WorkingHours")
                         .WithMany()
