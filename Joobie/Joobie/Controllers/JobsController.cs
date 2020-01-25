@@ -1,6 +1,8 @@
 ﻿using Joobie.Data;
+using Joobie.Infrastructure;
 using Joobie.Models.JobModels;
 using Joobie.Utility;
+using Joobie.ViewModels;
 using LinqKit;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -14,32 +16,73 @@ namespace Joobie.Controllers
     public class JobsController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly SearchStringSession _searchStringSession;
+        private static byte _pageSize = 5; 
 
-        public JobsController(ApplicationDbContext context)
+        public JobsController(ApplicationDbContext context, SearchStringSession searchStringSession)
         {
             _context = context;
+            _searchStringSession = searchStringSession;
         }
 
         // GET: Jobs
-        public async Task<IActionResult> Index(string searchString, string citySearchString, int[] categories, int[] typesOfContracts, int[] workingHours)
+        public async Task<IActionResult> Index(SearchSettingViewModel searchSettingViewModel,int page=1)
         {
-            IEnumerable<Job> jobs = await GetSortedAndFilteredJobListAsync(searchString, citySearchString, new List<int>(categories),
-                new List<int>(typesOfContracts), new List<int>(workingHours));
+           
+            if (searchSettingViewModel.WorkingHour.Length == 0 && searchSettingViewModel.TypesOfContracts.Length == 0 &&
+                searchSettingViewModel.Categories.Length == 0 && searchSettingViewModel.SearchString == "" && searchSettingViewModel.CitySearchString == "")
+            {
+                if (_searchStringSession.searchSetting == null)
+                {
+                    searchSettingViewModel = await SetSearchSettingViewModel();
+                    _searchStringSession.SetSearch(searchSettingViewModel);
+                }
+            }
+            else
+            {
+                _searchStringSession.SetSearch(searchSettingViewModel);
+            }
 
-            ViewData["Categories"] = _context.Category;
-            ViewData["TypesOfContracts"] = _context.TypeOfContract;
-            ViewData["WorkingHours"] = _context.WorkingHours;
+            searchSettingViewModel = _searchStringSession.searchSetting;
+
+            var jobs = await GetSortedAndFilteredJobListAsync(searchSettingViewModel);
+            int totalJobs = jobs.Count();
+
+            jobs = jobs.OrderBy(c => c.AddedDate)
+                       .Skip((page - 1) * _pageSize)
+                       .Take(_pageSize)
+                       .ToList();
+
+            ViewData["searchSettingViewModel"] = searchSettingViewModel;
+
+            var viewModel = new ListViewModel<Job>
+            {
+                //searchStringSession = _searchStringSession,
+                Items = jobs,
+                PagingInfo = new PagingInfo
+                {
+                    CurrentPage = (byte)page,
+                    ItemsPerPage = _pageSize,
+                    TotalItems = (byte)totalJobs
+                }
+            };
+
+            return View(viewModel);
+
 
             if (User.IsInRole(Strings.AdminUser))
-            {
-               
-                return View(jobs);
+            {          
+                return View(viewModel);
             }
          
-            return View("ReadOnlyList",jobs);
+            return View("ReadOnlyList", viewModel);
         }
 
-       
+        public IActionResult ResetSearch()
+        {
+            _searchStringSession.SetSearch(null);
+            return RedirectToAction(nameof(Index));
+        }
 
         public async Task<IActionResult> Details(long? id)
         {
@@ -55,6 +98,7 @@ namespace Joobie.Controllers
                 .Include(j => j.TypeOfContract)
                 .Include(j => j.WorkingHours)
                 .FirstOrDefaultAsync(m => m.Id == id);
+
             if (job == null)
             {
                 return NotFound();
@@ -186,41 +230,88 @@ namespace Joobie.Controllers
         }
 
 
-        private async  Task<IEnumerable<Job>> GetSortedAndFilteredJobListAsync(string jobNameSearchString, string citySearchString,
-            List<int> categories, List<int> typesOfContracts, List<int> workingHours)
+        private async  Task<IEnumerable<Job>> GetSortedAndFilteredJobListAsync(SearchSettingViewModel searchSettingViewModel)
         {
             var predicate = PredicateBuilder.New<Job>();
             predicate.DefaultExpression = j => true;
-            if (!string.IsNullOrEmpty(jobNameSearchString))
+            if (!string.IsNullOrEmpty(searchSettingViewModel.SearchString))
             {
-                predicate = predicate.And(j => j.Name.Contains(jobNameSearchString));
+                predicate = predicate.And(j => j.Name.Contains(searchSettingViewModel.SearchString));
             }
-            if (!string.IsNullOrEmpty(citySearchString))
+            if (!string.IsNullOrEmpty(searchSettingViewModel.CitySearchString))
             {
-                predicate = predicate.And(j => j.Localization.Contains(citySearchString));
+                predicate = predicate.And(j => j.Localization.Contains(searchSettingViewModel.CitySearchString));
             }
-            if (categories.Count > 0)
+            if (searchSettingViewModel.Categories.Any(c=>c.Selected==true))
             {
-                predicate = predicate.And(j => categories.Contains(j.CategoryId));
+                List<int> catIds = new List<int>();
+                for (int i = 0; i < searchSettingViewModel.Categories.Length; i++)
+                {
+                    if(searchSettingViewModel.Categories[i].Selected ==true)
+                        catIds.Add(searchSettingViewModel.Categories[i].Id);
+                }
+                if (catIds.Any())
+                    predicate = predicate.And(j => catIds.Contains(j.CategoryId));
             }
-            if (typesOfContracts.Count > 0)
+            if (searchSettingViewModel.TypesOfContracts.Any(c => c.Selected == true))
             {
-                predicate = predicate.And(j => typesOfContracts.Contains(j.TypeOfContractId));
+                List<int> typesIds = new List<int>();
+                for (int i = 0; i < searchSettingViewModel.TypesOfContracts.Length; i++)
+                {
+                    if (searchSettingViewModel.TypesOfContracts[i].Selected == true)
+                        typesIds.Add(searchSettingViewModel.TypesOfContracts[i].Id);
+                }
+                if (typesIds.Any())
+                    predicate = predicate.And(j => typesIds.Contains(j.TypeOfContractId));
             }
-            if (workingHours.Count > 0)
+            if (searchSettingViewModel.WorkingHour.Any(c => c.Selected == true))
             {
-                predicate = predicate.And(j => workingHours.Contains(j.WorkingHoursId));
+                List<int> workingHoursIds = new List<int>();
+                for (int i = 0; i < searchSettingViewModel.WorkingHour.Length; i++)
+                {
+                    if (searchSettingViewModel.WorkingHour[i].Selected == true)
+                        workingHoursIds.Add(searchSettingViewModel.WorkingHour[i].Id);
+                }
+                if (workingHoursIds.Any())
+                    predicate = predicate.And(j => workingHoursIds.Contains(j.WorkingHoursId));
             }
             predicate = predicate.And(j => j.ApplicationUser.Name != null);
 
             var jobs = await _context.Job.Where(predicate)
-                                .Where(j => j.ApplicationUser.Name != null)
                                  .Include(j => j.Category)
                                  .Include(j => j.TypeOfContract)
                                  .Include(j => j.WorkingHours)
                                  .Include(j => j.ApplicationUser)
                                  .ToListAsync();
             return jobs;
+        }
+
+        private async Task<SearchSettingViewModel> SetSearchSettingViewModel()
+        {
+            var categories = await _context.Category.ToListAsync();
+            var workingHours = await  _context.WorkingHours.ToListAsync();
+            var typesOfContracts = await  _context.TypeOfContract.ToListAsync();
+
+            var searchSettingViewModel = new SearchSettingViewModel { Categories = new Filter[categories.Count],
+                TypesOfContracts = new Filter[typesOfContracts.Count], WorkingHour = new Filter[workingHours.Count] };
+
+            for(int i = 0; i < categories.Count; i++)
+            {
+                searchSettingViewModel.Categories[i] =
+                    new Filter { Id = categories[i].Id, Name = categories[i].Name, Selected = false };
+            }
+            for (int i = 0; i < workingHours.Count; i++)
+            {
+                searchSettingViewModel.WorkingHour[i] = 
+                    new Filter { Id = workingHours[i].Id, Name = workingHours[i].Name, Selected = false };
+            }
+            for (int i = 0; i < typesOfContracts.Count; i++)
+            {
+                searchSettingViewModel.TypesOfContracts[i] =
+                    new Filter { Id = typesOfContracts[i].Id, Name = typesOfContracts[i].Name, Selected = false };
+            }
+
+            return searchSettingViewModel;
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Joobie.Data;
+using Joobie.Infrastructure;
 using Joobie.Models.JobModels;
 using Joobie.Services;
 
@@ -60,6 +61,8 @@ namespace Joobie
 
 
             services.AddRazorPages();
+            services.AddScoped(SearchStringSession.GetSession);
+            services.AddSession();
 
             services.ConfigureApplicationCookie(options =>
 
@@ -86,6 +89,7 @@ namespace Joobie
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseSession();
 
             app.UseRouting();
 

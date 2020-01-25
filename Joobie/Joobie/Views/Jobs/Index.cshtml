@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Joobie.Models.JobModels.Job>
+﻿@model Joobie.ViewModels.ListViewModel<Joobie.Models.JobModels.Job>
 
 @{
     ViewData["Title"] = "Index";
@@ -6,7 +6,7 @@
 }
 
 
-<partial name="~/Views/Jobs/Search.cshtml" />
+<partial name="~/Views/Jobs/Search.cshtml" model=@ViewData["searchSettingViewModel"] />
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -15,40 +15,40 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                Name
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Description)
+                Description
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Localization)
+               Localization
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.AddedDate)
+               AddedDate
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ExpirationDate)
+               ExpirationDate
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Salary)
+                Salary
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Category)
+                Category
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.TypeOfContract)
+                TypeOfContract
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.WorkingHours)
+                WorkingHours
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ApplicationUser)
+                Company
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
+        @foreach (var item in Model.Items)
         {
             <tr>
                 <td>
@@ -90,6 +90,13 @@
         }
     </tbody>
 </table>
+
+
+<div page-model="@Model.PagingInfo" page-classes-enabled="true"
+     page-class="btn" page-class-normal="btn-secondary"
+     page-class-selected="btn-primary"
+     class="btn-group pull m-1">
+</div>
 
 
 
