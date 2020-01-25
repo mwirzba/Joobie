@@ -44,11 +44,15 @@
             </div>
         </div>
         <div class="form-group">
-
+            <p>
+                <a id="forgot-password" asp-page="./ForgotPassword">Zapomniałeś hasła?</a>
+            </p>
             <p>
                 <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Zarejestruj się</a>
             </p>
-
+            <p>
+                <button type="submit" asp-page-handler="SendVerificationEmail" class="btn-link" style="padding:0px;margin:0px;border:0px">Wyślij ponownie e-mail weryfikacyjny</button>
+            </p>
         </div>
     </div>
 </form>
