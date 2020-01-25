@@ -51,24 +51,26 @@ namespace Joobie.Areas.Identity.Pages.Account
         public class InputModel
         {
             [Required]
-            [EmailAddress]
+            [EmailAddress(ErrorMessage = "Zły format adresu email")]
             [Display(Name = "Email")]
             public string Email { get; set; }
 
             [Required]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            [StringLength(100, ErrorMessage = "{0} musi mieć co najmniej {2} znaków i maksymanie {1} znaków", MinimumLength = 6)]
             [DataType(DataType.Password)]
-            [Display(Name = "Password")]
+            [Display(Name = "Hasło")]
             public string Password { get; set; }
 
             [DataType(DataType.Password)]
-            [Display(Name = "Confirm password")]
-            [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+            [Display(Name = "Potwierdź Hasło")]
+            [Compare("Password", ErrorMessage = "Hasla muszą się zgadzać")]
             public string ConfirmPassword { get; set; }
 
             
             [Display(Name = "Nazwa Firmy")]
             public string Name { get; set; }
+
+            [Display(Name = "Nip")]
             public string Nip { get; set; }
 
         }
@@ -81,6 +83,7 @@ namespace Joobie.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
+            string role = Request.Form["rdUserRole"].ToString();
 
             returnUrl = returnUrl ?? Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
@@ -114,24 +117,38 @@ namespace Joobie.Areas.Identity.Pages.Account
                         await _roleManager.CreateAsync(new IdentityRole(Strings.CompanyUser));
                     }
 
-                    if (Input.Name == null && Input.Nip==null)
+                    if (role == Strings.AdminUser)
+                    {
+                        await _userManager.AddToRoleAsync(user, Strings.AdminUser);
+                    }
+                    else if (role == Strings.ModeratorUser)
+                    {
+                        await _userManager.AddToRoleAsync(user, Strings.ModeratorUser);
+                    }
+                    else if (role == Strings.EmployeeUser)
                     {
                         await _userManager.AddToRoleAsync(user, Strings.EmployeeUser);
                     }
-                    else 
+                    else if (role == Strings.CompanyUser)
                     {
                         await _userManager.AddToRoleAsync(user, Strings.CompanyUser);
                     }
-
-                    if (_userManager.Options.SignIn.RequireConfirmedAccount)
-                    {
-                        return RedirectToPage("RegisterConfirmation", new { email = Input.Email });
-                    }
                     else
                     {
+                        if (Input.Name == null && Input.Nip == null)
+                        {
+                            await _userManager.AddToRoleAsync(user, Strings.EmployeeUser);
+                        }
+                        else
+                        {
+                            await _userManager.AddToRoleAsync(user, Strings.CompanyUser);
+                        }
                         await _signInManager.SignInAsync(user, isPersistent: false);
                         return LocalRedirect(returnUrl);
                     }
+
+                    return RedirectToAction("Index", "User");
+
                 }
                 foreach (var error in result.Errors)
                 {

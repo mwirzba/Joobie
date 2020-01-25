@@ -62,4 +62,9 @@
     </PackageReference>
   </ItemGroup>
 
+
+  <ItemGroup>
+    <Folder Include="Views\User\" />
+  </ItemGroup>
+
 </Project>
