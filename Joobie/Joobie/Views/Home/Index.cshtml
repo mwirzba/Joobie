@@ -1,9 +1,102 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model Joobie.ViewModels.ListViewModel<Joobie.Models.JobModels.Job>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+
+<partial name="~/Views/Jobs/Search.cshtml" model=@ViewData["searchSettingViewModel"] />
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Description
+            </th>
+            <th>
+                Localization
+            </th>
+            <th>
+                AddedDate
+            </th>
+            <th>
+                ExpirationDate
+            </th>
+            <th>
+                Salary
+            </th>
+            <th>
+                Category
+            </th>
+            <th>
+                TypeOfContract
+            </th>
+            <th>
+                WorkingHours
+            </th>
+            <th>
+                Company
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Items)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Localization)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AddedDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ExpirationDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Salary)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TypeOfContract.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.WorkingHours.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ApplicationUser.Name)
+                </td>
+                <td>
+                    <a asp-action="Apply" asp-route-id="@item.Id">Aplikuj</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> 
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+<div page-model="@Model.PagingInfo" page-classes-enabled="true"
+     page-class="btn" page-class-normal="btn-secondary"
+     page-class-selected="btn-primary"
+     class="btn-group pull m-1">
 </div>
+
+
+
 

@@ -5,6 +5,25 @@
     <UserSecretsId>aspnet-Joobie-5378F9BB-C52D-4B76-8963-A918B5B31E8D</UserSecretsId>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Migrations\20200125182752_mig.cs" />
+    <Compile Remove="Migrations\20200125182752_mig.Designer.cs" />
+    <Compile Remove="Migrations\20200125183400_mig.cs" />
+    <Compile Remove="Migrations\20200125183400_mig.Designer.cs" />
+    <Compile Remove="Migrations\20200125184538_mig.cs" />
+    <Compile Remove="Migrations\20200125184538_mig.Designer.cs" />
+    <Compile Remove="Migrations\20200125184803_mig.cs" />
+    <Compile Remove="Migrations\20200125184803_mig.Designer.cs" />
+    <Compile Remove="Migrations\20200125184838_mig.cs" />
+    <Compile Remove="Migrations\20200125184838_mig.Designer.cs" />
+    <Compile Remove="Migrations\20200125210549_mig2.cs" />
+    <Compile Remove="Migrations\20200125210549_mig2.Designer.cs" />
+    <Compile Remove="Migrations\20200125210958_Cv.cs" />
+    <Compile Remove="Migrations\20200125210958_Cv.Designer.cs" />
+    <Compile Remove="Migrations\20200125215702_mig23.cs" />
+    <Compile Remove="Migrations\20200125215702_mig23.Designer.cs" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="LinqKit" Version="1.1.17" />

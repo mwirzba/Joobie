@@ -19,6 +19,13 @@ namespace Joobie.Models.JobModels
         public string Name { get; set; }
 
 
+        public Boolean isActive
+        {
+            get;
+            set;
+        } = true;
+
+
         [Display(Name = "Opis")]
         public string Description { get; set; }
 
@@ -70,6 +77,8 @@ namespace Joobie.Models.JobModels
         [ForeignKey("UserId")]
         [Display(Name = "Firma")]
         public virtual ApplicationUser ApplicationUser { get; set; }
+
+        public ICollection<CVJobApplicationUser> CVJobApplicationUser { get; } = new List<CVJobApplicationUser>();
 
     }
 }

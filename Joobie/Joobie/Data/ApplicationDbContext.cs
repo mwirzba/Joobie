@@ -20,11 +20,18 @@ namespace Joobie.Data
         public DbSet<TypeOfContract> TypeOfContract { get; set; }
         public DbSet<WorkingHours> WorkingHours { get; set; }
 
+        
         public DbSet<ApplicationUser> ApplicationUser { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<CVJobApplicationUser>()
+        .HasKey(t => new { t.ApplicationUserId, t.JobsId });
+
             modelBuilder.Entity<ApplicationUser>().HasData(
                 new ApplicationUser { Id= "31d98481-9339-4e36-b3d4-c8f7e7ab3256", UserName = "DefaultUser@gmail.com", NormalizedUserName = "DEFAULTUSER@GMAIL.COM", Email = "DefaultUser@gmail.com", EmailConfirmed = false, PasswordHash = "AQAAAAEAACcQAAAAEKQK0227340I7E9mRrWOJJwBpOyDx6zuZ9iN06nmNGJZkEyHl7ZZdBgxhtulSzn69Q==", SecurityStamp = "PBSCMSVSUTGUUIVILSKHSXF2HIQ2OXW6", ConcurrencyStamp = "e5fbd409-c106-4492-8ed1-deeb2da3a7af", Name = "DefaultCompany", Nip = "DefaultNip", LockoutEnabled = true }
                 );
@@ -97,5 +104,8 @@ namespace Joobie.Data
     new Job { Id = 13, Name = "Azure DevOps", TypeOfContractId = 1, WorkingHoursId = 3, CategoryId = 16, UserId = "31d98481-9339-4e36-b3d4-c8f7e7ab3256" }
 );
         }
+
+
+        public DbSet<Joobie.Models.JobModels.CVJobApplicationUser> CVJobApplicationUser { get; set; }
     }
 }

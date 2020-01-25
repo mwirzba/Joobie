@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29509.3
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Joobie", "Joobie\Joobie.csproj", "{5F29D126-E61E-441F-9131-F4E6AA69A04B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Joobie", "Joobie\Joobie.csproj", "{5F29D126-E61E-441F-9131-F4E6AA69A04B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

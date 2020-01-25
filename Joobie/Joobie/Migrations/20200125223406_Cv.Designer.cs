@@ -4,14 +4,16 @@ using Joobie.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Joobie.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200125223406_Cv")]
+    partial class Cv
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -277,9 +279,6 @@ namespace Joobie.Migrations
                     b.Property<byte>("WorkingHoursId")
                         .HasColumnType("tinyint");
 
-                    b.Property<bool>("isActive")
-                        .HasColumnType("bit");
-
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
@@ -300,8 +299,7 @@ namespace Joobie.Migrations
                             Name = ".NET Developer",
                             TypeOfContractId = (byte)1,
                             UserId = "31d98481-9339-4e36-b3d4-c8f7e7ab3256",
-                            WorkingHoursId = (byte)1,
-                            isActive = true
+                            WorkingHoursId = (byte)1
                         },
                         new
                         {
@@ -310,8 +308,7 @@ namespace Joobie.Migrations
                             Name = "Junior .NET Developer",
                             TypeOfContractId = (byte)1,
                             UserId = "31d98481-9339-4e36-b3d4-c8f7e7ab3256",
-                            WorkingHoursId = (byte)2,
-                            isActive = true
+                            WorkingHoursId = (byte)2
                         },
                         new
                         {
@@ -320,8 +317,7 @@ namespace Joobie.Migrations
                             Name = "Senior .NET Developer",
                             TypeOfContractId = (byte)1,
                             UserId = "31d98481-9339-4e36-b3d4-c8f7e7ab3256",
-                            WorkingHoursId = (byte)1,
-                            isActive = true
+                            WorkingHoursId = (byte)1
                         },
                         new
                         {
@@ -330,8 +326,7 @@ namespace Joobie.Migrations
                             Name = "Starszy Inżynier Oprogramowania .NET",
                             TypeOfContractId = (byte)1,
                             UserId = "31d98481-9339-4e36-b3d4-c8f7e7ab3256",
-                            WorkingHoursId = (byte)1,
-                            isActive = true
+                            WorkingHoursId = (byte)1
                         },
                         new
                         {
@@ -340,8 +335,7 @@ namespace Joobie.Migrations
                             Name = "Programista .NET",
                             TypeOfContractId = (byte)1,
                             UserId = "31d98481-9339-4e36-b3d4-c8f7e7ab3256",
-                            WorkingHoursId = (byte)3,
-                            isActive = true
+                            WorkingHoursId = (byte)3
                         },
                         new
                         {
@@ -350,8 +344,7 @@ namespace Joobie.Migrations
                             Name = "C# .Net developer",
                             TypeOfContractId = (byte)3,
                             UserId = "31d98481-9339-4e36-b3d4-c8f7e7ab3256",
-                            WorkingHoursId = (byte)1,
-                            isActive = true
+                            WorkingHoursId = (byte)1
                         },
                         new
                         {
@@ -360,8 +353,7 @@ namespace Joobie.Migrations
                             Name = ".NET Developer",
                             TypeOfContractId = (byte)5,
                             UserId = "31d98481-9339-4e36-b3d4-c8f7e7ab3256",
-                            WorkingHoursId = (byte)1,
-                            isActive = true
+                            WorkingHoursId = (byte)1
                         },
                         new
                         {
@@ -370,8 +362,7 @@ namespace Joobie.Migrations
                             Name = ".NET Developer",
                             TypeOfContractId = (byte)3,
                             UserId = "31d98481-9339-4e36-b3d4-c8f7e7ab3256",
-                            WorkingHoursId = (byte)1,
-                            isActive = true
+                            WorkingHoursId = (byte)1
                         },
                         new
                         {
@@ -380,8 +371,7 @@ namespace Joobie.Migrations
                             Name = "Software Engineer C#",
                             TypeOfContractId = (byte)3,
                             UserId = "31d98481-9339-4e36-b3d4-c8f7e7ab3256",
-                            WorkingHoursId = (byte)3,
-                            isActive = true
+                            WorkingHoursId = (byte)3
                         },
                         new
                         {
@@ -390,8 +380,7 @@ namespace Joobie.Migrations
                             Name = "Quality Assurance",
                             TypeOfContractId = (byte)1,
                             UserId = "31d98481-9339-4e36-b3d4-c8f7e7ab3256",
-                            WorkingHoursId = (byte)3,
-                            isActive = true
+                            WorkingHoursId = (byte)3
                         },
                         new
                         {
@@ -400,8 +389,7 @@ namespace Joobie.Migrations
                             Name = "Programista .NET",
                             TypeOfContractId = (byte)5,
                             UserId = "31d98481-9339-4e36-b3d4-c8f7e7ab3256",
-                            WorkingHoursId = (byte)1,
-                            isActive = true
+                            WorkingHoursId = (byte)1
                         },
                         new
                         {
@@ -410,8 +398,7 @@ namespace Joobie.Migrations
                             Name = "Junior .NET Developer",
                             TypeOfContractId = (byte)5,
                             UserId = "31d98481-9339-4e36-b3d4-c8f7e7ab3256",
-                            WorkingHoursId = (byte)2,
-                            isActive = true
+                            WorkingHoursId = (byte)2
                         },
                         new
                         {
@@ -420,8 +407,7 @@ namespace Joobie.Migrations
                             Name = "Azure DevOps",
                             TypeOfContractId = (byte)1,
                             UserId = "31d98481-9339-4e36-b3d4-c8f7e7ab3256",
-                            WorkingHoursId = (byte)3,
-                            isActive = true
+                            WorkingHoursId = (byte)3
                         });
                 });
 
