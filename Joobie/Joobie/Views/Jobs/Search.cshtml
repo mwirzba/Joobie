@@ -1,0 +1,68 @@
+﻿
+@{
+    ViewData["Title"] = "Search";
+}
+
+<form asp-action="Index" method="get">
+    <div class="form-row">
+        <div class="col">
+            <input class="form-control" placeholder="Nazwa stanowiska" type="text" name="searchString" value="@ViewData["CurrentFilter"]" />
+        </div>
+        <div class="col">
+            <input class="form-control" placeholder="Nazwa miasta" type="text" name="citySearchString" value="@ViewData["CurrentCityFilter"]" />
+        </div>
+        <div class="col">
+            <input type="submit" value="Szukaj" class="btn btn-primary" />
+        </div>
+        <div class="col">
+            <button asp-action="Index" class="btn btn-secondary">Pokaz wszystko</button>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="col">
+            <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Kategorie</button>
+            <ul class="dropdown-menu">
+                @foreach (var item in @ViewData["Categories"] as IEnumerable<Joobie.Models.JobModels.Category>)
+                {
+                    <li>
+                        <div class="dropdown-item">
+                            <label>
+                                <input class="form-check-input" type="checkbox" name="categories" value="@item.Id"> @item.Name
+                            </label>
+                        </div>
+                    </li>
+                }
+            </ul>
+        </div>
+        <div class="col">
+            <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Rodzaj umowy</button>
+            <ul class="dropdown-menu">
+                @foreach (var item in @ViewData["TypesOfContracts"] as IEnumerable<Joobie.Models.JobModels.TypeOfContract>)
+                {
+                    <li>
+                        <div class="dropdown-item">
+                            <label>
+                                <input type="checkbox" name="typesOfContracts" value="@item.Id">@item.Name
+                            </label>
+                        </div>
+                    </li>
+                }
+            </ul>
+        </div>
+        <div class="col">
+            <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Wymiar pracy</button>
+            <ul class="dropdown-menu">
+                @foreach (var item in @ViewData["WorkingHours"] as IEnumerable<Joobie.Models.JobModels.WorkingHours>)
+                {
+                    <li>
+                        <div class="dropdown-item">
+                            <label>
+                                <input type="checkbox" name="workingHours" value="@item.Id">@item.Name
+                            </label>
+                        </div>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+</form>

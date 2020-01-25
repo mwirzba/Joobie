@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Joobie.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200125145456_initial")]
-    partial class initial
+    [Migration("20200125151653_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

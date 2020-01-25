@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Joobie.Data;
+using Joobie.Models.JobModels;
+using Joobie.Utility;
+using LinqKit;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Joobie.Data;
-using Joobie.Models.JobModels;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Joobie.Controllers
 {
@@ -20,13 +21,31 @@ namespace Joobie.Controllers
         }
 
         // GET: Jobs
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString, string citySearchString, int[] categories, int[] typesOfContracts, int[] workingHours)
         {
-            var applicationDbContext = _context.Job.Include(j => j.ApplicationUser).Where(j=>j.ApplicationUser.Name!=null).Include(j => j.Category).Include(j => j.TypeOfContract).Include(j => j.WorkingHours);
-            return View(await applicationDbContext.ToListAsync());
+            IEnumerable<Job> jobs;
+            ViewData["Categories"] = _context.Category;
+            ViewData["TypesOfContracts"] = _context.TypeOfContract;
+            ViewData["WorkingHours"] = _context.WorkingHours;
+
+            if (User.IsInRole(Strings.AdminUser))
+            {
+                jobs = await _context.Job.Include(j => j.ApplicationUser)
+                                  .Where(j => j.ApplicationUser.Name != null)
+                                  .Include(j => j.Category)
+                                  .Include(j => j.TypeOfContract)
+                                  .Include(j => j.WorkingHours)
+                                  .ToListAsync();
+                return View(jobs);
+            }
+            jobs = await GetSortedAndFilteredJobListAsync(searchString, citySearchString, new List<int>(categories),
+                new List<int>(typesOfContracts), new List<int>(workingHours));
+
+            return View(jobs);
         }
 
-        // GET: Jobs/Details/5
+       
+
         public async Task<IActionResult> Details(long? id)
         {
             if (id == null)
@@ -49,19 +68,16 @@ namespace Joobie.Controllers
             return View(job);
         }
 
-        // GET: Jobs/Create
         public IActionResult Create()
         {
-            ViewData["UserId"] = new SelectList(_context.ApplicationUser.Where(j => j.Name != null), "Id", "Name");
-            ViewData["CategoryId"] = new SelectList(_context.Category, "Id", "Name");
-            ViewData["TypeOfContractId"] = new SelectList(_context.TypeOfContract, "Id", "Name");
-            ViewData["WorkingHoursId"] = new SelectList(_context.WorkingHours, "Id", "Name");
+            ViewData["Employees"] = new SelectList(_context.ApplicationUser.Where(j => j.Name != null), "Id", "Name");
+            ViewData["Categories"] = new SelectList(_context.Category, "Id", "Name");
+            ViewData["TypesOfContracts"] = new SelectList(_context.TypeOfContract, "Id", "Name");
+            ViewData["WorkingHours"] = new SelectList(_context.WorkingHours, "Id", "Name");
             return View();
         }
 
-        // POST: Jobs/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Name,Description,Localization,AddedDate,ExpirationDate,Salary,CategoryId,TypeOfContractId,WorkingHoursId,UserId")] Job job)
@@ -72,10 +88,10 @@ namespace Joobie.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UserId"] = new SelectList(_context.ApplicationUser.Where(j => j.Name != null), "Id", "Name", job.UserId);
-            ViewData["CategoryId"] = new SelectList(_context.Category, "Id", "Name", job.CategoryId);
-            ViewData["TypeOfContractId"] = new SelectList(_context.TypeOfContract, "Id", "Name", job.TypeOfContractId);
-            ViewData["WorkingHoursId"] = new SelectList(_context.WorkingHours, "Id", "Name", job.WorkingHoursId);
+            ViewData["Employees"] = new SelectList(_context.ApplicationUser.Where(j => j.Name != null), "Id", "Name");
+            ViewData["Categories"] = new SelectList(_context.Category, "Id", "Name");
+            ViewData["TypesOfContracts"] = new SelectList(_context.TypeOfContract, "Id", "Name");
+            ViewData["WorkingHours"] = new SelectList(_context.WorkingHours, "Id", "Name");
             return View(job);
         }
 
@@ -92,16 +108,14 @@ namespace Joobie.Controllers
             {
                 return NotFound();
             }
-            ViewData["UserId"] = new SelectList(_context.ApplicationUser.Where(j => j.Name != null), "Id", "Name", job.UserId);
-            ViewData["CategoryId"] = new SelectList(_context.Category, "Id", "Name", job.CategoryId);
-            ViewData["TypeOfContractId"] = new SelectList(_context.TypeOfContract, "Id", "Name", job.TypeOfContractId);
-            ViewData["WorkingHoursId"] = new SelectList(_context.WorkingHours, "Id", "Name", job.WorkingHoursId);
+            ViewData["Employees"] = new SelectList(_context.ApplicationUser.Where(j => j.Name != null), "Id", "Name");
+            ViewData["Categories"] = new SelectList(_context.Category, "Id", "Name");
+            ViewData["TypesOfContracts"] = new SelectList(_context.TypeOfContract, "Id", "Name");
+            ViewData["WorkingHours"] = new SelectList(_context.WorkingHours, "Id", "Name");
             return View(job);
         }
 
-        // POST: Jobs/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(long id, [Bind("Id,Name,Description,Localization,AddedDate,ExpirationDate,Salary,CategoryId,TypeOfContractId,WorkingHoursId,UserId")] Job job)
@@ -131,10 +145,10 @@ namespace Joobie.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UserId"] = new SelectList(_context.ApplicationUser.Where(j => j.Name != null), "Id", "Name", job.UserId);
-            ViewData["CategoryId"] = new SelectList(_context.Category, "Id", "Name", job.CategoryId);
-            ViewData["TypeOfContractId"] = new SelectList(_context.TypeOfContract, "Id", "Name", job.TypeOfContractId);
-            ViewData["WorkingHoursId"] = new SelectList(_context.WorkingHours, "Id", "Name", job.WorkingHoursId);
+            ViewData["Employees"] = new SelectList(_context.ApplicationUser.Where(j => j.Name != null), "Id", "Name");
+            ViewData["Categories"] = new SelectList(_context.Category, "Id", "Name");
+            ViewData["TypesOfContracts"] = new SelectList(_context.TypeOfContract, "Id", "Name");
+            ViewData["WorkingHours"] = new SelectList(_context.WorkingHours, "Id", "Name");
             return View(job);
         }
 
@@ -174,6 +188,36 @@ namespace Joobie.Controllers
         private bool JobExists(long id)
         {
             return _context.Job.Any(e => e.Id == id);
+        }
+
+
+        private async  Task<IEnumerable<Job>> GetSortedAndFilteredJobListAsync(string jobNameSearchString, string citySearchString,
+            List<int> categories, List<int> typesOfContracts, List<int> workingHours)
+        {
+            var predicate = PredicateBuilder.New<Job>();
+            predicate.DefaultExpression = j => true;
+            if (!string.IsNullOrEmpty(jobNameSearchString))
+            {
+                predicate = predicate.And(j => j.Name.Contains(jobNameSearchString));
+            }
+            if (!string.IsNullOrEmpty(citySearchString))
+            {
+                predicate = predicate.And(j => j.Localization.Contains(citySearchString));
+            }
+            if (categories.Count > 0)
+            {
+                predicate = predicate.And(j => categories.Contains(j.CategoryId));
+            }
+            if (typesOfContracts.Count > 0)
+            {
+                predicate = predicate.And(j => typesOfContracts.Contains(j.TypeOfContractId));
+            }
+            if (workingHours.Count > 0)
+            {
+                predicate = predicate.And(j => workingHours.Contains(j.WorkingHoursId));
+            }
+            var jobs = await _context.Job.Where(predicate).ToListAsync();
+            return jobs;
         }
     }
 }

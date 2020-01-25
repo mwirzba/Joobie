@@ -5,51 +5,6 @@
     <UserSecretsId>aspnet-Joobie-5378F9BB-C52D-4B76-8963-A918B5B31E8D</UserSecretsId>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Compile Remove="Migrations\20200121092448_Initial.cs" />
-    <Compile Remove="Migrations\20200121092448_Initial.Designer.cs" />
-    <Compile Remove="Migrations\20200121093127_Initial.cs" />
-    <Compile Remove="Migrations\20200121093127_Initial.Designer.cs" />
-    <Compile Remove="Migrations\20200121093428_Initial.cs" />
-    <Compile Remove="Migrations\20200121093428_Initial.Designer.cs" />
-    <Compile Remove="Migrations\20200124083210_todo.cs" />
-    <Compile Remove="Migrations\20200124083210_todo.Designer.cs" />
-    <Compile Remove="Migrations\20200124083946_todo2.cs" />
-    <Compile Remove="Migrations\20200124083946_todo2.Designer.cs" />
-    <Compile Remove="Migrations\20200124084500_todo3.cs" />
-    <Compile Remove="Migrations\20200124084500_todo3.Designer.cs" />
-    <Compile Remove="Migrations\20200124085444_todo4.cs" />
-    <Compile Remove="Migrations\20200124085444_todo4.Designer.cs" />
-    <Compile Remove="Migrations\20200124090929_todo5.cs" />
-    <Compile Remove="Migrations\20200124090929_todo5.Designer.cs" />
-    <Compile Remove="Migrations\20200124105727_ApplicationUserMigration.cs" />
-    <Compile Remove="Migrations\20200124105727_ApplicationUserMigration.Designer.cs" />
-    <Compile Remove="Migrations\20200124105938_InitialDataUpdate.cs" />
-    <Compile Remove="Migrations\20200124105938_InitialDataUpdate.Designer.cs" />
-    <Compile Remove="Migrations\20200124110259_Initial.cs" />
-    <Compile Remove="Migrations\20200124110259_Initial.Designer.cs" />
-    <Compile Remove="Migrations\20200124110515_Initial.cs" />
-    <Compile Remove="Migrations\20200124110515_Initial.Designer.cs" />
-    <Compile Remove="Migrations\20200124110727_JobDataPopulation.cs" />
-    <Compile Remove="Migrations\20200124110727_JobDataPopulation.Designer.cs" />
-    <Compile Remove="Migrations\20200124111628_initial.cs" />
-    <Compile Remove="Migrations\20200124111628_initial.Designer.cs" />
-    <Compile Remove="Migrations\20200124112104_initialtest.cs" />
-    <Compile Remove="Migrations\20200124112104_initialtest.Designer.cs" />
-    <Compile Remove="Migrations\20200124112223_initialtest2.cs" />
-    <Compile Remove="Migrations\20200124112223_initialtest2.Designer.cs" />
-    <Compile Remove="Migrations\20200124112425_initial.cs" />
-    <Compile Remove="Migrations\20200124112425_initial.Designer.cs" />
-    <Compile Remove="Migrations\20200124112617_initial.cs" />
-    <Compile Remove="Migrations\20200124112617_initial.Designer.cs" />
-    <Compile Remove="Migrations\20200124112646_initial.cs" />
-    <Compile Remove="Migrations\20200124112646_initial.Designer.cs" />
-    <Compile Remove="Migrations\20200125144904_autoincrement.cs" />
-    <Compile Remove="Migrations\20200125144904_autoincrement.Designer.cs" />
-    <Compile Remove="Migrations\20200125145215_initial.cs" />
-    <Compile Remove="Migrations\20200125145215_initial.Designer.cs" />
-  </ItemGroup>
-
 
   <ItemGroup>
     <PackageReference Include="LinqKit" Version="1.1.17" />
