@@ -6,6 +6,7 @@ using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using Joobie.Models.JobModels;
+using Joobie.Utility;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -24,17 +25,20 @@ namespace Joobie.Areas.Identity.Pages.Account
         private readonly UserManager<IdentityUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
         public RegisterModel(
            UserManager<IdentityUser> userManager,
            SignInManager<IdentityUser> signInManager,
            ILogger<RegisterModel> logger,
-           IEmailSender emailSender)
+           IEmailSender emailSender,
+           RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _roleManager = roleManager;
         }
 
         [BindProperty]
@@ -77,6 +81,7 @@ namespace Joobie.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
+
             returnUrl = returnUrl ?? Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
@@ -91,19 +96,33 @@ namespace Joobie.Areas.Identity.Pages.Account
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
-                    _logger.LogInformation("User created a new account with password.");
 
-                    /*var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                    code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-                    var callbackUrl = Url.Page(
-                        "/Account/ConfirmEmail",
-                        pageHandler: null,
-                        values: new { area = "Identity", userId = user.Id, code = code },
-                        protocol: Request.Scheme);
+                    if (!await _roleManager.RoleExistsAsync(Strings.AdminUser))
+                    {
+                        await _roleManager.CreateAsync(new IdentityRole(Strings.AdminUser));
+                    }
+                    if (!await _roleManager.RoleExistsAsync(Strings.ModeratorUser))
+                    {
+                        await _roleManager.CreateAsync(new IdentityRole(Strings.ModeratorUser));
+                    }
+                    if (!await _roleManager.RoleExistsAsync(Strings.EmployeeUser))
+                    {
+                        await _roleManager.CreateAsync(new IdentityRole(Strings.EmployeeUser));
+                    }
+                    if (!await _roleManager.RoleExistsAsync(Strings.CompanyUser))
+                    {
+                        await _roleManager.CreateAsync(new IdentityRole(Strings.CompanyUser));
+                    }
 
-                    await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                        $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
-*/
+                    if (Input.Name == null && Input.Nip==null)
+                    {
+                        await _userManager.AddToRoleAsync(user, Strings.EmployeeUser);
+                    }
+                    else 
+                    {
+                        await _userManager.AddToRoleAsync(user, Strings.CompanyUser);
+                    }
+
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
                         return RedirectToPage("RegisterConfirmation", new { email = Input.Email });

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Joobie.Data;
+using Joobie.Models.JobModels;
 using Joobie.Services;
 
 using Microsoft.AspNetCore.Builder;
@@ -35,8 +36,9 @@ namespace Joobie
                  options.UseSqlServer(Configuration["Data:JoobieDb:connectionString"]));
 
 
-
-            services.AddDefaultIdentity<IdentityUser>().AddRoles<IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
+            services.AddIdentity<IdentityUser, IdentityRole>()
+                .AddDefaultTokenProviders()
+                .AddEntityFrameworkStores<ApplicationDbContext>();
 
 
             services.AddSingleton<IEmailSender, EmailSender>();
