@@ -141,13 +141,31 @@ namespace Joobie.Areas.Identity.Pages.Account
                         }
                         else
                         {
-                            await _userManager.AddToRoleAsync(user, Strings.CompanyUser);
+                           await _userManager.AddToRoleAsync(user, Strings.CompanyUser);
                         }
-                        await _signInManager.SignInAsync(user, isPersistent: false);
+                    }
+                    _userManager.Options.SignIn.RequireConfirmedAccount = true;
+                    var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                    code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
+                    var callbackUrl = Url.Page(
+                        "/Account/ConfirmEmail",
+                        pageHandler: null,
+                        values: new { area="Identity", userId = user.Id, code = code },
+                       protocol: Request.Scheme);
+
+                    await _emailSender.SendEmailAsync(Input.Email, "Potwierdź adres e-mail od Joobie :)",
+                        $"Proszę o potwierdzenie swojego konta klikając w link <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>Tutaj :)</a>.");
+                    await _signInManager.SignInAsync(user, isPersistent: false);
+                    if (_userManager.Options.SignIn.RequireConfirmedAccount)
+                    {
+                        return RedirectToPage("RegisterConfirmation", new { email = Input.Email });
+                    }
+                    else
+                    {
+                        await _userManager.AddToRoleAsync(user, Strings.EmployeeUser);
                         return LocalRedirect(returnUrl);
                     }
 
-                    return RedirectToAction("Index", "User");
 
                 }
                 foreach (var error in result.Errors)
