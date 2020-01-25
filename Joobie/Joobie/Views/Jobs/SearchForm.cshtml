@@ -21,9 +21,9 @@
             <div class="form-row">
                 <div class="col">
                      <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Kategorie</button>
-                     <ul class="dropdown-menu list-inline">
+                     <ul class="dropdown-menu">
                              @foreach (var item in @ViewData["Categories"] as IEnumerable<Joobie.Models.JobModels.Category>)
-                             {
+                             { 
                                  <li>
                                      <div class="dropdown-item">
                                          <label>

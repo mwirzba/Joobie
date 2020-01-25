@@ -24,7 +24,17 @@ namespace Joobie.Controllers
             ViewData["CurrentFilter"] = searchString;
             ViewData["CurrentCityFilter"] = citySearchString;
             IEnumerable<Job> jobs = await GetSortedAndFilteredJobListAsync(searchString, citySearchString,new List<int>(categories), new List<int>(typesOfContracts), new List<int>(workingHours));
-            return View("List", jobs);
+
+            return View("ReadOnlyList", jobs);
+        }
+
+        public async Task<IActionResult> DetailsAsync(long id)
+        {
+            var jobInDb = await _unitOfWork.Jobs.GetJobWithAllPropertiesAsync(id);
+            if (jobInDb != null)
+                return View("Details", jobInDb);
+            else
+                return RedirectToAction("ReadOnlyList");
         }
 
         public async Task<IActionResult> EditAsync(long id)

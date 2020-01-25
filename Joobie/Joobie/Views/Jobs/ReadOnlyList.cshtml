@@ -1,0 +1,23 @@
+﻿@model IEnumerable<Joobie.Models.JobModels.Job>
+@{
+    ViewData["Title"] = "ReadOnlyList";
+}
+
+
+<partial name="~/Views/Jobs/SearchForm.cshtml" />
+<div class="container">
+    <div class="row row-cols-2">
+        <div class="col-md-auto">
+            @foreach (var job in Model)
+            {
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">@job.Name</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">@job.Company.Name</h6>
+                        <p class="card-text">@job.Localization</p>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
