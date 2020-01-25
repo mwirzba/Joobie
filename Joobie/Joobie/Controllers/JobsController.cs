@@ -23,25 +23,20 @@ namespace Joobie.Controllers
         // GET: Jobs
         public async Task<IActionResult> Index(string searchString, string citySearchString, int[] categories, int[] typesOfContracts, int[] workingHours)
         {
-            IEnumerable<Job> jobs;
+            IEnumerable<Job> jobs = await GetSortedAndFilteredJobListAsync(searchString, citySearchString, new List<int>(categories),
+                new List<int>(typesOfContracts), new List<int>(workingHours));
+
             ViewData["Categories"] = _context.Category;
             ViewData["TypesOfContracts"] = _context.TypeOfContract;
             ViewData["WorkingHours"] = _context.WorkingHours;
 
             if (User.IsInRole(Strings.AdminUser))
             {
-                jobs = await _context.Job.Include(j => j.ApplicationUser)
-                                  .Where(j => j.ApplicationUser.Name != null)
-                                  .Include(j => j.Category)
-                                  .Include(j => j.TypeOfContract)
-                                  .Include(j => j.WorkingHours)
-                                  .ToListAsync();
+               
                 return View(jobs);
             }
-            jobs = await GetSortedAndFilteredJobListAsync(searchString, citySearchString, new List<int>(categories),
-                new List<int>(typesOfContracts), new List<int>(workingHours));
-
-            return View(jobs);
+         
+            return View("ReadOnlyList",jobs);
         }
 
        
@@ -216,7 +211,15 @@ namespace Joobie.Controllers
             {
                 predicate = predicate.And(j => workingHours.Contains(j.WorkingHoursId));
             }
-            var jobs = await _context.Job.Where(predicate).ToListAsync();
+            predicate = predicate.And(j => j.ApplicationUser.Name != null);
+
+            var jobs = await _context.Job.Where(predicate)
+                                .Where(j => j.ApplicationUser.Name != null)
+                                 .Include(j => j.Category)
+                                 .Include(j => j.TypeOfContract)
+                                 .Include(j => j.WorkingHours)
+                                 .Include(j => j.ApplicationUser)
+                                 .ToListAsync();
             return jobs;
         }
     }

@@ -68,7 +68,7 @@ namespace Joobie.Models.JobModels
         public string UserId { get; set; }
 
         [ForeignKey("UserId")]
-        [Display(Name = "Użytkownik")]
+        [Display(Name = "Firma")]
         public virtual ApplicationUser ApplicationUser { get; set; }
 
     }
