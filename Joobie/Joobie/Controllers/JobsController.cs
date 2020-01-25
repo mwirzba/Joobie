@@ -57,7 +57,6 @@ namespace Joobie.Controllers
 
             var viewModel = new ListViewModel<Job>
             {
-                //searchStringSession = _searchStringSession,
                 Items = jobs,
                 PagingInfo = new PagingInfo
                 {
@@ -67,11 +66,8 @@ namespace Joobie.Controllers
                 }
             };
 
-            return View(viewModel);
-
-
             if (User.IsInRole(Strings.AdminUser))
-            {          
+            {           
                 return View(viewModel);
             }
          

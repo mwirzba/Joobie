@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "ReadOnlyList";
+    Layout = "_EmployeeLayout";
 }
 
 
@@ -9,26 +10,40 @@
 <br/>
 <div class="container">
     <div class="row">
-        @foreach (var job in Model.Items)
+        @if(@Model.Items.Any())
         {
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">@job.Name</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">@job.ApplicationUser.Name</h6>
-                        <p class="card-text">@job.Localization</p>
+            @foreach (var job in Model.Items)
+            {
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <form asp-action="Details" method="post">
+                                <h5 class="card-title">
+                                    <button class="btn btn-link" type="submit">@job.Name</button>
+                                </h5>
+                                <input type="hidden" name="id" asp-for="@job.Id"/>
+                            </form>
+                            <h6 class="card-subtitle mb-2 text-muted">@job.ApplicationUser.Name</h6>
+                            <p class="card-text">@job.Localization</p>
+                        </div>
                     </div>
                 </div>
-            </div>
+            }
+
+         <div page-model="@Model.PagingInfo" page-classes-enabled="true"
+            page-class="btn" page-class-normal="btn-secondary"
+            page-class-selected="btn-primary"
+            class="btn-group pull m-1">
+         </div>
+        }
+        else 
+        {
+            <h2>Niestety nie znaleziono żadnych ofert</h2>
         }
     </div>
 
 
-    <div page-model="@Model.PagingInfo" page-classes-enabled="true"
-         page-class="btn" page-class-normal="btn-secondary"
-         page-class-selected="btn-primary"
-         class="btn-group pull m-1">
-    </div>
+
 
 </div>
 

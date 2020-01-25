@@ -1,3 +1,12 @@
-﻿@{
-    Layout = "_Layout";
+﻿@using Joobie.Utility;
+
+@{
+    if (User.IsInRole(Strings.AdminUser) || User.IsInRole(Strings.ModeratorUser))
+    {
+        Layout = "_Layout";
+    }
+    else
+    {
+        Layout = "_EmployeeLayout";
+    }
 }
