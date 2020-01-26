@@ -24,7 +24,9 @@
                                 <input type="hidden" name="id" asp-for="@job.JobInMiddleTable.Id" />
 
 
-                                <p class="card-text">@job.JobInMiddleTable.Localization</p>
+                                <a class="card-text">@job.JobInMiddleTable.ApplicationUser.Name</a><br />
+                                <a class="card-text">@Html.DisplayNameFor(m=>job.JobInMiddleTable.Salary)</a>: <a class="card-text">@job.JobInMiddleTable.Salary</a><br />
+                                <a class="card-text">@job.JobInMiddleTable.Localization</a>
                                 <div class="w-100"></div>
                             </div>
                         </div>

@@ -39,7 +39,7 @@ namespace Joobie
 
             services.AddIdentity<IdentityUser, IdentityRole>(config =>
             {
-                config.SignIn.RequireConfirmedEmail = true;
+                config.SignIn.RequireConfirmedEmail = false;
                 config.Tokens.ProviderMap.Add("CustomEmailConfirmation",
                     new TokenProviderDescriptor(
                         typeof(CustomEmailConfirmationTokenProvider<IdentityUser>)));
@@ -61,9 +61,9 @@ namespace Joobie
                 options.Password.RequireUppercase = false;
                 options.Password.RequireLowercase = false;
                 options.Password.RequiredLength = 4;
+
                 options.SignIn.RequireConfirmedEmail = false;
                 options.SignIn.RequireConfirmedPhoneNumber = false;
-
 
             });
 
