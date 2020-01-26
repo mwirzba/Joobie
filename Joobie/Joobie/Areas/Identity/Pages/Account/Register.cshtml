@@ -6,113 +6,116 @@
 }
 
 
-    <form method="post" asp-route-returnUrl="@Model.ReturnUrl" enctype="multipart/form-data">
-        <div class="border backgroundWhite">
-            <h1>@ViewData["Title"]</h1>
-            <hr />
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+<form method="post" asp-route-returnUrl="@Model.ReturnUrl" enctype="multipart/form-data">
+    <div class="border backgroundWhite">
+        <h1>@ViewData["Title"]</h1>
+        <hr />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-            <div class="form-group row">
-                <div class="col-2">
-                    <label asp-for="Input.Email" class="col-form-label"></label>
-                </div>
-                <div class="col-5">
-                    <input asp-for="Input.Email" class="form-control" />
-
-                </div>
-                <span asp-validation-for="Input.Email" class="text-danger"></span>
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="Input.Email" class="col-form-label"></label>
             </div>
+            <div class="col-5">
+                <input asp-for="Input.Email" class="form-control" />
 
-            <div class="form-group row">
-                <div class="col-2">
-                    <label asp-for="Input.Password" class="col-form-label"></label>
-                </div>
-                <div class="col-5">
-                    <input asp-for="Input.Password" class="form-control" />
-                </div>
-                <span asp-validation-for="Input.Password" class="text-danger"></span>
             </div>
+            <span asp-validation-for="Input.Email" class="text-danger"></span>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="Input.Password" class="col-form-label"></label>
+            </div>
+            <div class="col-5">
+                <input asp-for="Input.Password" class="form-control" />
+            </div>
+            <span asp-validation-for="Input.Password" class="text-danger"></span>
+        </div>
 
 
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="Input.ConfirmPassword" class="col-form-label"></label>
+            </div>
+            <div class="col-5">
+                <input asp-for="Input.ConfirmPassword" class="form-control" />
+            </div>
+            <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <input class="btn" type="checkbox" id="IsThisCompanyAccount" />
+            <label>Konto firmowe</label>
+        </div>
+        <div id="autoUpdate" class="autoUpdate">
             <div class="form-group row">
                 <div class="col-2">
-                    <label asp-for="Input.ConfirmPassword" class="col-form-label"></label>
+                    <label asp-for="Input.Name" class="col-form-label"></label>
                 </div>
                 <div class="col-5">
-                    <input asp-for="Input.ConfirmPassword" class="form-control" />
+                    <input asp-for="Input.Name" class="form-control" />
+
                 </div>
-                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                <span asp-validation-for="Input.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <div class="col-2">
+                    <label asp-for="Input.Nip" class="col-form-label"></label>
+                </div>
+                <div class="col-5">
+                    <input asp-for="Input.Nip" class="form-control" />
+                </div>
+                <span asp-validation-for="Input.Nip" class="text-danger"></span>
             </div>
 
             <div class="form-group">
-                <input class="btn" type="checkbox" id="IsThisCompanyAccount" />
-                <label>Konto firmowe</label>
-            </div>
-            <div id="autoUpdate" class="autoUpdate">
-                <div class="form-group row">
-                    <div class="col-2">
-                        <label asp-for="Input.Name" class="col-form-label"></label>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="inputGroupFileAddon01">Ustaw ikone firmy</span>
                     </div>
-                    <div class="col-5">
-                        <input asp-for="Input.Name" class="form-control" />
-
+                    <div class="custom-file">
+                        <input asp-for="Input.Image" type="file" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
+                        <label class="custom-file-label" for="inputGroupFile01">Wybierz grafike</label>
                     </div>
-                    <span asp-validation-for="Input.Name" class="text-danger"></span>
                 </div>
-                <div class="form-group row">
-                    <div class="col-2">
-                        <label asp-for="Input.Nip" class="col-form-label"></label>
-                    </div>
-                    <div class="col-5">
-                        <input asp-for="Input.Nip" class="form-control" />
-                    </div>
-                    <span asp-validation-for="Input.Nip" class="text-danger"></span>
-                </div>
-
-                <div class="form-group">
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="inputGroupFileAddon01">Ustaw ikone firmy</span>
-                        </div>
-                        <div class="custom-file">
-                            <input asp-for="Input.Image" type="file" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
-                            <label class="custom-file-label" for="inputGroupFile01">Wybierz grafike</label>
-                        </div>
-                    </div>
-                    <span asp-validation-for="Input.Image" class="text-danger"></span>
-                </div>
-
-
+                <span asp-validation-for="Input.Image" class="text-danger"></span>
             </div>
 
-            @if (User.IsInRole(Strings.AdminUser))
-            {
-                <div class="form-group row">
-                    <div class="col-2">
-                    </div>
+
+        </div>
+
+        @if (User.IsInRole(Strings.ModeratorUser) || User.IsInRole(Strings.AdminUser))
+        {
+            <div class="form-group row">
+                <div class="col-2">
+                </div>
+                @if (User.IsInRole(Strings.AdminUser))
+                {
                     <div class="form-group btn">
                         <input type="radio" name="rdUserRole" value="@Strings.AdminUser" checked /> <label>@Strings.AdminUser</label>
                     </div>
-                    <div class="form-group btn">
-                        <input type="radio" name="rdUserRole" value="@Strings.ModeratorUser" checked /> <label>@Strings.ModeratorUser</label>
-                    </div>
-                    <div class="form-group btn">
-                        <input type="radio" name="rdUserRole" value="@Strings.CompanyUser" checked /> <label>@Strings.CompanyUser</label>
-                    </div>
-                    <div class="form-group btn">
-                        <input type="radio" name="rdUserRole" value="@Strings.EmployeeUser" checked /> <label>@Strings.EmployeeUser</label>
-                    </div>
+                }
+                <div class="form-group btn">
+                    <input type="radio" name="rdUserRole" value="@Strings.ModeratorUser" checked /> <label>@Strings.ModeratorUser</label>
                 </div>
+                <div class="form-group btn">
+                    <input type="radio" name="rdUserRole" value="@Strings.CompanyUser" checked /> <label>@Strings.CompanyUser</label>
+                </div>
+                <div class="form-group btn">
+                    <input type="radio" name="rdUserRole" value="@Strings.EmployeeUser" checked /> <label>@Strings.EmployeeUser</label>
+                </div>
+            </div>
 
-            }
+        }
 
         <div class="form-group row">
             <div class="col-5 offset-2">
                 <button type="submit" class="btn btn-primary form-control">Zarejestruj</button>
             </div>
         </div>
-        </div>
-    </form>
+    </div>
+</form>
 
 
 <script type="text/javascript">

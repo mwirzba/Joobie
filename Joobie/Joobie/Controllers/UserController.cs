@@ -37,7 +37,7 @@ namespace Joobie.Controllers
             {
                 return NotFound();
             }
-            var user = await _db.ApplicationUser.FindAsync(id);
+            var user = await _db.ApplicationUser.FirstOrDefaultAsync(m=>m.Id==id);
             if (user == null)
             {
                 return NotFound();
@@ -49,7 +49,7 @@ namespace Joobie.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string? id)
         {
-            var user = await _db.ApplicationUser.FindAsync(id);
+            var user = await _db.ApplicationUser.FirstOrDefaultAsync(m => m.Id == id);
             if (user == null)
             {
                 return View();

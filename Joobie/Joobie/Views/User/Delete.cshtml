@@ -31,7 +31,14 @@
 
         <div class="form-group row">
             <div class="col-5 offset-2">
-                <partial name="_DeleteAndBackToListButton" model="Model.Id" />
+                <div class="row">
+                    <div class="col-6">
+                        <input type="submit" class="btn btn-danger form-control" asp-route-id="@Model.Id" value="Usuń" />
+                    </div>
+                    <div class="col-6">
+                        <a asp-action="Index" class="btn btn-success form-control">Wróć do listy</a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
