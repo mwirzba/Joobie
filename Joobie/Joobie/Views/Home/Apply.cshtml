@@ -32,9 +32,10 @@
         </div>
     </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+    <div>
+        <a asp-action="Details" asp-route-id="@Model.JobsId" class="btn btn-success form-control">Wróć do szczegółów</a>
+        <a asp-action="Index" class="btn btn-success form-control">Wróć do listy ofert</a>
+    </div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

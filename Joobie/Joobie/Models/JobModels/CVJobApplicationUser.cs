@@ -20,6 +20,7 @@ namespace Joobie.Models.JobModels
 
         [NotMapped]
         [CvValidation]
+        [Required(ErrorMessage ="CV jest wymagane")]
         public IFormFile Cv { get; set; }
 
         public string ApplicationUserId { get; set; }

@@ -231,7 +231,7 @@ namespace Joobie.Controllers
             bool saveImageSuccess = true;
             if (!ModelState.IsValid)
             {
-                return View();
+                return View("Apply", cVJobApplicationUser);
             }
             var cVJobApplicationUserInDb = await _context.CVJobApplicationUser.FirstOrDefaultAsync(c => c.ApplicationUserId == userId && c.JobsId== cVJobApplicationUser.JobsId);
             if (cVJobApplicationUserInDb != null)
@@ -249,11 +249,7 @@ namespace Joobie.Controllers
                 return RedirectToAction(nameof(Index));
             }
             
-            if (!Request.Form.Files.Any())
-            {
-                ModelState.AddModelError("Car.Image", "Image is required");
-                return View("Index");
-            }
+
             uniqueName = await GetUniqueFileName();
             cVJobApplicationUser.CvName = Path.GetFileNameWithoutExtension(uniqueName)
                 + Path.GetExtension(cVJobApplicationUser.Cv.FileName);
@@ -304,6 +300,22 @@ namespace Joobie.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        public async Task<IActionResult> Details(long Id)
+        {
+            var job = await _context.Job.Include(j => j.Category)
+                .Include(j => j.TypeOfContract)
+                .Include(j => j.WorkingHours)
+                .Include(j => j.ApplicationUser)
+                .Where(j => j.Id == Id)
+                .FirstOrDefaultAsync();
+            CVJobApplicationUser cVJobApplicationUser = new CVJobApplicationUser
+            {
+                Job = job,
+                JobsId = Id
+            };
+            return View(cVJobApplicationUser);
         }
     }
 }

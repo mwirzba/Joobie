@@ -17,7 +17,6 @@ namespace Joobie.Validators
             if (file == null)
             {
                 return ValidationResult.Success;
-                //return new ValidationResult("Image is required");
             }
             try
             {
@@ -26,7 +25,7 @@ namespace Joobie.Validators
                     return ValidationResult.Success;
             }
             catch { }
-            return new ValidationResult("Wrong type of file. File must be in pdf format.");
+            return new ValidationResult("Zły typ pliku. Plik musi być w formacie pdf.");
         }
     }
 }
