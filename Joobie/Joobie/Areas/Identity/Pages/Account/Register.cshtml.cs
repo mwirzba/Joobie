@@ -1,14 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using Joobie.Models.JobModels;
 using Joobie.Utility;
+using Joobie.Validators;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -26,6 +29,7 @@ namespace Joobie.Areas.Identity.Pages.Account
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly string _savePath = "/Joobie/Joobie/wwwroot/CompanyIcons";
 
         public RegisterModel(
            UserManager<IdentityUser> userManager,
@@ -65,13 +69,15 @@ namespace Joobie.Areas.Identity.Pages.Account
             [Display(Name = "Potwierdź Hasło")]
             [Compare("Password", ErrorMessage = "Hasla muszą się zgadzać")]
             public string ConfirmPassword { get; set; }
-
             
             [Display(Name = "Nazwa Firmy")]
             public string Name { get; set; }
 
             [Display(Name = "Nip")]
             public string Nip { get; set; }
+
+            [ImageValidation]
+            public IFormFile Image { get; set; }
 
         }
 
@@ -89,12 +95,13 @@ namespace Joobie.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
+               
                 var user = new ApplicationUser
                 {
                     UserName = Input.Email,
                     Email = Input.Email,
                     Name = Input.Name,
-                    Nip = Input.Nip
+                    Nip = Input.Nip,
                 };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
@@ -141,7 +148,18 @@ namespace Joobie.Areas.Identity.Pages.Account
                         }
                         else
                         {
-                           await _userManager.AddToRoleAsync(user, Strings.CompanyUser);
+                            string imagePath = "default.png";
+                            if (Request.Form.Files.Any())
+                            {
+                                string uniqueName = await GetUniqueFileName();
+                                imagePath = Path.GetFileNameWithoutExtension(uniqueName)
+                                    + Path.GetExtension(Input.Image.FileName);
+                                bool saveImageSuccess = await SaveImageToDirectory(imagePath);
+                                if (saveImageSuccess == false)
+                                    ModelState.AddModelError(string.Empty, "Błąd podczas zapisu ikony");
+                            }
+                            user.CompanyImagePath = imagePath;
+                            await _userManager.AddToRoleAsync(user, Strings.CompanyUser);
                         }
                     }
                     _userManager.Options.SignIn.RequireConfirmedAccount = true;
@@ -176,6 +194,35 @@ namespace Joobie.Areas.Identity.Pages.Account
 
             // If we got this far, something failed, redisplay form
             return Page();
+        }
+
+        private async Task<bool> SaveImageToDirectory(string fileName)
+        {
+            IFormFile file = Request.Form.Files.First();
+            string pathSrc = Path.GetDirectoryName(Path.GetDirectoryName(Directory.GetCurrentDirectory()));
+            pathSrc += _savePath;
+            using (var stream = new FileStream(Path.Combine(pathSrc, fileName), FileMode.Create))
+            {
+                await file.CopyToAsync(stream);
+            }
+            return true;
+        }
+
+        private async Task<string> GetUniqueFileName()
+        {
+            string fileName = "";
+            await Task.Run(() =>
+            {
+                fileName = Path.GetRandomFileName();
+                string path = Path.Combine("~/Data/Images", fileName);
+                while (System.IO.File.Exists(path))
+                {
+                    fileName = Path.GetRandomFileName();
+                    path = Path.Combine("~/Data/Images", fileName);
+                }
+            });
+
+            return fileName;
         }
     }
 }

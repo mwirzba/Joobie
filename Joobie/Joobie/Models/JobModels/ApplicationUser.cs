@@ -14,6 +14,7 @@ namespace Joobie.Models.JobModels
         [Required]
         [Display(Name="Nip")]
         public string Nip { get; set; }
+        public string CompanyImagePath { get; set; }
         public ICollection<CVJobApplicationUser> CVJobApplicationUser { get; } = new List<CVJobApplicationUser>();
     }
 }
