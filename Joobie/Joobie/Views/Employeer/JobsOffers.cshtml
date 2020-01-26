@@ -1,6 +1,7 @@
 ﻿@model  Joobie.ViewModels.ListViewModel<Joobie.Models.JobModels.Job>
 @{
     ViewData["Title"] = "JobsOffers";
+    Layout = "_EmployeerLayout";
 }
 
 <h1>Twoje oferty pracy</h1>
@@ -50,21 +51,8 @@
         {
             <h2>Niestety nie znaleziono żadnych ofert</h2>
         }
-        <a asp-action="Create" asp-controller="Job" class="btn btn-primary">Dodaj nowa oferte</a>
+        <a asp-action="Create" asp-controller="Jobs" class="btn btn-primary">Dodaj nowa oferte</a>
     </div>
 
 </div>
 
-
-
-
-@section scripts {
-    <script type="text/javascript">
-
-        function imgError(image) {
-            image.onerror = "";
-            image.src = "/CompanyIcons/default.png";
-            return true;
-        }
-    </script>
-}

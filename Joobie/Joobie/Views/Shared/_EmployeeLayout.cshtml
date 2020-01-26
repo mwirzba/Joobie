@@ -35,13 +35,13 @@
             </div>
         </nav>
     </header>
-        <div class="col-12">
-            <div class="container">
-                <main role="main" class="pb-3">
-                    @RenderBody()
-                </main>
-            </div>
+    <div class="col-12">
+        <div class="container">
+            <main role="main" class="pb-3">
+                @RenderBody()
+            </main>
         </div>
+    </div>
     <footer class="border-top footer text-muted">
         <div class="container">
             &copy; 2020 - Joobie - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
@@ -52,5 +52,6 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
 
     @RenderSection("Scripts", required: false)
+    @RenderSection("editor_scripts", required: false)
 </body>
 </html>

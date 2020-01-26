@@ -114,7 +114,7 @@ namespace Joobie.Controllers
             return View(job);
         }
 
-        //[Authorize(Roles = Strings.AdminUser + "," + Strings.ModeratorUser + "," + Strings.CompanyUser)]
+        [Authorize(Roles = Strings.AdminUser + "," + Strings.ModeratorUser + "," + Strings.CompanyUser)]
         public IActionResult Create()
         {
             ViewData["Employees"] = new SelectList(_context.ApplicationUser.Where(j => j.Name != null), "Id", "Name");
@@ -128,7 +128,7 @@ namespace Joobie.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = Strings.AdminUser + "," + Strings.ModeratorUser + "," + Strings.CompanyUser)]
-        public async Task<IActionResult> Save([Bind("Id,Name,Description,Localization,AddedDate,ExpirationDate,Salary,CategoryId,TypeOfContractId,WorkingHoursId,UserId")] Job job)
+        public async Task<IActionResult> Create([Bind("Id,Name,Description,Localization,AddedDate,ExpirationDate,Salary,CategoryId,TypeOfContractId,WorkingHoursId,UserId")] Job job)
         {
             if (ModelState.IsValid)
             {
