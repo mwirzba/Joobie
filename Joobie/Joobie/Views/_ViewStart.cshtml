@@ -5,6 +5,10 @@
     {
         Layout = "_Layout";
     }
+     else if(User.IsInRole(Strings.CompanyUser))
+    {
+        Layout = "_EmployeerLayout";
+    }
     else
     {
         Layout = "_EmployeeLayout";

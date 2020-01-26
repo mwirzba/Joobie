@@ -7,9 +7,9 @@ namespace Joobie.ViewModels
 {
     public class PagingInfo
     {
-        public byte TotalItems { get; set; }
-        public byte ItemsPerPage { get; set; }
-        public byte CurrentPage { get; set; }
-        public byte TotalPages => (byte)Math.Ceiling((decimal)TotalItems / ItemsPerPage);
+        public int TotalItems { get; set; }
+        public int ItemsPerPage { get; set; }
+        public int CurrentPage { get; set; }
+        public int TotalPages => (byte)Math.Ceiling((decimal)TotalItems / ItemsPerPage);
     }
 }

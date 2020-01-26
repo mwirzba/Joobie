@@ -63,9 +63,9 @@ namespace Joobie.Controllers
                 Items = jobs,
                 PagingInfo = new PagingInfo
                 {
-                    CurrentPage = (byte)page,
+                    CurrentPage = page,
                     ItemsPerPage = _pageSize,
-                    TotalItems = (byte)totalJobs
+                    TotalItems = totalJobs
                 }
             };
 
@@ -108,7 +108,7 @@ namespace Joobie.Controllers
             return View(job);
         }
 
-        [Authorize(Roles = Strings.AdminUser + "," + Strings.ModeratorUser)]
+        //[Authorize(Roles = Strings.AdminUser + "," + Strings.ModeratorUser + "," + Strings.CompanyUser)]
         public IActionResult Create()
         {
             ViewData["Employees"] = new SelectList(_context.ApplicationUser.Where(j => j.Name != null), "Id", "Name");
@@ -121,8 +121,8 @@ namespace Joobie.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = Strings.AdminUser + "," + Strings.ModeratorUser)]
-        public async Task<IActionResult> Create([Bind("Id,Name,Description,Localization,AddedDate,ExpirationDate,Salary,CategoryId,TypeOfContractId,WorkingHoursId,UserId")] Job job)
+        [Authorize(Roles = Strings.AdminUser + "," + Strings.ModeratorUser + "," + Strings.CompanyUser)]
+        public async Task<IActionResult> Save([Bind("Id,Name,Description,Localization,AddedDate,ExpirationDate,Salary,CategoryId,TypeOfContractId,WorkingHoursId,UserId")] Job job)
         {
             if (ModelState.IsValid)
             {
@@ -134,7 +134,7 @@ namespace Joobie.Controllers
             ViewData["Categories"] = new SelectList(_context.Category, "Id", "Name");
             ViewData["TypesOfContracts"] = new SelectList(_context.TypeOfContract, "Id", "Name");
             ViewData["WorkingHours"] = new SelectList(_context.WorkingHours, "Id", "Name");
-            return View(job);
+            return View(nameof(Create),job);
         }
 
         // GET: Jobs/Edit/5

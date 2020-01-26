@@ -1,0 +1,39 @@
+﻿@model Joobie.Models.JobModels.Job
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+
+
+<div class="container">
+    <div class="row">
+        @if (@Model.CVJobApplicationUser.Any())
+        {
+
+            @foreach (var job in Model.CVJobApplicationUser)
+            {
+                <div class="col-md-12 readonly-list-space">
+                    <div class="card flex-row flex-wrap">
+                            <div class="card-header border-0">
+                                <img class="img-thumbnail h-100" id="img" style="width: 100px;" src="@Url.Content("~/CompanyIcons/" + job.ApplicationUser.CompanyImagePath)" onerror="imgError(this);" />
+                            </div>
+                            <div class="card-block px-2">
+                                <h5 class="card-title">
+                                    <button class="btn btn-link" type="submit">@job.</button>
+                                </h5>
+                                    <h6 class="card-subtitle mb-2 text-muted">Nazwa użytkownika: @job.ApplicationUser.Name</h6>
+                                <p class="card-text">@job.CvName</p>
+                                <div class="w-100"></div>
+                            </div>
+                        </div>
+                </div>
+            }
+        }
+        else
+        {
+            <h2>Niestety nie znaleziono żadnych aplikacji</h2>
+        }
+    </div>
+
+</div>
