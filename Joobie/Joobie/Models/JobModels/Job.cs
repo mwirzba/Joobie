@@ -16,6 +16,7 @@ namespace Joobie.Models.JobModels
 
 
         [Display(Name = "Nazwa")]
+        [Required(ErrorMessage = "Nazwa jest wymagana")]
         public string Name { get; set; }
 
 
@@ -26,24 +27,29 @@ namespace Joobie.Models.JobModels
         } = true;
 
 
+        [Required(ErrorMessage = "Pole wymagane")]
         [Display(Name = "Opis")]
         public string Description { get; set; }
 
 
+        [Required(ErrorMessage = "Pole wymagane")]
         [Display(Name = "Lokalizacja")]
         public string Localization { get; set; }
 
+        [Required(ErrorMessage = "Pole wymagane")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [Display(Name = "Data dodania")]
         public DateTime? AddedDate { get; set; }
 
+        [Required(ErrorMessage = "Pole wymagane")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [Display(Name = "Termin wygaśnięcia")]
         public DateTime? ExpirationDate { get; set; }
 
 
+        [Required(ErrorMessage ="Pole wymagane")]
         [Display(Name = "Wynagrodzenie")]
         public string Salary { get; set; }
 

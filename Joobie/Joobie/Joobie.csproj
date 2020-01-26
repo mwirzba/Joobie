@@ -34,6 +34,8 @@
     <Compile Remove="Migrations\20200125234705_AddedImagePathToUser2.Designer.cs" />
     <Compile Remove="Migrations\20200126144333_test.cs" />
     <Compile Remove="Migrations\20200126144333_test.Designer.cs" />
+    <Compile Remove="Migrations\20200126212735_mig.cs" />
+    <Compile Remove="Migrations\20200126212735_mig.Designer.cs" />
   </ItemGroup>
 
 

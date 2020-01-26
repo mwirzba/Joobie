@@ -89,19 +89,7 @@ namespace Joobie.Data
             );
 
             modelBuilder.Entity<Job>().HasData(
-    new Job { Id = 1, Name = ".NET Developer", TypeOfContractId = 1, WorkingHoursId = 1, CategoryId = 16, UserId = "31d98481-9339-4e36-b3d4-c8f7e7ab3256" },
-    new Job { Id = 2, Name = "Junior .NET Developer", TypeOfContractId = 1, WorkingHoursId = 2, CategoryId = 1, UserId = "31d98481-9339-4e36-b3d4-c8f7e7ab3256" },
-    new Job { Id = 3, Name = "Senior .NET Developer", TypeOfContractId = 1, WorkingHoursId = 1, CategoryId = 1, UserId = "31d98481-9339-4e36-b3d4-c8f7e7ab3256" },
-    new Job { Id = 4, Name = "Starszy Inżynier Oprogramowania .NET", TypeOfContractId = 1, WorkingHoursId = 1, CategoryId = 16, UserId = "31d98481-9339-4e36-b3d4-c8f7e7ab3256" },
-    new Job { Id = 5, Name = "Programista .NET", TypeOfContractId = 1, WorkingHoursId = 3, CategoryId = 16, UserId = "31d98481-9339-4e36-b3d4-c8f7e7ab3256" },
-    new Job { Id = 6, Name = "C# .Net developer", TypeOfContractId = 3, WorkingHoursId = 1, CategoryId = 16, UserId = "31d98481-9339-4e36-b3d4-c8f7e7ab3256" },
-    new Job { Id = 7, Name = ".NET Developer", TypeOfContractId = 5, WorkingHoursId = 1, CategoryId = 15, UserId = "31d98481-9339-4e36-b3d4-c8f7e7ab3256" },
-    new Job { Id = 8, Name = ".NET Developer", TypeOfContractId = 3, WorkingHoursId = 1, CategoryId = 12, UserId = "31d98481-9339-4e36-b3d4-c8f7e7ab3256" },
-    new Job { Id = 9, Name = "Software Engineer C#", TypeOfContractId = 3, WorkingHoursId = 3, CategoryId = 13, UserId = "31d98481-9339-4e36-b3d4-c8f7e7ab3256" },
-    new Job { Id = 10, Name = "Quality Assurance", TypeOfContractId = 1, WorkingHoursId = 3, CategoryId = 11, UserId = "31d98481-9339-4e36-b3d4-c8f7e7ab3256" },
-    new Job { Id = 11, Name = "Programista .NET", TypeOfContractId = 5, WorkingHoursId = 1, CategoryId = 15, UserId = "31d98481-9339-4e36-b3d4-c8f7e7ab3256" },
-    new Job { Id = 12, Name = "Junior .NET Developer", TypeOfContractId = 5, WorkingHoursId = 2, CategoryId = 16, UserId= "31d98481-9339-4e36-b3d4-c8f7e7ab3256" },
-    new Job { Id = 13, Name = "Azure DevOps", TypeOfContractId = 1, WorkingHoursId = 3, CategoryId = 16, UserId = "31d98481-9339-4e36-b3d4-c8f7e7ab3256" }
+    new Job { Id = 1, Name = ".NET Developer", TypeOfContractId = 1, WorkingHoursId = 1, CategoryId = 16, UserId = "31d98481-9339-4e36-b3d4-c8f7e7ab3256" , AddedDate=new DateTime(2020, 1, 26), ExpirationDate = new DateTime(2020, 1, 26), Salary="5000", Description=":)", Localization="Gdańsk"  }
 );
         }
 
