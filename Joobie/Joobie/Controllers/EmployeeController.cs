@@ -58,17 +58,20 @@ namespace Joobie.Controllers
                     .Include(j => j.CVJobApplicationUser)
                     .Where(j => j.UserId != user.Id);
             var lol = jobs.ToList();
+
+            var jobs2 = _context.CVJobApplicationUser.Include(j => j.JobInMiddleTable).Include(j => j.EmployeeUser).Where(j => j.EmployeeUserId == user.Id);
+            var lol2 = jobs2.ToList();
             
-            int totalJobs = jobs.Count();
+            int totalJobs = jobs2.Count();
 
             jobs = jobs.OrderBy(c => c.AddedDate)
 
                   .Skip((page - 1) * _pageSize)
                   .Take(_pageSize);
 
-            var viewModel = new ListViewModel<Job>
+            var viewModel = new ListViewModel<CVJobApplicationUser>
             {
-                Items = jobs,
+                Items = jobs2,
                 PagingInfo = new PagingInfo
                 {
                     CurrentPage = (byte)page,
