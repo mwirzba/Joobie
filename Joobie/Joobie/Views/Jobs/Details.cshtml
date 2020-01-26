@@ -3,14 +3,6 @@
 
 @{
     ViewData["Title"] = "Details";
-    if (User.IsInRole(Strings.AdminUser) || User.IsInRole(Strings.ModeratorUser))
-    {
-        Layout = "~/Views/Shared/_Layout.cshtml";
-    }
-    else
-    {       
-        Layout = "_EmployeeLayout";
-    }
 }
 
 <h1>Details</h1>
