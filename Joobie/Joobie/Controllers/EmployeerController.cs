@@ -71,7 +71,8 @@ namespace Joobie.Controllers
                 .Include(c  => c.ApplicationUser)
                 .Include(c => c.CVJobApplicationUser)
                 .ThenInclude(j => j.EmployeeUser)
-                .FirstOrDefault(c => c.ApplicationUser.Id == user.Id);
+                .Where(c => c.ApplicationUser.Id == user.Id)
+                .FirstOrDefault(j => j.Id == id);
 
 
             if (job == null)
