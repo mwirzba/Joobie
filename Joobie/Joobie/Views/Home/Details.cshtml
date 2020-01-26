@@ -7,8 +7,6 @@
 
     <div class="border backgroundWhite">
         <fieldset disabled>
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
             <div class="col-7">
                 <h2 class="text-info">Szczegóły</h2>
                 <br />
@@ -21,7 +19,6 @@
                 <div class="col-5">
                     <input asp-for="Job.Name" class="form-control" />
                 </div>
-                <span asp-validation-for="Job.Name" class="text-danger"></span>
             </div>
 
             <div class="form-group row">
@@ -31,7 +28,6 @@
                 <div class="col-5">
                     <input asp-for="Job.ApplicationUser.Name" class="form-control" />
                 </div>
-                <span asp-validation-for="Job.ApplicationUser.Name" class="text-danger"></span>
             </div>
 
             <div class="form-group row">
@@ -41,7 +37,6 @@
                 <div class="col-5">
                     @Html.Raw(Model.Job.Description)
                 </div>
-                <span asp-validation-for="Job.Description" class="text-danger"></span>
             </div>
 
             <div class="form-group row">
@@ -51,7 +46,6 @@
                 <div class="col-5">
                     <input asp-for="Job.Localization" class="form-control" />
                 </div>
-                <span asp-validation-for="Job.Localization" class="text-danger"></span>
             </div>
 
             <div class="form-group row">
@@ -61,7 +55,6 @@
                 <div class="col-5">
                     <input asp-for="Job.AddedDate" class="form-control" />
                 </div>
-                <span asp-validation-for="Job.AddedDate" class="text-danger"></span>
             </div>
 
             <div class="form-group row">
@@ -71,7 +64,6 @@
                 <div class="col-5">
                     <input asp-for="Job.ExpirationDate" class="form-control" />
                 </div>
-                <span asp-validation-for="Job.ExpirationDate" class="text-danger"></span>
             </div>
 
             <div class="form-group row">
@@ -81,7 +73,6 @@
                 <div class="col-5">
                     <input asp-for="Job.Salary" class="form-control" />
                 </div>
-                <span asp-validation-for="Job.Salary" class="text-danger"></span>
             </div>
 
             <div class="form-group row">
@@ -91,7 +82,6 @@
                 <div class="col-5">
                     <input asp-for="Job.Category.Name" class="form-control" />
                 </div>
-                <span asp-validation-for="Job.Category.Name" class="text-danger"></span>
             </div>
 
 
@@ -102,7 +92,6 @@
                 <div class="col-5">
                     <input asp-for="Job.TypeOfContract.Name" class="form-control" />
                 </div>
-                <span asp-validation-for="Job.TypeOfContract.Name" class="text-danger"></span>
             </div>
 
 
@@ -113,7 +102,6 @@
                 <div class="col-5">
                     <input asp-for="Job.WorkingHours.Name" class="form-control" />
                 </div>
-                <span asp-validation-for="Job.WorkingHours.Name" class="text-danger"></span>
             </div>
             <a asp-action="Apply" asp-route-id="@Model.Job.Id">Aplikuj</a>
 
@@ -121,7 +109,3 @@
         </fieldset>
 
     </div>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}

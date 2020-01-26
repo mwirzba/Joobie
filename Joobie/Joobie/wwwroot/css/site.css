@@ -75,6 +75,9 @@ body {
 .btn-space {
     margin-top: 2px;
 }
+.readonly-list-space {
+    margin-top: 5px;
+}
 
 .class-space-right {
     margin-right: 12px;
