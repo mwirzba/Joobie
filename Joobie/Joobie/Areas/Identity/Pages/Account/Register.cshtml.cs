@@ -183,8 +183,6 @@ namespace Joobie.Areas.Identity.Pages.Account
                         await _userManager.AddToRoleAsync(user, Strings.EmployeeUser);
                         return LocalRedirect(returnUrl);
                     }
-
-
                 }
                 foreach (var error in result.Errors)
                 {

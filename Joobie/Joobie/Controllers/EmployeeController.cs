@@ -1,13 +1,19 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Joobie.Data;
 using Joobie.Models.JobModels;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
+using Joobie.Utility;
+using System.IO;
 using Microsoft.AspNetCore.Http;
 using Joobie.ViewModels;
 using Microsoft.AspNetCore.Identity;
-using System.Linq;
 
 namespace Joobie.Controllers
 {
@@ -51,17 +57,21 @@ namespace Joobie.Controllers
             var jobs = _context.Job.Include(j=>j.ApplicationUser)
                     .Include(j => j.CVJobApplicationUser)
                     .Where(j => j.UserId != user.Id);
+            var lol = jobs.ToList();
+
+            var jobs2 = _context.CVJobApplicationUser.Include(j => j.JobInMiddleTable).Include(j => j.EmployeeUser).Where(j => j.EmployeeUserId == user.Id);
+            var lol2 = jobs2.ToList();
             
-            int totalJobs = jobs.Count();
+            int totalJobs = jobs2.Count();
 
             jobs = jobs.OrderBy(c => c.AddedDate)
 
                   .Skip((page - 1) * _pageSize)
                   .Take(_pageSize);
 
-            var viewModel = new ListViewModel<Job>
+            var viewModel = new ListViewModel<CVJobApplicationUser>
             {
-                Items = jobs,
+                Items = jobs2,
                 PagingInfo = new PagingInfo
                 {
                     CurrentPage = (byte)page,
