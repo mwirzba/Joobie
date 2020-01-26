@@ -97,7 +97,18 @@
         <div class="col-5 offset-2">
             <div class="row">
                 <div class="col-6">
-                    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-info form-control">Edytuj</a>
+                    @if (User.IsInRole(Strings.AdminUser) || User.IsInRole(Strings.ModeratorUser))
+                    {
+                        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-info form-control">Edytuj</a>
+                    }
+                    else if (User.IsInRole(Strings.CompanyUser))
+                    {
+
+                    }
+                    else
+                    {
+                        <a asp-action="Apply" asp-route-id="@Model.Id" class="btn btn-info form-control">Apply</a>
+                    }
                 </div>
                 <div class="col-6">
                     <a asp-action="Index" class="btn btn-success form-control">Wróć do listy</a>
