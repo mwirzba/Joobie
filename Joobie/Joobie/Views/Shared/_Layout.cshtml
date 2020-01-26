@@ -23,24 +23,6 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <partial name="_LoginPartial" />
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Jobs" asp-action="Index">Oferty</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Categories" asp-action="Index">Kategorie</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="TypeOfContracts" asp-action="Index">Rodzaje umów</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="WorkingHours" asp-action="Index">Rodzaje etatów</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Administration" asp-action="ListRoles">Role</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Index">Użytkownicy</a>
-                        </li>
                     </ul>
                 </div>
             </div>
@@ -56,9 +38,13 @@
         </div>
         <div class="col-2">
             <div class="list-group list-group-flush class-space-right">
-                <div class="sidebar-heading">sidebar </div>
-                <a class="btn btn-primary btn-space" asp-area="" asp-controller="Categories" asp-action="Index">Categories</a>
-                <a class="btn btn-primary btn-space" asp-area="" asp-controller="Categories" asp-action="Index">Categories</a>
+                <div class="sidebar-heading text-center">Panel Moderatora </div>
+                <a class="btn btn-primary btn-space" asp-area="" asp-controller="Jobs" asp-action="Index">Oferty</a>
+                <a class="btn btn-primary btn-space" asp-area="" asp-controller="Categories" asp-action="Index">Kategorie</a>
+                <a class="btn btn-primary btn-space" asp-area="" asp-controller="TypeOfContracts" asp-action="Index">Rodzaje umów</a>
+                <a class="btn btn-primary btn-space" asp-area="" asp-controller="Categories" asp-action="Index">Rodzaje etatów</a>
+                <a class="btn btn-primary btn-space" asp-area="" asp-controller="Administration" asp-action="ListRoles">Role</a>
+                <a class="btn btn-primary btn-space" asp-area="" asp-controller="User" asp-action="Index">Użytkownicy</a>
             </div>
         </div>
     </div>

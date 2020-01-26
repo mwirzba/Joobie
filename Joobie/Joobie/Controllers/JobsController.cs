@@ -4,6 +4,7 @@ using Joobie.Models.JobModels;
 using Joobie.Utility;
 using Joobie.ViewModels;
 using LinqKit;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -13,6 +14,8 @@ using System.Threading.Tasks;
 
 namespace Joobie.Controllers
 {
+
+
     public class JobsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -74,11 +77,13 @@ namespace Joobie.Controllers
             return View("ReadOnlyList", viewModel);
         }
 
+
         public IActionResult ResetSearch()
         {
             _searchStringSession.SetSearch(null);
             return RedirectToAction(nameof(Index));
         }
+
 
         public async Task<IActionResult> Details(long? id)
         {
@@ -103,6 +108,7 @@ namespace Joobie.Controllers
             return View(job);
         }
 
+        [Authorize(Roles = Strings.AdminUser + "," + Strings.ModeratorUser)]
         public IActionResult Create()
         {
             ViewData["Employees"] = new SelectList(_context.ApplicationUser.Where(j => j.Name != null), "Id", "Name");
@@ -115,6 +121,7 @@ namespace Joobie.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = Strings.AdminUser + "," + Strings.ModeratorUser)]
         public async Task<IActionResult> Create([Bind("Id,Name,Description,Localization,AddedDate,ExpirationDate,Salary,CategoryId,TypeOfContractId,WorkingHoursId,UserId")] Job job)
         {
             if (ModelState.IsValid)
@@ -131,6 +138,7 @@ namespace Joobie.Controllers
         }
 
         // GET: Jobs/Edit/5
+        [Authorize(Roles = Strings.AdminUser + "," + Strings.ModeratorUser)]
         public async Task<IActionResult> Edit(long? id)
         {
             if (id == null)
@@ -153,6 +161,7 @@ namespace Joobie.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = Strings.AdminUser + "," + Strings.ModeratorUser)]
         public async Task<IActionResult> Edit(long id, [Bind("Id,Name,Description,Localization,AddedDate,ExpirationDate,Salary,CategoryId,TypeOfContractId,WorkingHoursId,UserId")] Job job)
         {
             if (id != job.Id)
@@ -188,6 +197,7 @@ namespace Joobie.Controllers
         }
 
         // GET: Jobs/Delete/5
+        [Authorize(Roles = Strings.AdminUser + "," + Strings.ModeratorUser)]
         public async Task<IActionResult> Delete(long? id)
         {
             if (id == null)
@@ -212,6 +222,7 @@ namespace Joobie.Controllers
         // POST: Jobs/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = Strings.AdminUser + "," + Strings.ModeratorUser)]
         public async Task<IActionResult> DeleteConfirmed(long id)
         {
             var job = await _context.Job.FindAsync(id);

@@ -7,9 +7,12 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Joobie.Data;
 using Joobie.Models.JobModels;
+using Joobie.Utility;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Joobie.Controllers
 {
+    [Authorize(Roles = Strings.AdminUser + "," + Strings.ModeratorUser)]
     public class CategoriesController : Controller
     {
         private readonly ApplicationDbContext _context;

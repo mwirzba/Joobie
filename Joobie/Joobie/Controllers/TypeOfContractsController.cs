@@ -7,9 +7,13 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Joobie.Data;
 using Joobie.Models.JobModels;
+using Microsoft.AspNetCore.Authorization;
+using Joobie.Utility;
 
 namespace Joobie.Controllers
 {
+
+    [Authorize(Roles = Strings.AdminUser + "," + Strings.ModeratorUser)]
     public class TypeOfContractsController : Controller
     {
         private readonly ApplicationDbContext _context;

@@ -13,7 +13,8 @@ using System.Threading.Tasks;
 namespace Joobie.Controllers
 {
 
-    [Authorize]
+
+    [Authorize(Roles = Strings.AdminUser + "," + Strings.ModeratorUser)]
     public class UserController : Controller
     {
         private readonly ApplicationDbContext _db;

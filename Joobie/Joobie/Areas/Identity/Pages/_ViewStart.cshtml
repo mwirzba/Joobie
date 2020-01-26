@@ -1,4 +1,13 @@
-﻿
+﻿@using Joobie.Utility;
+
+
 @{
-    Layout = "/Views/Shared/_Layout.cshtml";
+    if (User.IsInRole(Strings.AdminUser) || User.IsInRole(Strings.ModeratorUser))
+    {
+        Layout = "_Layout";
+    }
+    else
+    {
+        Layout = "_EmployeeLayout";
+    }
 }

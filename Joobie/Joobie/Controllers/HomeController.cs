@@ -76,14 +76,6 @@ namespace Joobie.Controllers
             };
 
             return View(viewModel);
-
-
-            if (User.IsInRole(Strings.AdminUser))
-            {
-                return View(viewModel);
-            }
-
-            return View("ReadOnlyList", viewModel);
         }
 
         private async Task<SearchSettingViewModel> SetSearchSettingViewModel()
