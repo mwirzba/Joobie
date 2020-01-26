@@ -4,10 +4,10 @@
 @{
     if (User.IsInRole(Strings.AdminUser) || User.IsInRole(Strings.ModeratorUser))
     {
-        Layout = "_Layout";
+        Layout = "/Views/Shared/_Layout.cshtml";
     }
     else
     {
-        Layout = "_EmployeeLayout";
+        Layout = "/Views/Shared/_EmployeeLayout";
     }
 }
