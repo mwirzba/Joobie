@@ -1,94 +1,13 @@
-﻿@model Joobie.ViewModels.ListViewModel<Joobie.Models.JobModels.Job>
+﻿
 
 @{
     ViewData["Title"] = "Index";
 }
-
-
-<partial name="~/Views/Jobs/Search.cshtml" model=@ViewData["searchSettingViewModel"] />
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                Name
-            </th>
-            <th>
-                Localization
-            </th>
-            <th>
-                AddedDate
-            </th>
-            <th>
-                ExpirationDate
-            </th>
-            <th>
-                Salary
-            </th>
-            <th>
-                Category
-            </th>
-            <th>
-                TypeOfContract
-            </th>
-            <th>
-                WorkingHours
-            </th>
-            <th>
-                Company
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.Items)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Localization)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.AddedDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ExpirationDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Salary)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Category.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.TypeOfContract.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.WorkingHours.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ApplicationUser.Name)
-                </td>
-                <td>
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> 
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
-
-
-<div page-model="@Model.PagingInfo" page-classes-enabled="true"
-     page-class="btn" page-class-normal="btn-secondary"
-     page-class-selected="btn-primary"
-     class="btn-group pull m-1">
+<div>
+    
+        ____━*━____━━____━__*___━_*__­__┓­­­━╭━━━━━━━━╮
+        <br />___*_━━____━━____━━*____━━___­┗┓­­­|::::::::::^━━^
+        <br />____━━____━*━____━━____━━*___­━┗­­­|:::: ｡◕‿‿­­­­◕｡|
+        <br />____*━___━━_*___━━____*━━____*­━­­­╰O-O----O-O
+        <br />
 </div>
-
-
-
-

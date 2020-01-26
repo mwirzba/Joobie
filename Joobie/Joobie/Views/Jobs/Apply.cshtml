@@ -1,0 +1,44 @@
+﻿@model Joobie.Models.JobModels.CVJobApplicationUser
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div class="border backgroundWhite">
+    <div class="col-7">
+        <h2 class="text-info">Dodaj CV do oferty</h2>
+        <br />
+    </div>
+    <div class="col-5">
+        <form asp-action="Apply" enctype="multipart/form-data" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="JobsId" value="@Model.JobsId" />
+
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="inputGroupFileAddon01">Dodaj CV</span>
+                </div>
+                <div class="custom-file">
+                    <input asp-for="Cv" type="file" class="custom-file-input" id="inputGroupFile01"
+                           aria-describedby="inputGroupFileAddon01">
+                    <label class="custom-file-label" for="inputGroupFile01">Wybierz plik</label>
+                </div>
+            </div>
+
+            <span asp-validation-for="Cv" class="text-danger"></span>
+
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="row">
+                <div class="col-12">
+                    <input type="submit" value="Wyślij" class="btn btn-info form-control btn-space">
+                    <a asp-action="Details" asp-route-id="@Model.JobsId" class="btn btn-success form-control btn-space">Wróć do szczegółów</a>
+                    <a asp-action="Index" class="btn btn-success form-control btn-space">Wróć do listy ofert</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

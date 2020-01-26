@@ -21,7 +21,7 @@ namespace Joobie.Migrations
 
             modelBuilder.Entity("Joobie.Models.JobModels.CVJobApplicationUser", b =>
                 {
-                    b.Property<string>("ApplicationUserId")
+                    b.Property<string>("EmployeeUserId")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<long>("JobsId")
@@ -30,19 +30,12 @@ namespace Joobie.Migrations
                     b.Property<string>("CvName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("JobId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<long?>("JobId1")
+                    b.Property<long?>("JobId")
                         .HasColumnType("bigint");
 
-                    b.HasKey("ApplicationUserId", "JobsId");
+                    b.HasKey("EmployeeUserId", "JobsId");
 
-                    b.HasAlternateKey("JobId");
-
-                    b.HasIndex("JobId1");
+                    b.HasIndex("JobId");
 
                     b.ToTable("CVJobApplicationUser");
                 });
@@ -746,15 +739,15 @@ namespace Joobie.Migrations
 
             modelBuilder.Entity("Joobie.Models.JobModels.CVJobApplicationUser", b =>
                 {
-                    b.HasOne("Joobie.Models.JobModels.ApplicationUser", "ApplicationUser")
+                    b.HasOne("Joobie.Models.JobModels.ApplicationUser", "EmployeeUser")
                         .WithMany("CVJobApplicationUser")
-                        .HasForeignKey("ApplicationUserId")
+                        .HasForeignKey("EmployeeUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Joobie.Models.JobModels.Job", "Job")
                         .WithMany("CVJobApplicationUser")
-                        .HasForeignKey("JobId1");
+                        .HasForeignKey("JobId");
                 });
 
             modelBuilder.Entity("Joobie.Models.JobModels.Job", b =>
