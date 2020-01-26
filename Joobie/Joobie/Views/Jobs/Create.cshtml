@@ -88,11 +88,7 @@
                 <select asp-for="WorkingHoursId" class="form-control" asp-items="ViewBag.WorkingHours"></select>
             </div>
         </div>
-        @if (User.IsInRole(Strings.CompanyUser))
-        {
-            <input type="hidden" value="UserId"/>
-        }
-        else
+        @if (!User.IsInRole(Strings.CompanyUser))
         {
             <div class="form-group row">
                 <div class="col-2">

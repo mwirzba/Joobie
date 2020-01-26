@@ -130,6 +130,14 @@ namespace Joobie.Controllers
         [Authorize(Roles = Strings.AdminUser + "," + Strings.ModeratorUser + "," + Strings.CompanyUser)]
         public async Task<IActionResult> Create([Bind("Id,Name,Description,Localization,AddedDate,ExpirationDate,Salary,CategoryId,TypeOfContractId,WorkingHoursId,UserId")] Job job)
         {
+            if (User.IsInRole(Strings.CompanyUser))
+            {
+                var claimsIdentity = (ClaimsIdentity)this.User.Identity;
+                var claim = claimsIdentity.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier);
+                var userId = claim.Value;
+                job.UserId = userId;
+            }
+
             if (ModelState.IsValid)
             {
                 _context.Add(job);

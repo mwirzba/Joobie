@@ -64,10 +64,9 @@ namespace Joobie.Controllers
                 return NotFound();
 
             var user = await _userManager.GetUserAsync(HttpContext.User);
-            var job = await  _context.Job
+            var job =  _context.Job
                              .Include(j => j.CVJobApplicationUser)
-                             .Where(j => j.Id == id)
-                             .FirstOrDefaultAsync();
+                             .FirstOrDefault(j => j.Id == id);
             if (job == null)
                 return NotFound();
 
