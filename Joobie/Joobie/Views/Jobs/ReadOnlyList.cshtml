@@ -7,44 +7,61 @@
 
 
 <partial name="~/Views/Jobs/Search.cshtml" model=@ViewData["searchSettingViewModel"] />
-<br/>
+<br />
 <div class="container">
     <div class="row">
-        @if(@Model.Items.Any())
+        @if (@Model.Items.Any())
         {
             @foreach (var job in Model.Items)
             {
                 <div class="col-md-12">
-                    <div class="card">
-                        <div class="card-body">
-                            <form asp-action="Details" method="post">
-                                <h5 class="card-title">
-                                    <button class="btn btn-link" type="submit">@job.Name</button>
-                                </h5>
-                                <input type="hidden" name="id" asp-for="@job.Id"/>
-                            </form>
-                            <h6 class="card-subtitle mb-2 text-muted">@job.ApplicationUser.Name</h6>
-                            <p class="card-text">@job.Localization</p>
-                        </div>
+                    <form asp-action="Details" method="post">
+                        <div class="card flex-row flex-wrap">
+                    <div class="card-header border-0">
+                        <img class="img-thumbnail h-100" id="img" style="width: 100px;" src="@Url.Content("~/CompanyIcons/" + job.ApplicationUser.CompanyImagePath)" onerror="imgError(this);" />
+                    </div>
+                    <div class="card-block px-2">
+
+                        <h5 class="card-title">
+                            <button class="btn btn-link" type="submit">@job.Name</button>
+                        </h5>
+                        <input type="hidden" name="id" asp-for="@job.Id" />
+                        <h6 class="card-subtitle mb-2 text-muted">@job.ApplicationUser.Name</h6>
+                        <p class="card-text">@job.Localization</p>
+                        <div class="w-100"></div>
                     </div>
                 </div>
+                 </form>
+                </div>
+
+
+
             }
 
-         <div page-model="@Model.PagingInfo" page-classes-enabled="true"
-            page-class="btn" page-class-normal="btn-secondary"
-            page-class-selected="btn-primary"
-            class="btn-group pull m-1">
-         </div>
+            <div page-model="@Model.PagingInfo" page-classes-enabled="true"
+                 page-class="btn" page-class-normal="btn-secondary"
+                 page-class-selected="btn-primary"
+                 class="btn-group pull m-1">
+            </div>
         }
-        else 
+        else
         {
             <h2>Niestety nie znaleziono żadnych ofert</h2>
         }
     </div>
 
-
-
-
 </div>
 
 
+
+
+@section scripts {
+    <script type="text/javascript">
+
+        function imgError(image) {
+             image.onerror = "";
+            image.src = "/CompanyIcons/default.png";
+            return true;
+        }
+    </script>
+}
