@@ -1,5 +1,6 @@
 ﻿@model Joobie.Models.JobModels.CVJobApplicationUser
 
+
 @{
     ViewData["Title"] = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -39,7 +40,7 @@
                     <label asp-for="Job.Description" class="control-label"></label>
                 </div>
                 <div class="col-5">
-                    <input asp-for="Job.Description" class="form-control" />
+                    @Html.Raw(Model.Job.Description)
                 </div>
                 <span asp-validation-for="Job.Description" class="text-danger"></span>
             </div>

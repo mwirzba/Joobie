@@ -4,7 +4,7 @@
     ViewData["Title"] = "Edit";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<link href="~/lib/Trumbowyg-master/dist/ui/trumbowyg.min.css" rel="stylesheet" />
+    <link href="~/lib/Trumbowyg/ui/trumbowyg.min.css" rel="stylesheet" />
 <h1>Edit</h1>
 
 <h4>Job</h4>
@@ -76,8 +76,7 @@
     <a asp-action="Index">Back to List</a>
 </div>
 @section editor_scripts{
-
     <script src="//ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="~/lib/Trumbowyg-master/dist/trumbowyg.min.js"></script>
+    <script src="~/lib/Trumbowyg/trumbowyg.min.js"></script>
     <script>$('#editor').trumbowyg();</script>
 }
