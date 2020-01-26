@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Joobie.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200126144603_Initial")]
+    [Migration("20200126151052_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -23,21 +23,18 @@ namespace Joobie.Migrations
 
             modelBuilder.Entity("Joobie.Models.JobModels.CVJobApplicationUser", b =>
                 {
+                    b.Property<long>("JobInMiddleTableId")
+                        .HasColumnType("bigint");
+
                     b.Property<string>("EmployeeUserId")
                         .HasColumnType("nvarchar(450)");
-
-                    b.Property<long>("JobsId")
-                        .HasColumnType("bigint");
 
                     b.Property<string>("CvName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long?>("JobId")
-                        .HasColumnType("bigint");
+                    b.HasKey("JobInMiddleTableId", "EmployeeUserId");
 
-                    b.HasKey("EmployeeUserId", "JobsId");
-
-                    b.HasIndex("JobId");
+                    b.HasIndex("EmployeeUserId");
 
                     b.ToTable("CVJobApplicationUser");
                 });
@@ -747,9 +744,11 @@ namespace Joobie.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Joobie.Models.JobModels.Job", "Job")
+                    b.HasOne("Joobie.Models.JobModels.Job", "JobInMiddleTable")
                         .WithMany("CVJobApplicationUser")
-                        .HasForeignKey("JobId");
+                        .HasForeignKey("JobInMiddleTableId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Joobie.Models.JobModels.Job", b =>

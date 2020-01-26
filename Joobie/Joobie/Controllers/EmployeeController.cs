@@ -12,6 +12,8 @@ using Microsoft.AspNetCore.Authorization;
 using Joobie.Utility;
 using System.IO;
 using Microsoft.AspNetCore.Http;
+using Joobie.ViewModels;
+using Microsoft.AspNetCore.Identity;
 
 namespace Joobie.Controllers
 {
@@ -19,11 +21,14 @@ namespace Joobie.Controllers
     {
 
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<IdentityUser> _userManager;
+        private readonly string _downloadPath = "/Joobie/Joobie/wwwroot/cVs/";
+        private static byte _pageSize = 5;
 
-        private const string _cVFilePath = "/Joobie/Joobie/wwwroot/cVs";
-
-        public EmployeeController(ApplicationDbContext context)
+        public EmployeeController(ApplicationDbContext context,
+            UserManager<IdentityUser> userManager)
         {
+            _userManager = userManager;
             _context = context;
         }
 
@@ -34,99 +39,72 @@ namespace Joobie.Controllers
             var claimsIdentity = (ClaimsIdentity)User.Identity;
             var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
             string userId = claim.Value;
-            return View();
 
+            var applicationDbContext = _context.CVJobApplicationUser.Include(c => c.EmployeeUser)
+                .Include(c => c.JobInMiddleTable).ThenInclude(j => j.Category)
+                .Include(j => j.JobInMiddleTable).ThenInclude(j => j.TypeOfContract)
+                .Include(j => j.JobInMiddleTable).ThenInclude(j => j.WorkingHours)
+                .Include(j => j.JobInMiddleTable).ThenInclude(j => j.ApplicationUser)
+                .Where(j => j.EmployeeUserId == userId);
+            var list = applicationDbContext.ToList();
+            return View(list);
         }
 
 
-        [Authorize(Roles = Strings.EmployeeUser)]
-        public async Task<IActionResult> Apply(long Id)
+        public async Task<IActionResult> JobsOffers(int page = 1)
         {
-            var job = await _context.Job.Include(j => j.Category)
-                .Include(j => j.TypeOfContract)
-                .Include(j => j.WorkingHours)
-                .Include(j => j.ApplicationUser)
-                .Where(j => j.Id == Id)
-                .FirstOrDefaultAsync();
-            CVJobApplicationUser cVJobApplicationUser = new CVJobApplicationUser
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            var jobs = _context.Job.Include(j=>j.ApplicationUser)
+                    .Include(j => j.CVJobApplicationUser)
+                    .Where(j => j.UserId != user.Id);
+            var lol = jobs.ToList();
+            
+            int totalJobs = jobs.Count();
+
+            jobs = jobs.OrderBy(c => c.AddedDate)
+
+                  .Skip((page - 1) * _pageSize)
+                  .Take(_pageSize);
+
+            var viewModel = new ListViewModel<Job>
             {
-                Job = job,
-                JobsId = Id
-            };
-            return View(cVJobApplicationUser);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Apply(CVJobApplicationUser cVJobApplicationUser)
-        {
-            var claimsIdentity = (ClaimsIdentity)User.Identity;
-            var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
-            string userId = claim.Value;
-            cVJobApplicationUser.EmployeeUserId = userId;
-            var uniqueName = "";
-            bool saveImageSuccess = true;
-            if (!ModelState.IsValid)
-            {
-                return View("Apply", cVJobApplicationUser);
-            }
-            var cVJobApplicationUserInDb = await _context.CVJobApplicationUser.FirstOrDefaultAsync(c => c.EmployeeUserId == userId && c.JobsId == cVJobApplicationUser.JobsId);
-            if (cVJobApplicationUserInDb != null)
-            {
-                uniqueName = cVJobApplicationUserInDb.CvName;
-                cVJobApplicationUserInDb.Job = cVJobApplicationUser.Job;
-                cVJobApplicationUserInDb.EmployeeUser = cVJobApplicationUser.EmployeeUser;
-
-                if (Request.Form.Files.Any())
-                    saveImageSuccess = await SaveCvToDirectory(uniqueName);
-                if (saveImageSuccess == false)
-                    return View("Error");
-
-                await _context.SaveChangesAsync();
-
-                return RedirectToAction(nameof(Index));
-            }
-
-
-            uniqueName = await GetUniqueFileName();
-            cVJobApplicationUser.CvName = Path.GetFileNameWithoutExtension(uniqueName)
-                + Path.GetExtension(cVJobApplicationUser.Cv.FileName);
-            saveImageSuccess = await SaveCvToDirectory(cVJobApplicationUser.CvName);
-            if (saveImageSuccess == false)
-                return View("Error");
-            await _context.CVJobApplicationUser.AddAsync(cVJobApplicationUser);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-
-        private async Task<bool> SaveCvToDirectory(string fileName)
-        {
-            IFormFile file = Request.Form.Files.First();
-            string pathSrc = Path.GetDirectoryName(Path.GetDirectoryName(Directory.GetCurrentDirectory()));
-            pathSrc += _cVFilePath;
-            using (var stream = new FileStream(Path.Combine(pathSrc, fileName), FileMode.Create))
-            {
-                await file.CopyToAsync(stream);
-            }
-            return true;
-        }
-
-
-        private async Task<string> GetUniqueFileName()
-        {
-            string fileName = "";
-            await Task.Run(() =>
-            {
-                fileName = Path.GetRandomFileName();
-                string path = Path.Combine("~/Data/Cvs", fileName);
-                while (System.IO.File.Exists(path))
+                Items = jobs,
+                PagingInfo = new PagingInfo
                 {
-                    fileName = Path.GetRandomFileName();
-                    path = Path.Combine("~/Data/Cvs", fileName);
+                    CurrentPage = (byte)page,
+                    ItemsPerPage = _pageSize,
+                    TotalItems = (byte)totalJobs
                 }
-            });
+            };
 
-            return fileName;
+            return View(viewModel);
+
+        }
+
+        public async Task<IActionResult> Details(long? id)
+        {
+            if (id == null)
+                return NotFound();
+
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            var job = await _context.Job
+                             .Include(j => j.CVJobApplicationUser)
+                             .Where(j => j.Id == id)
+                             .FirstOrDefaultAsync();
+            if (job == null)
+                return NotFound();
+
+            return View(job);
+
+        }
+
+        public IActionResult Download(string cvPath)
+        {
+            var path = _downloadPath + cvPath;
+            string filePath = path;
+            Response.Headers.Add("Content-Disposition", "inline; filename=CV.pdf");
+            return File(filePath, "application/pdf");
+
         }
     }
 }

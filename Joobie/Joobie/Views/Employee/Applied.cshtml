@@ -4,22 +4,17 @@
     ViewData["Title"] = "Applied";
 }
 
-<h1>Applied</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.JobsId)
+                @Html.DisplayNameFor(model => model.JobInMiddleTable.Name)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.CvName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.EmployeeUser)
+                @Html.DisplayNameFor(model => model.JobInMiddleTable.ApplicationUser.Name)
             </th>
             <th></th>
         </tr>
@@ -28,20 +23,20 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.JobsId)
+                @Html.DisplayFor(modelItem => item.JobInMiddleTable.Name)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.CvName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.EmployeeUser.Id)
+                @Html.DisplayFor(modelItem => item.JobInMiddleTable.ApplicationUser.Name)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) 
             </td>
         </tr>
 }
     </tbody>
 </table>
+
+

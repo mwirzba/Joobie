@@ -30,7 +30,7 @@ namespace Joobie.Data
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<CVJobApplicationUser>()
-        .HasKey(t => new { t.EmployeeUserId, t.JobsId });
+        .HasKey(t => new { t.JobInMiddleTableId, t.EmployeeUserId });
 
             modelBuilder.Entity<ApplicationUser>().HasData(
                 new ApplicationUser { Id= "31d98481-9339-4e36-b3d4-c8f7e7ab3256", UserName = "DefaultUser@gmail.com", NormalizedUserName = "DEFAULTUSER@GMAIL.COM", Email = "DefaultUser@gmail.com", EmailConfirmed = false, PasswordHash = "AQAAAAEAACcQAAAAEKQK0227340I7E9mRrWOJJwBpOyDx6zuZ9iN06nmNGJZkEyHl7ZZdBgxhtulSzn69Q==", SecurityStamp = "PBSCMSVSUTGUUIVILSKHSXF2HIQ2OXW6", ConcurrencyStamp = "e5fbd409-c106-4492-8ed1-deeb2da3a7af", Name = "DefaultCompany", Nip = "DefaultNip", LockoutEnabled = true }

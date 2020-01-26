@@ -18,9 +18,11 @@ namespace Joobie.Models.JobModels
         [Required(ErrorMessage ="CV jest wymagane")]
         public IFormFile Cv { get; set; }
 
+        public long JobInMiddleTableId { get; set; }
+        public Job JobInMiddleTable { get; set; }
+
+
         public string EmployeeUserId { get; set; }
         public ApplicationUser EmployeeUser { get; set; }
-        public long JobsId { get; set; }
-        public Job Job { get; set; }
     }
 }

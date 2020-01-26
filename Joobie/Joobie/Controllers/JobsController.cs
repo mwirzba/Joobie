@@ -348,8 +348,8 @@ namespace Joobie.Controllers
                 .FirstOrDefaultAsync();
             CVJobApplicationUser cVJobApplicationUser = new CVJobApplicationUser
             {
-                Job = job,
-                JobsId = Id
+                JobInMiddleTable = job,
+                JobInMiddleTableId = Id
             };
             return View(cVJobApplicationUser);
         }
@@ -368,11 +368,11 @@ namespace Joobie.Controllers
             {
                 return View("Apply", cVJobApplicationUser);
             }
-            var cVJobApplicationUserInDb = await _context.CVJobApplicationUser.FirstOrDefaultAsync(c => c.EmployeeUserId == userId && c.JobsId == cVJobApplicationUser.JobsId);
+            var cVJobApplicationUserInDb = await _context.CVJobApplicationUser.FirstOrDefaultAsync(c => c.EmployeeUserId == userId && c.JobInMiddleTableId == cVJobApplicationUser.JobInMiddleTableId);
             if (cVJobApplicationUserInDb != null)
             {
                 uniqueName = cVJobApplicationUserInDb.CvName;
-                cVJobApplicationUserInDb.Job = cVJobApplicationUser.Job;
+                cVJobApplicationUserInDb.JobInMiddleTable = cVJobApplicationUser.JobInMiddleTable;
                 cVJobApplicationUserInDb.EmployeeUser = cVJobApplicationUser.EmployeeUser;
 
                 if (Request.Form.Files.Any())

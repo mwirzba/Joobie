@@ -246,14 +246,13 @@ namespace Joobie.Migrations
                 name: "CVJobApplicationUser",
                 columns: table => new
                 {
+                    JobInMiddleTableId = table.Column<long>(nullable: false),
                     EmployeeUserId = table.Column<string>(nullable: false),
-                    JobsId = table.Column<long>(nullable: false),
-                    CvName = table.Column<string>(nullable: true),
-                    JobId = table.Column<long>(nullable: true)
+                    CvName = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CVJobApplicationUser", x => new { x.EmployeeUserId, x.JobsId });
+                    table.PrimaryKey("PK_CVJobApplicationUser", x => new { x.JobInMiddleTableId, x.EmployeeUserId });
                     table.ForeignKey(
                         name: "FK_CVJobApplicationUser_AspNetUsers_EmployeeUserId",
                         column: x => x.EmployeeUserId,
@@ -261,11 +260,11 @@ namespace Joobie.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_CVJobApplicationUser_Job_JobId",
-                        column: x => x.JobId,
+                        name: "FK_CVJobApplicationUser_Job_JobInMiddleTableId",
+                        column: x => x.JobInMiddleTableId,
                         principalTable: "Job",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(
@@ -398,9 +397,9 @@ namespace Joobie.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CVJobApplicationUser_JobId",
+                name: "IX_CVJobApplicationUser_EmployeeUserId",
                 table: "CVJobApplicationUser",
-                column: "JobId");
+                column: "EmployeeUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Job_CategoryId",
