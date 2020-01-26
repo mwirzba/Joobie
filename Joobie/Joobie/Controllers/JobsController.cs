@@ -416,11 +416,11 @@ namespace Joobie.Controllers
             await Task.Run(() =>
             {
                 fileName = Path.GetRandomFileName();
-                string path = Path.Combine("~/Data/Cvs", fileName);
+                string path = Path.Combine("~/wwwroot/cVs", fileName);
                 while (System.IO.File.Exists(path))
                 {
                     fileName = Path.GetRandomFileName();
-                    path = Path.Combine("~/Data/Cvs", fileName);
+                    path = Path.Combine("~/wwwroot/cVs", fileName);
                 }
             });
 

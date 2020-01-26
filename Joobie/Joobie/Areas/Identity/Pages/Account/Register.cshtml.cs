@@ -212,11 +212,11 @@ namespace Joobie.Areas.Identity.Pages.Account
             await Task.Run(() =>
             {
                 fileName = Path.GetRandomFileName();
-                string path = Path.Combine("~/Data/Images", fileName);
+                string path = Path.Combine("~/wwwroot/CompanyIcons", fileName);
                 while (System.IO.File.Exists(path))
                 {
                     fileName = Path.GetRandomFileName();
-                    path = Path.Combine("~/Data/Images", fileName);
+                    path = Path.Combine("~/wwwroot/CompanyIcons", fileName);
                 }
             });
 
