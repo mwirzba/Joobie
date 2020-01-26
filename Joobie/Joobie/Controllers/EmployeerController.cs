@@ -4,8 +4,7 @@ using Joobie.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.Data.Entity;
+using Microsoft.EntityFrameworkCore;
 using System.IO;
 using System.Linq;
 using System.Security.Claims;
@@ -19,7 +18,7 @@ namespace Joobie.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly UserManager<IdentityUser> _userManager;
-        private readonly string _downloadPath = "/Joobie/Joobie/wwwroot/cVs/";
+        private readonly string _downloadPath = "~/cVs/";
         private static byte _pageSize = 5;
 
         public EmployeerController(ApplicationDbContext context, 
@@ -62,11 +61,19 @@ namespace Joobie.Controllers
         {
             if (id == null)
                 return NotFound();
+            var job2 =  _context.Job
+                            .Include(j => j.CVJobApplicationUser)
+                            .ToList();
 
             var user = await _userManager.GetUserAsync(HttpContext.User);
-            var job =  _context.Job
-                             .Include(j => j.CVJobApplicationUser)
-                             .FirstOrDefault(j => j.Id == id);
+
+            var job = _context.Job
+                .Include(c  => c.ApplicationUser)
+                .Include(c => c.CVJobApplicationUser)
+                .ThenInclude(j => j.EmployeeUser)
+                .FirstOrDefault(c => c.ApplicationUser.Id == user.Id);
+
+
             if (job == null)
                 return NotFound();
 
@@ -74,13 +81,24 @@ namespace Joobie.Controllers
 
         }
 
-        public IActionResult Download(string cvPath)
+        public async Task<IActionResult> Download(string cvPath)
         {
-            var path = _downloadPath + cvPath;
-            string filePath = path;
-            Response.Headers.Add("Content-Disposition", "inline; filename=CV.pdf");
-            return File(filePath, "application/pdf");
-
+            var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\cVs\\" + cvPath);
+            var memory = new MemoryStream();
+            if (System.IO.File.Exists(path))
+            {
+                using (var stream = new FileStream(path, FileMode.Open))
+                {
+                    await stream.CopyToAsync(memory);
+                }
+                memory.Position = 0;
+                return File(memory, "application/pdf", "CV.pdf");
+            }
+            else
+            {
+                ViewBag.Error = "Nie mozna odnaleźć CV skontaktuj się z administatorem.";
+                return RedirectToAction(nameof(JobsOffers));
+            }
         }
 
     }

@@ -1,19 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Joobie.Data;
 using Joobie.Models.JobModels;
 using System.Security.Claims;
-using Microsoft.AspNetCore.Authorization;
-using Joobie.Utility;
-using System.IO;
 using Microsoft.AspNetCore.Http;
 using Joobie.ViewModels;
 using Microsoft.AspNetCore.Identity;
+using System.Linq;
 
 namespace Joobie.Controllers
 {
@@ -57,7 +51,6 @@ namespace Joobie.Controllers
             var jobs = _context.Job.Include(j=>j.ApplicationUser)
                     .Include(j => j.CVJobApplicationUser)
                     .Where(j => j.UserId != user.Id);
-            var lol = jobs.ToList();
             
             int totalJobs = jobs.Count();
 

@@ -1,4 +1,4 @@
-﻿@model  Joobie.ViewModels.ListViewModel<Joobie.Models.JobModels.Job>
+﻿@model Joobie.ViewModels.ListViewModel<Joobie.Models.JobModels.Job>
 @{
     ViewData["Title"] = "JobsOffers";
     Layout = "_EmployeerLayout";
@@ -6,46 +6,51 @@
 
 <h1>Twoje oferty pracy</h1>
 
+@if (ViewBag.Error != null)
+{
+    <strong>ViewBag.Error</strong>
+}
+
 <div class="container">
     <div class="row">
         @if (@Model.Items.Any())
         {
-        @foreach (var job in Model.Items)
+            @foreach (var job in Model.Items)
             {
-        <div class="col-md-12 readonly-list-space">
-            <form asp-action="Details" method="post">
-                <div class="card flex-row flex-wrap">
-                    <div class="card-header border-0">
-                        <img class="img-thumbnail h-100" id="img" style="width: 100px;" src="@Url.Content("~/CompanyIcons/" + job.ApplicationUser.CompanyImagePath)" onerror="imgError(this);" />
-                    </div>
-                    <div class="card-block px-2">
-                        <h5 class="card-title">
-                            <button class="btn btn-link" type="submit">@job.Name</button>
-                        </h5>
-                        <input type="hidden" name="id" asp-for="@job.Id" />
-                        @if(@job.CVJobApplicationUser.Any())
-                        {
-                            <h6 class="card-subtitle mb-2 text-muted">Ilość aplikacji: @job.CVJobApplicationUser.Count</h6>
-                        }
-                        else 
-                        {
-                            <h6 class="card-subtitle mb-2 text-muted">Jeszcze nikt nie zaaplikował na tą ofertę</h6>
-                        }
-                        <p class="card-text">@job.Localization</p>
-                        <div class="w-100"></div>
-                    </div>
+                <div class="col-md-12 readonly-list-space">
+                    <form asp-action="Details" method="post">
+                        <div class="card flex-row flex-wrap">
+                            <div class="card-header border-0">
+                                <img class="img-thumbnail h-100" id="img" style="width: 100px;" src="@Url.Content("~/CompanyIcons/" + job.ApplicationUser.CompanyImagePath)" onerror="imgError(this);" />
+                            </div>
+                            <div class="card-block px-2">
+                                <h5 class="card-title">
+                                    <button class="btn btn-link" type="submit">@job.Name</button>
+                                </h5>
+                                <input type="hidden" name="id" asp-for="@job.Id" />
+                                @if (@job.CVJobApplicationUser.Any())
+                                {
+                                    <h6 class="card-subtitle mb-2 text-muted">Ilość aplikacji: @job.CVJobApplicationUser.Count</h6>
+                                }
+                                else
+                                {
+                                    <h6 class="card-subtitle mb-2 text-muted">Jeszcze nikt nie zaaplikował na tą ofertę</h6>
+                                }
+                                <p class="card-text">@job.Localization</p>
+                                <div class="w-100"></div>
+                            </div>
+                        </div>
+                    </form>
                 </div>
-            </form>
-        </div>
 
-       }
+            }
 
 
-        <div page-model="@Model.PagingInfo" page-classes-enabled="true"
-             page-class="btn" page-class-normal="btn-secondary"
-             page-class-selected="btn-primary"
-             class="btn-group pull m-1">
-        </div>
+            <div page-model="@Model.PagingInfo" page-classes-enabled="true"
+                 page-class="btn" page-class-normal="btn-secondary"
+                 page-class-selected="btn-primary"
+                 class="btn-group pull m-1">
+            </div>
         }
         else
         {
@@ -55,4 +60,6 @@
     </div>
 
 </div>
+
+
 
