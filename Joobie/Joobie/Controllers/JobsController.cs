@@ -66,7 +66,7 @@ namespace Joobie.Controllers
                 }
             };
 
-            if (User.IsInRole(Strings.AdminUser))
+            if (User.IsInRole(Strings.AdminUser) || User.IsInRole(Strings.ModeratorUser))
             {           
                 return View(viewModel);
             }
