@@ -6,6 +6,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20200125151653_Initial.cs" />
+    <Compile Remove="Migrations\20200125151653_Initial.Designer.cs" />
     <Compile Remove="Migrations\20200125182752_mig.cs" />
     <Compile Remove="Migrations\20200125182752_mig.Designer.cs" />
     <Compile Remove="Migrations\20200125183400_mig.cs" />
@@ -22,6 +24,16 @@
     <Compile Remove="Migrations\20200125210958_Cv.Designer.cs" />
     <Compile Remove="Migrations\20200125215702_mig23.cs" />
     <Compile Remove="Migrations\20200125215702_mig23.Designer.cs" />
+    <Compile Remove="Migrations\20200125223406_Cv.cs" />
+    <Compile Remove="Migrations\20200125223406_Cv.Designer.cs" />
+    <Compile Remove="Migrations\20200125225252_Cv2.cs" />
+    <Compile Remove="Migrations\20200125225252_Cv2.Designer.cs" />
+    <Compile Remove="Migrations\20200125234225_AddedImagePathToUser.cs" />
+    <Compile Remove="Migrations\20200125234225_AddedImagePathToUser.Designer.cs" />
+    <Compile Remove="Migrations\20200125234705_AddedImagePathToUser2.cs" />
+    <Compile Remove="Migrations\20200125234705_AddedImagePathToUser2.Designer.cs" />
+    <Compile Remove="Migrations\20200126144333_test.cs" />
+    <Compile Remove="Migrations\20200126144333_test.Designer.cs" />
   </ItemGroup>
 
 

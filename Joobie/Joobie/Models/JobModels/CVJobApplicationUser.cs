@@ -11,11 +11,6 @@ namespace Joobie.Models.JobModels
 {
     public class CVJobApplicationUser
     {
-
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int JobId { get; set; }
-
         public string CvName { get; set; }
 
         [NotMapped]
@@ -23,8 +18,8 @@ namespace Joobie.Models.JobModels
         [Required(ErrorMessage ="CV jest wymagane")]
         public IFormFile Cv { get; set; }
 
-        public string ApplicationUserId { get; set; }
-        public ApplicationUser ApplicationUser { get; set; }
+        public string EmployeeUserId { get; set; }
+        public ApplicationUser EmployeeUser { get; set; }
         public long JobsId { get; set; }
         public Job Job { get; set; }
     }

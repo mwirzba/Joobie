@@ -21,6 +21,7 @@ namespace Joobie.Controllers
 
     public class JobsController : Controller
     {
+        
         private readonly ApplicationDbContext _context;
 
         private const string _cVFilePath = "/Joobie/Joobie/wwwroot/cVs";
@@ -352,19 +353,19 @@ namespace Joobie.Controllers
             var claimsIdentity = (ClaimsIdentity)User.Identity;
             var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
             string userId = claim.Value;
-            cVJobApplicationUser.ApplicationUserId = userId;
+            cVJobApplicationUser.EmployeeUserId = userId;
             var uniqueName = "";
             bool saveImageSuccess = true;
             if (!ModelState.IsValid)
             {
                 return View("Apply", cVJobApplicationUser);
             }
-            var cVJobApplicationUserInDb = await _context.CVJobApplicationUser.FirstOrDefaultAsync(c => c.ApplicationUserId == userId && c.JobsId == cVJobApplicationUser.JobsId);
+            var cVJobApplicationUserInDb = await _context.CVJobApplicationUser.FirstOrDefaultAsync(c => c.EmployeeUserId == userId && c.JobsId == cVJobApplicationUser.JobsId);
             if (cVJobApplicationUserInDb != null)
             {
                 uniqueName = cVJobApplicationUserInDb.CvName;
                 cVJobApplicationUserInDb.Job = cVJobApplicationUser.Job;
-                cVJobApplicationUserInDb.ApplicationUser = cVJobApplicationUser.ApplicationUser;
+                cVJobApplicationUserInDb.EmployeeUser = cVJobApplicationUser.EmployeeUser;
 
                 if (Request.Form.Files.Any())
                     saveImageSuccess = await SaveCvToDirectory(uniqueName);
