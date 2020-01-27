@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Joobie.Migrations
 {
-    public partial class Initial : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -201,13 +201,13 @@ namespace Joobie.Migrations
                 {
                     Id = table.Column<long>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(nullable: false),
                     isActive = table.Column<bool>(nullable: false),
-                    Description = table.Column<string>(nullable: true),
-                    Localization = table.Column<string>(nullable: true),
-                    AddedDate = table.Column<DateTime>(nullable: true),
-                    ExpirationDate = table.Column<DateTime>(nullable: true),
-                    Salary = table.Column<string>(nullable: true),
+                    Description = table.Column<string>(nullable: false),
+                    Localization = table.Column<string>(nullable: false),
+                    AddedDate = table.Column<DateTime>(nullable: false),
+                    ExpirationDate = table.Column<DateTime>(nullable: false),
+                    Salary = table.Column<string>(nullable: false),
                     CategoryId = table.Column<byte>(nullable: false),
                     TypeOfContractId = table.Column<byte>(nullable: false),
                     WorkingHoursId = table.Column<byte>(nullable: false),
@@ -270,7 +270,7 @@ namespace Joobie.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Discriminator", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName", "CompanyImagePath", "Name", "Nip" },
-                values: new object[] { "31d98481-9339-4e36-b3d4-c8f7e7ab3256", 0, "e5fbd409-c106-4492-8ed1-deeb2da3a7af", "ApplicationUser", "DefaultUser@gmail.com", false, true, null, null, "DEFAULTUSER@GMAIL.COM", "AQAAAAEAACcQAAAAEKQK0227340I7E9mRrWOJJwBpOyDx6zuZ9iN06nmNGJZkEyHl7ZZdBgxhtulSzn69Q==", null, false, "PBSCMSVSUTGUUIVILSKHSXF2HIQ2OXW6", false, "DefaultUser@gmail.com", null, "DefaultCompany", "DefaultNip" });
+                values: new object[] { "31d98481-9339-4e36-b3d4-c8f7e7ab3256", 0, "e5fbd409-c106-4492-8ed1-deeb2da3a7af", "ApplicationUser", "DefaultUser@gmail.com", true, true, null, null, "DEFAULTUSER@GMAIL.COM", "AQAAAAEAACcQAAAAEKQK0227340I7E9mRrWOJJwBpOyDx6zuZ9iN06nmNGJZkEyHl7ZZdBgxhtulSzn69Q==", null, false, "PBSCMSVSUTGUUIVILSKHSXF2HIQ2OXW6", false, "DefaultUser@gmail.com", null, "DefaultCompany", "DefaultNip" });
 
             migrationBuilder.InsertData(
                 table: "Category",
@@ -340,22 +340,7 @@ namespace Joobie.Migrations
             migrationBuilder.InsertData(
                 table: "Job",
                 columns: new[] { "Id", "AddedDate", "CategoryId", "Description", "ExpirationDate", "Localization", "Name", "Salary", "TypeOfContractId", "UserId", "WorkingHoursId", "isActive" },
-                values: new object[,]
-                {
-                    { 1L, null, (byte)16, null, null, null, ".NET Developer", null, (byte)1, "31d98481-9339-4e36-b3d4-c8f7e7ab3256", (byte)1, true },
-                    { 3L, null, (byte)1, null, null, null, "Senior .NET Developer", null, (byte)1, "31d98481-9339-4e36-b3d4-c8f7e7ab3256", (byte)1, true },
-                    { 4L, null, (byte)16, null, null, null, "Starszy Inżynier Oprogramowania .NET", null, (byte)1, "31d98481-9339-4e36-b3d4-c8f7e7ab3256", (byte)1, true },
-                    { 6L, null, (byte)16, null, null, null, "C# .Net developer", null, (byte)3, "31d98481-9339-4e36-b3d4-c8f7e7ab3256", (byte)1, true },
-                    { 7L, null, (byte)15, null, null, null, ".NET Developer", null, (byte)5, "31d98481-9339-4e36-b3d4-c8f7e7ab3256", (byte)1, true },
-                    { 8L, null, (byte)12, null, null, null, ".NET Developer", null, (byte)3, "31d98481-9339-4e36-b3d4-c8f7e7ab3256", (byte)1, true },
-                    { 11L, null, (byte)15, null, null, null, "Programista .NET", null, (byte)5, "31d98481-9339-4e36-b3d4-c8f7e7ab3256", (byte)1, true },
-                    { 2L, null, (byte)1, null, null, null, "Junior .NET Developer", null, (byte)1, "31d98481-9339-4e36-b3d4-c8f7e7ab3256", (byte)2, true },
-                    { 12L, null, (byte)16, null, null, null, "Junior .NET Developer", null, (byte)5, "31d98481-9339-4e36-b3d4-c8f7e7ab3256", (byte)2, true },
-                    { 5L, null, (byte)16, null, null, null, "Programista .NET", null, (byte)1, "31d98481-9339-4e36-b3d4-c8f7e7ab3256", (byte)3, true },
-                    { 9L, null, (byte)13, null, null, null, "Software Engineer C#", null, (byte)3, "31d98481-9339-4e36-b3d4-c8f7e7ab3256", (byte)3, true },
-                    { 10L, null, (byte)11, null, null, null, "Quality Assurance", null, (byte)1, "31d98481-9339-4e36-b3d4-c8f7e7ab3256", (byte)3, true },
-                    { 13L, null, (byte)16, null, null, null, "Azure DevOps", null, (byte)1, "31d98481-9339-4e36-b3d4-c8f7e7ab3256", (byte)3, true }
-                });
+                values: new object[] { 1L, new DateTime(2020, 1, 26, 0, 0, 0, 0, DateTimeKind.Unspecified), (byte)16, ":)", new DateTime(2020, 1, 26, 0, 0, 0, 0, DateTimeKind.Unspecified), "Gdańsk", ".NET Developer", "5000", (byte)1, "31d98481-9339-4e36-b3d4-c8f7e7ab3256", (byte)1, true });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",

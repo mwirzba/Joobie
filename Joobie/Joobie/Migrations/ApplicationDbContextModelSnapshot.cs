@@ -238,24 +238,30 @@ namespace Joobie.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime?>("AddedDate")
+                        .IsRequired()
                         .HasColumnType("datetime2");
 
                     b.Property<byte>("CategoryId")
                         .HasColumnType("tinyint");
 
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("ExpirationDate")
+                        .IsRequired()
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Localization")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Salary")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<byte>("TypeOfContractId")
@@ -286,131 +292,16 @@ namespace Joobie.Migrations
                         new
                         {
                             Id = 1L,
+                            AddedDate = new DateTime(2020, 1, 26, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CategoryId = (byte)16,
+                            Description = ":)",
+                            ExpirationDate = new DateTime(2020, 1, 26, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Localization = "Gdańsk",
                             Name = ".NET Developer",
+                            Salary = "5000",
                             TypeOfContractId = (byte)1,
                             UserId = "31d98481-9339-4e36-b3d4-c8f7e7ab3256",
                             WorkingHoursId = (byte)1,
-                            isActive = true
-                        },
-                        new
-                        {
-                            Id = 2L,
-                            CategoryId = (byte)1,
-                            Name = "Junior .NET Developer",
-                            TypeOfContractId = (byte)1,
-                            UserId = "31d98481-9339-4e36-b3d4-c8f7e7ab3256",
-                            WorkingHoursId = (byte)2,
-                            isActive = true
-                        },
-                        new
-                        {
-                            Id = 3L,
-                            CategoryId = (byte)1,
-                            Name = "Senior .NET Developer",
-                            TypeOfContractId = (byte)1,
-                            UserId = "31d98481-9339-4e36-b3d4-c8f7e7ab3256",
-                            WorkingHoursId = (byte)1,
-                            isActive = true
-                        },
-                        new
-                        {
-                            Id = 4L,
-                            CategoryId = (byte)16,
-                            Name = "Starszy Inżynier Oprogramowania .NET",
-                            TypeOfContractId = (byte)1,
-                            UserId = "31d98481-9339-4e36-b3d4-c8f7e7ab3256",
-                            WorkingHoursId = (byte)1,
-                            isActive = true
-                        },
-                        new
-                        {
-                            Id = 5L,
-                            CategoryId = (byte)16,
-                            Name = "Programista .NET",
-                            TypeOfContractId = (byte)1,
-                            UserId = "31d98481-9339-4e36-b3d4-c8f7e7ab3256",
-                            WorkingHoursId = (byte)3,
-                            isActive = true
-                        },
-                        new
-                        {
-                            Id = 6L,
-                            CategoryId = (byte)16,
-                            Name = "C# .Net developer",
-                            TypeOfContractId = (byte)3,
-                            UserId = "31d98481-9339-4e36-b3d4-c8f7e7ab3256",
-                            WorkingHoursId = (byte)1,
-                            isActive = true
-                        },
-                        new
-                        {
-                            Id = 7L,
-                            CategoryId = (byte)15,
-                            Name = ".NET Developer",
-                            TypeOfContractId = (byte)5,
-                            UserId = "31d98481-9339-4e36-b3d4-c8f7e7ab3256",
-                            WorkingHoursId = (byte)1,
-                            isActive = true
-                        },
-                        new
-                        {
-                            Id = 8L,
-                            CategoryId = (byte)12,
-                            Name = ".NET Developer",
-                            TypeOfContractId = (byte)3,
-                            UserId = "31d98481-9339-4e36-b3d4-c8f7e7ab3256",
-                            WorkingHoursId = (byte)1,
-                            isActive = true
-                        },
-                        new
-                        {
-                            Id = 9L,
-                            CategoryId = (byte)13,
-                            Name = "Software Engineer C#",
-                            TypeOfContractId = (byte)3,
-                            UserId = "31d98481-9339-4e36-b3d4-c8f7e7ab3256",
-                            WorkingHoursId = (byte)3,
-                            isActive = true
-                        },
-                        new
-                        {
-                            Id = 10L,
-                            CategoryId = (byte)11,
-                            Name = "Quality Assurance",
-                            TypeOfContractId = (byte)1,
-                            UserId = "31d98481-9339-4e36-b3d4-c8f7e7ab3256",
-                            WorkingHoursId = (byte)3,
-                            isActive = true
-                        },
-                        new
-                        {
-                            Id = 11L,
-                            CategoryId = (byte)15,
-                            Name = "Programista .NET",
-                            TypeOfContractId = (byte)5,
-                            UserId = "31d98481-9339-4e36-b3d4-c8f7e7ab3256",
-                            WorkingHoursId = (byte)1,
-                            isActive = true
-                        },
-                        new
-                        {
-                            Id = 12L,
-                            CategoryId = (byte)16,
-                            Name = "Junior .NET Developer",
-                            TypeOfContractId = (byte)5,
-                            UserId = "31d98481-9339-4e36-b3d4-c8f7e7ab3256",
-                            WorkingHoursId = (byte)2,
-                            isActive = true
-                        },
-                        new
-                        {
-                            Id = 13L,
-                            CategoryId = (byte)16,
-                            Name = "Azure DevOps",
-                            TypeOfContractId = (byte)1,
-                            UserId = "31d98481-9339-4e36-b3d4-c8f7e7ab3256",
-                            WorkingHoursId = (byte)3,
                             isActive = true
                         });
                 });
@@ -721,7 +612,7 @@ namespace Joobie.Migrations
                             AccessFailedCount = 0,
                             ConcurrencyStamp = "e5fbd409-c106-4492-8ed1-deeb2da3a7af",
                             Email = "DefaultUser@gmail.com",
-                            EmailConfirmed = false,
+                            EmailConfirmed = true,
                             LockoutEnabled = true,
                             NormalizedUserName = "DEFAULTUSER@GMAIL.COM",
                             PasswordHash = "AQAAAAEAACcQAAAAEKQK0227340I7E9mRrWOJJwBpOyDx6zuZ9iN06nmNGJZkEyHl7ZZdBgxhtulSzn69Q==",
