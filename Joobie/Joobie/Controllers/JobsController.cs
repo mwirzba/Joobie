@@ -356,6 +356,8 @@ namespace Joobie.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+
+        [Authorize(Roles = Strings.EmployeeUser)]
         public async Task<IActionResult> Apply(CVJobApplicationUser cVJobApplicationUser)
         {
             var claimsIdentity = (ClaimsIdentity)User.Identity;
