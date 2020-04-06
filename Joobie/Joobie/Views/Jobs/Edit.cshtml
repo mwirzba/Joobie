@@ -1,16 +1,16 @@
 ﻿@model Joobie.Models.JobModels.Job
-
+@using Joobie.Utility
 @{
     ViewData["Title"] = "Edit";
 }
-    <link href="~/lib/Trumbowyg/ui/trumbowyg.min.css" rel="stylesheet" />
+<link href="~/lib/Trumbowyg/ui/trumbowyg.min.css" rel="stylesheet" />
 <h1>Edit</h1>
 
 <h4>Job</h4>
 <hr />
 <div class="row">
     <div class="col-12">
-        <form asp-action="Edit col-10">
+        <form asp-action="Save">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
@@ -20,7 +20,6 @@
             </div>
             <div class="form-group">
                 <label asp-for="Description" class="control-label"></label>
-                @*<input asp-for="Description" class="form-control" />*@
                 <textarea id="editor" asp-for="Description"></textarea>
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
@@ -59,11 +58,17 @@
                 <select asp-for="WorkingHoursId" class="form-control" asp-items="ViewBag.WorkingHours"></select>
                 <span asp-validation-for="WorkingHoursId" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="UserId" class="control-label"></label>
-                <select asp-for="UserId" class="form-control" asp-items="ViewBag.Employees"></select>
-                <span asp-validation-for="UserId" class="text-danger"></span>
-            </div>
+            @if (!User.IsInRole(Strings.CompanyUser))
+            {
+                <div class="form-group">
+                    <label asp-for="UserId" class="control-label"></label>
+                    <select asp-for="UserId" class="form-control" asp-items="ViewBag.Employees"></select>
+                    <span asp-validation-for="UserId" class="text-danger"></span>
+                </div>
+            }
+            else {
+               <input asp-for="UserId" type="hidden" value="@Model.UserId"/>
+            }
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>

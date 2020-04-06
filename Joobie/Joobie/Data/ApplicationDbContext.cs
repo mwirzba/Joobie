@@ -10,17 +10,12 @@ namespace Joobie.Data
 {
     public class ApplicationDbContext : IdentityDbContext
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-            : base(options)
-        {
-        }
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options): base(options){}
 
         public DbSet<Job> Job { get; set; }
         public DbSet<Category> Category { get; set; }
         public DbSet<TypeOfContract> TypeOfContract { get; set; }
-        public DbSet<WorkingHours> WorkingHours { get; set; }
-
-        
+        public DbSet<WorkingHours> WorkingHours { get; set; }    
         public DbSet<ApplicationUser> ApplicationUser { get; set; }
 
 
@@ -30,11 +25,18 @@ namespace Joobie.Data
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<CVJobApplicationUser>()
-        .HasKey(t => new { t.JobInMiddleTableId, t.EmployeeUserId });
+                .HasKey(t => new { t.JobInMiddleTableId, t.EmployeeUserId });
 
             modelBuilder.Entity<ApplicationUser>().HasData(
-                new ApplicationUser { Id= "31d98481-9339-4e36-b3d4-c8f7e7ab3256", UserName = "DefaultUser@gmail.com", NormalizedUserName = "DEFAULTUSER@GMAIL.COM", Email = "DefaultUser@gmail.com", EmailConfirmed = true, PasswordHash = "AQAAAAEAACcQAAAAEKQK0227340I7E9mRrWOJJwBpOyDx6zuZ9iN06nmNGJZkEyHl7ZZdBgxhtulSzn69Q==", SecurityStamp = "PBSCMSVSUTGUUIVILSKHSXF2HIQ2OXW6", ConcurrencyStamp = "e5fbd409-c106-4492-8ed1-deeb2da3a7af", Name = "DefaultCompany", Nip = "DefaultNip", LockoutEnabled = true }
-                );
+                new ApplicationUser { 
+                    Id= "31d98481-9339-4e36-b3d4-c8f7e7ab3256", UserName = "DefaultUser@gmail.com",
+                    NormalizedUserName = "DEFAULTUSER@GMAIL.COM", Email = "DefaultUser@gmail.com", 
+                    EmailConfirmed = true, PasswordHash = "AQAAAAEAACcQAAAAEKQK0227340I7E9mRrWOJJwBpOyDx6zuZ9iN06nmNGJZkEyHl7ZZdBgxhtulSzn69Q==",
+                    SecurityStamp = "PBSCMSVSUTGUUIVILSKHSXF2HIQ2OXW6", ConcurrencyStamp = "e5fbd409-c106-4492-8ed1-deeb2da3a7af",
+                    Name = "DefaultCompany", Nip = "DefaultNip", LockoutEnabled = true
+                }
+           );
+
            modelBuilder.Entity<Category>().HasData(
                 new Category { Id = 1, Name = "Administracja biurowa" },
                 new Category { Id = 2, Name = "Doradztwo / Konsulting" },
@@ -72,6 +74,7 @@ namespace Joobie.Data
                 new Category { Id = 34, Name = "Energetyka" },
                 new Category { Id = 35, Name = "Inne" }
             );
+
             modelBuilder.Entity<TypeOfContract>().HasData(
                 new TypeOfContract { Id = 1, Name = "Umowa o pracę" },
                 new TypeOfContract { Id = 2, Name = "Umowa o dzieło" },
@@ -89,26 +92,22 @@ namespace Joobie.Data
             );
 
             modelBuilder.Entity<Job>().HasData(
-    new Job { Id = 1, Name = ".NET Developer", TypeOfContractId = 1, WorkingHoursId = 1, CategoryId = 16, UserId = "31d98481-9339-4e36-b3d4-c8f7e7ab3256", AddedDate = new DateTime(2020, 1, 26), ExpirationDate = new DateTime(2020, 2, 26), Salary = "5000", Description = ":)", Localization = "Gdańsk" },
-    new Job { Id = 2, Name = "Junior .NET Developer", TypeOfContractId = 1, WorkingHoursId = 2, CategoryId = 1, UserId = "31d98481-9339-4e36-b3d4-c8f7e7ab3256", AddedDate = new DateTime(2020, 1, 26), ExpirationDate = new DateTime(2020, 2, 26), Salary = "5300", Description = ":)", Localization = "Gdynia" },
-    new Job { Id = 3, Name = "Senior .NET Developer", TypeOfContractId = 1, WorkingHoursId = 1, CategoryId = 1, UserId = "31d98481-9339-4e36-b3d4-c8f7e7ab3256", AddedDate = new DateTime(2020, 1, 26), ExpirationDate = new DateTime(2020, 2, 26), Salary = "4000", Description = ":)", Localization = "Sopot" },
-    new Job { Id = 4, Name = "Starszy Inżynier Oprogramowania .NET", TypeOfContractId = 1, WorkingHoursId = 1, CategoryId = 16, UserId = "31d98481-9339-4e36-b3d4-c8f7e7ab3256", AddedDate = new DateTime(2020, 1, 26), ExpirationDate = new DateTime(2020, 2, 26), Salary = "5000", Description = ":)", Localization = "Koszalin" },
-    new Job { Id = 5, Name = "Programista .NET", TypeOfContractId = 1, WorkingHoursId = 3, CategoryId = 16, UserId = "31d98481-9339-4e36-b3d4-c8f7e7ab3256", AddedDate = new DateTime(2020, 1, 26), ExpirationDate = new DateTime(2020, 2, 26), Salary = "5900", Description = ":)", Localization = "Warszawa" },
-    new Job { Id = 6, Name = "C# .Net developer", TypeOfContractId = 3, WorkingHoursId = 1, CategoryId = 16, UserId = "31d98481-9339-4e36-b3d4-c8f7e7ab3256", AddedDate = new DateTime(2020, 1, 26), ExpirationDate = new DateTime(2020, 2, 26), Salary = "200", Description = ":)", Localization = "Gdańsk" },
-    new Job { Id = 7, Name = ".NET Developer", TypeOfContractId = 5, WorkingHoursId = 1, CategoryId = 15, UserId = "31d98481-9339-4e36-b3d4-c8f7e7ab3256", AddedDate = new DateTime(2020, 1, 26), ExpirationDate = new DateTime(2020, 2, 26), Salary = "6000", Description = ":)", Localization = "Lębork" },
-    new Job { Id = 8, Name = ".NET Developer", TypeOfContractId = 3, WorkingHoursId = 1, CategoryId = 12, UserId = "31d98481-9339-4e36-b3d4-c8f7e7ab3256", AddedDate = new DateTime(2020, 1, 26), ExpirationDate = new DateTime(2020, 2, 26), Salary = "9000", Description = ":)", Localization = "Gdańsk" },
-    new Job { Id = 9, Name = "Software Engineer C#", TypeOfContractId = 3, WorkingHoursId = 3, CategoryId = 13, UserId = "31d98481-9339-4e36-b3d4-c8f7e7ab3256", AddedDate = new DateTime(2020, 1, 26), ExpirationDate = new DateTime(2020, 2, 26), Salary = "5300", Description = ":)", Localization = "Gdańsk" },
-    new Job { Id = 10, Name = "Quality Assurance", TypeOfContractId = 1, WorkingHoursId = 3, CategoryId = 11, UserId = "31d98481-9339-4e36-b3d4-c8f7e7ab3256", AddedDate = new DateTime(2020, 1, 26), ExpirationDate = new DateTime(2020, 2, 26), Salary = "5300", Description = ":)", Localization = "Gdynia" },
-    new Job { Id = 11, Name = "Programista .NET", TypeOfContractId = 5, WorkingHoursId = 1, CategoryId = 15, UserId = "31d98481-9339-4e36-b3d4-c8f7e7ab3256", AddedDate = new DateTime(2020, 1, 26), ExpirationDate = new DateTime(2020, 2, 26), Salary = "3333", Description = ":)", Localization = "Gdańsk" },
-    new Job { Id = 12, Name = "Junior .NET Developer", TypeOfContractId = 5, WorkingHoursId = 2, CategoryId = 16, UserId = "31d98481-9339-4e36-b3d4-c8f7e7ab3256", AddedDate = new DateTime(2020, 1, 26), ExpirationDate = new DateTime(2020, 2, 26), Salary = "5300", Description = ":)", Localization = "Gdańsk" },
-    new Job { Id = 13, Name = "Azure DevOps", TypeOfContractId = 1, WorkingHoursId = 3, CategoryId = 16, UserId = "31d98481-9339-4e36-b3d4-c8f7e7ab3256", AddedDate = new DateTime(2020, 1, 26), ExpirationDate = new DateTime(2020, 2, 26), Salary = "4300", Description = ":)", Localization = "Gdańsk" }
-
-
-
-);
+                new Job { Id = 1, Name = ".NET Developer", TypeOfContractId = 1, WorkingHoursId = 1, CategoryId = 16, UserId = "31d98481-9339-4e36-b3d4-c8f7e7ab3256", AddedDate = new DateTime(2020, 1, 26), ExpirationDate = new DateTime(2020, 2, 26), Salary = "5000", Description = ":)", Localization = "Gdańsk" },
+                new Job { Id = 2, Name = "Junior .NET Developer", TypeOfContractId = 1, WorkingHoursId = 2, CategoryId = 1, UserId = "31d98481-9339-4e36-b3d4-c8f7e7ab3256", AddedDate = new DateTime(2020, 1, 26), ExpirationDate = new DateTime(2020, 2, 26), Salary = "5300", Description = ":)", Localization = "Gdynia" },
+                new Job { Id = 3, Name = "Senior .NET Developer", TypeOfContractId = 1, WorkingHoursId = 1, CategoryId = 1, UserId = "31d98481-9339-4e36-b3d4-c8f7e7ab3256", AddedDate = new DateTime(2020, 1, 26), ExpirationDate = new DateTime(2020, 2, 26), Salary = "4000", Description = ":)", Localization = "Sopot" },
+                new Job { Id = 4, Name = "Starszy Inżynier Oprogramowania .NET", TypeOfContractId = 1, WorkingHoursId = 1, CategoryId = 16, UserId = "31d98481-9339-4e36-b3d4-c8f7e7ab3256", AddedDate = new DateTime(2020, 1, 26), ExpirationDate = new DateTime(2020, 2, 26), Salary = "5000", Description = ":)", Localization = "Koszalin" },
+                new Job { Id = 5, Name = "Programista .NET", TypeOfContractId = 1, WorkingHoursId = 3, CategoryId = 16, UserId = "31d98481-9339-4e36-b3d4-c8f7e7ab3256", AddedDate = new DateTime(2020, 1, 26), ExpirationDate = new DateTime(2020, 2, 26), Salary = "5900", Description = ":)", Localization = "Warszawa" },
+                new Job { Id = 6, Name = "C# .Net developer", TypeOfContractId = 3, WorkingHoursId = 1, CategoryId = 16, UserId = "31d98481-9339-4e36-b3d4-c8f7e7ab3256", AddedDate = new DateTime(2020, 1, 26), ExpirationDate = new DateTime(2020, 2, 26), Salary = "200", Description = ":)", Localization = "Gdańsk" },
+                new Job { Id = 7, Name = ".NET Developer", TypeOfContractId = 5, WorkingHoursId = 1, CategoryId = 15, UserId = "31d98481-9339-4e36-b3d4-c8f7e7ab3256", AddedDate = new DateTime(2020, 1, 26), ExpirationDate = new DateTime(2020, 2, 26), Salary = "6000", Description = ":)", Localization = "Lębork" },
+                new Job { Id = 8, Name = ".NET Developer", TypeOfContractId = 3, WorkingHoursId = 1, CategoryId = 12, UserId = "31d98481-9339-4e36-b3d4-c8f7e7ab3256", AddedDate = new DateTime(2020, 1, 26), ExpirationDate = new DateTime(2020, 2, 26), Salary = "9000", Description = ":)", Localization = "Gdańsk" },
+                new Job { Id = 9, Name = "Software Engineer C#", TypeOfContractId = 3, WorkingHoursId = 3, CategoryId = 13, UserId = "31d98481-9339-4e36-b3d4-c8f7e7ab3256", AddedDate = new DateTime(2020, 1, 26), ExpirationDate = new DateTime(2020, 2, 26), Salary = "5300", Description = ":)", Localization = "Gdańsk" },
+                new Job { Id = 10, Name = "Quality Assurance", TypeOfContractId = 1, WorkingHoursId = 3, CategoryId = 11, UserId = "31d98481-9339-4e36-b3d4-c8f7e7ab3256", AddedDate = new DateTime(2020, 1, 26), ExpirationDate = new DateTime(2020, 2, 26), Salary = "5300", Description = ":)", Localization = "Gdynia" },
+                new Job { Id = 11, Name = "Programista .NET", TypeOfContractId = 5, WorkingHoursId = 1, CategoryId = 15, UserId = "31d98481-9339-4e36-b3d4-c8f7e7ab3256", AddedDate = new DateTime(2020, 1, 26), ExpirationDate = new DateTime(2020, 2, 26), Salary = "3333", Description = ":)", Localization = "Gdańsk" },
+                new Job { Id = 12, Name = "Junior .NET Developer", TypeOfContractId = 5, WorkingHoursId = 2, CategoryId = 16, UserId = "31d98481-9339-4e36-b3d4-c8f7e7ab3256", AddedDate = new DateTime(2020, 1, 26), ExpirationDate = new DateTime(2020, 2, 26), Salary = "5300", Description = ":)", Localization = "Gdańsk" },
+                new Job { Id = 13, Name = "Azure DevOps", TypeOfContractId = 1, WorkingHoursId = 3, CategoryId = 16, UserId = "31d98481-9339-4e36-b3d4-c8f7e7ab3256", AddedDate = new DateTime(2020, 1, 26), ExpirationDate = new DateTime(2020, 2, 26), Salary = "4300", Description = ":)", Localization = "Gdańsk" } );
         }
 
 
-        public DbSet<Joobie.Models.JobModels.CVJobApplicationUser> CVJobApplicationUser { get; set; }
+        public DbSet<CVJobApplicationUser> CVJobApplicationUser { get; set; }
     }
 }

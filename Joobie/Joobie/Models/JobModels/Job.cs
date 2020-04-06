@@ -1,11 +1,7 @@
-﻿
-using Joobie.Models.JobModels;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Joobie.Models.JobModels
 {
@@ -14,23 +10,15 @@ namespace Joobie.Models.JobModels
         [Key]
         public long Id { get; set; }
 
-
         [Display(Name = "Nazwa")]
         [Required(ErrorMessage = "Nazwa jest wymagana")]
         public string Name { get; set; }
 
-
-        public Boolean isActive
-        {
-            get;
-            set;
-        } = true;
-
+        public Boolean isActive { get; set; } = true;
 
         [Required(ErrorMessage = "Pole wymagane")]
         [Display(Name = "Opis")]
         public string Description { get; set; }
-
 
         [Required(ErrorMessage = "Pole wymagane")]
         [Display(Name = "Lokalizacja")]

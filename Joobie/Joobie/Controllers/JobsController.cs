@@ -6,6 +6,7 @@ using Joobie.ViewModels;
 using LinqKit;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -26,12 +27,15 @@ namespace Joobie.Controllers
 
         private const string _cVFilePath = "/Joobie/Joobie/wwwroot/cVs";
         private readonly SearchStringSession _searchStringSession;
+        private readonly UserManager<IdentityUser> _userManager;
         private static byte _pageSize = 5; 
 
-        public JobsController(ApplicationDbContext context, SearchStringSession searchStringSession)
+        public JobsController(ApplicationDbContext context,
+            SearchStringSession searchStringSession, UserManager<IdentityUser> userManager)
         {
             _context = context;
             _searchStringSession = searchStringSession;
+            _userManager = userManager;
         }
 
         // GET: Jobs
@@ -110,6 +114,12 @@ namespace Joobie.Controllers
             {
                 return NotFound();
             }
+            var currentUserId = _userManager.GetUserId(User); 
+
+            if(currentUserId != null)
+            {
+                ViewData["userId"] = currentUserId;
+            }
 
             return View(job);
         }
@@ -152,7 +162,7 @@ namespace Joobie.Controllers
         }
 
         // GET: Jobs/Edit/5
-        [Authorize(Roles = Strings.AdminUser + "," + Strings.ModeratorUser)]
+        [Authorize(Roles = Strings.AdminUser + "," + Strings.ModeratorUser + "," + Strings.CompanyUser)]
         public async Task<IActionResult> Edit(long? id)
         {
             if (id == null)
@@ -165,6 +175,15 @@ namespace Joobie.Controllers
             {
                 return NotFound();
             }
+
+            var currentUserId = _userManager.GetUserId(User);
+
+            if(job.UserId != currentUserId)
+            {
+                ViewData["Title"] = "Brak dostępu";
+                return View("~/Views/Shared/AccessDenied.cshtml");
+            }
+
             ViewData["Employees"] = new SelectList(_context.ApplicationUser.Where(j => j.Name != null), "Id", "Name");
             ViewData["Categories"] = new SelectList(_context.Category, "Id", "Name");
             ViewData["TypesOfContracts"] = new SelectList(_context.TypeOfContract, "Id", "Name");
@@ -175,12 +194,20 @@ namespace Joobie.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = Strings.AdminUser + "," + Strings.ModeratorUser)]
-        public async Task<IActionResult> Edit(long id, [Bind("Id,Name,Description,Localization,AddedDate,ExpirationDate,Salary,CategoryId,TypeOfContractId,WorkingHoursId,UserId")] Job job)
+        [Authorize(Roles = Strings.AdminUser + "," + Strings.ModeratorUser + "," + Strings.CompanyUser)]
+        public async Task<IActionResult> Save(long id, [Bind("Id,Name,Description,Localization,AddedDate,ExpirationDate,Salary,CategoryId,TypeOfContractId,WorkingHoursId,UserId")] Job job)
         {
             if (id != job.Id)
             {
                 return NotFound();
+            }
+
+
+            var currentUserId = _userManager.GetUserId(User);
+            if (job.UserId != currentUserId)
+            {
+                ViewData["Title"] = "Brak dostępu";
+                return View("~/Views/Shared/AccessDenied.cshtml");
             }
 
             if (ModelState.IsValid)
@@ -250,8 +277,68 @@ namespace Joobie.Controllers
             return _context.Job.Any(e => e.Id == id);
         }
 
+        [Authorize(Roles = Strings.EmployeeUser)]
+        public async Task<IActionResult> Apply(long Id)
+        {
+            var job = await _context.Job.Include(j => j.Category)
+                .Include(j => j.TypeOfContract)
+                .Include(j => j.WorkingHours)
+                .Include(j => j.ApplicationUser)
+                .Where(j => j.Id == Id)
+                .FirstOrDefaultAsync();
+            CVJobApplicationUser cVJobApplicationUser = new CVJobApplicationUser
+            {
+                JobInMiddleTable = job,
+                JobInMiddleTableId = Id
+            };
+            return View(cVJobApplicationUser);
+        }
 
-        private async  Task<IEnumerable<Job>> GetSortedAndFilteredJobListAsync(SearchSettingViewModel searchSettingViewModel)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = Strings.EmployeeUser)]
+        public async Task<IActionResult> Apply(CVJobApplicationUser cVJobApplicationUser)
+        {
+            var claimsIdentity = (ClaimsIdentity)User.Identity;
+            var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
+            string userId = claim.Value;
+            cVJobApplicationUser.EmployeeUserId = userId;
+            var uniqueName = "";
+            bool saveImageSuccess = true;
+            if (!ModelState.IsValid)
+            {
+                return View("Apply", cVJobApplicationUser);
+            }
+            var cVJobApplicationUserInDb = await _context.CVJobApplicationUser.FirstOrDefaultAsync(c => c.EmployeeUserId == userId && c.JobInMiddleTableId == cVJobApplicationUser.JobInMiddleTableId);
+            if (cVJobApplicationUserInDb != null)
+            {
+                uniqueName = cVJobApplicationUserInDb.CvName;
+                cVJobApplicationUserInDb.JobInMiddleTable = cVJobApplicationUser.JobInMiddleTable;
+                cVJobApplicationUserInDb.EmployeeUser = cVJobApplicationUser.EmployeeUser;
+
+                if (Request.Form.Files.Any())
+                    saveImageSuccess = await SaveCvToDirectory(uniqueName);
+                if (saveImageSuccess == false)
+                    return View("Error");
+
+                await _context.SaveChangesAsync();
+
+                return RedirectToAction(nameof(Index));
+            }
+
+
+            uniqueName = await GetUniqueFileName();
+            cVJobApplicationUser.CvName = Path.GetFileNameWithoutExtension(uniqueName)
+                + Path.GetExtension(cVJobApplicationUser.Cv.FileName);
+            saveImageSuccess = await SaveCvToDirectory(cVJobApplicationUser.CvName);
+            if (saveImageSuccess == false)
+                return View("Error");
+            await _context.CVJobApplicationUser.AddAsync(cVJobApplicationUser);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
+        private async Task<IEnumerable<Job>> GetSortedAndFilteredJobListAsync(SearchSettingViewModel searchSettingViewModel)
         {
             var predicate = PredicateBuilder.New<Job>();
             predicate.DefaultExpression = j => true;
@@ -263,12 +350,12 @@ namespace Joobie.Controllers
             {
                 predicate = predicate.And(j => j.Localization.Contains(searchSettingViewModel.CitySearchString));
             }
-            if (searchSettingViewModel.Categories.Any(c=>c.Selected==true))
+            if (searchSettingViewModel.Categories.Any(c => c.Selected == true))
             {
                 List<int> catIds = new List<int>();
                 for (int i = 0; i < searchSettingViewModel.Categories.Length; i++)
                 {
-                    if(searchSettingViewModel.Categories[i].Selected ==true)
+                    if (searchSettingViewModel.Categories[i].Selected == true)
                         catIds.Add(searchSettingViewModel.Categories[i].Id);
                 }
                 if (catIds.Any())
@@ -310,20 +397,24 @@ namespace Joobie.Controllers
         private async Task<SearchSettingViewModel> SetSearchSettingViewModel()
         {
             var categories = await _context.Category.ToListAsync();
-            var workingHours = await  _context.WorkingHours.ToListAsync();
-            var typesOfContracts = await  _context.TypeOfContract.ToListAsync();
+            var workingHours = await _context.WorkingHours.ToListAsync();
+            var typesOfContracts = await _context.TypeOfContract.ToListAsync();
 
-            var searchSettingViewModel = new SearchSettingViewModel { Categories = new Filter[categories.Count],
-                TypesOfContracts = new Filter[typesOfContracts.Count], WorkingHour = new Filter[workingHours.Count] };
+            var searchSettingViewModel = new SearchSettingViewModel
+            {
+                Categories = new Filter[categories.Count],
+                TypesOfContracts = new Filter[typesOfContracts.Count],
+                WorkingHour = new Filter[workingHours.Count]
+            };
 
-            for(int i = 0; i < categories.Count; i++)
+            for (int i = 0; i < categories.Count; i++)
             {
                 searchSettingViewModel.Categories[i] =
                     new Filter { Id = categories[i].Id, Name = categories[i].Name, Selected = false };
             }
             for (int i = 0; i < workingHours.Count; i++)
             {
-                searchSettingViewModel.WorkingHour[i] = 
+                searchSettingViewModel.WorkingHour[i] =
                     new Filter { Id = workingHours[i].Id, Name = workingHours[i].Name, Selected = false };
             }
             for (int i = 0; i < typesOfContracts.Count; i++)
@@ -333,70 +424,6 @@ namespace Joobie.Controllers
             }
 
             return searchSettingViewModel;
-        }
-
-
-
-        [Authorize(Roles = Strings.EmployeeUser)]
-        public async Task<IActionResult> Apply(long Id)
-        {
-            var job = await _context.Job.Include(j => j.Category)
-                .Include(j => j.TypeOfContract)
-                .Include(j => j.WorkingHours)
-                .Include(j => j.ApplicationUser)
-                .Where(j => j.Id == Id)
-                .FirstOrDefaultAsync();
-            CVJobApplicationUser cVJobApplicationUser = new CVJobApplicationUser
-            {
-                JobInMiddleTable = job,
-                JobInMiddleTableId = Id
-            };
-            return View(cVJobApplicationUser);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-
-        [Authorize(Roles = Strings.EmployeeUser)]
-        public async Task<IActionResult> Apply(CVJobApplicationUser cVJobApplicationUser)
-        {
-            var claimsIdentity = (ClaimsIdentity)User.Identity;
-            var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
-            string userId = claim.Value;
-            cVJobApplicationUser.EmployeeUserId = userId;
-            var uniqueName = "";
-            bool saveImageSuccess = true;
-            if (!ModelState.IsValid)
-            {
-                return View("Apply", cVJobApplicationUser);
-            }
-            var cVJobApplicationUserInDb = await _context.CVJobApplicationUser.FirstOrDefaultAsync(c => c.EmployeeUserId == userId && c.JobInMiddleTableId == cVJobApplicationUser.JobInMiddleTableId);
-            if (cVJobApplicationUserInDb != null)
-            {
-                uniqueName = cVJobApplicationUserInDb.CvName;
-                cVJobApplicationUserInDb.JobInMiddleTable = cVJobApplicationUser.JobInMiddleTable;
-                cVJobApplicationUserInDb.EmployeeUser = cVJobApplicationUser.EmployeeUser;
-
-                if (Request.Form.Files.Any())
-                    saveImageSuccess = await SaveCvToDirectory(uniqueName);
-                if (saveImageSuccess == false)
-                    return View("Error");
-
-                await _context.SaveChangesAsync();
-
-                return RedirectToAction(nameof(Index));
-            }
-
-
-            uniqueName = await GetUniqueFileName();
-            cVJobApplicationUser.CvName = Path.GetFileNameWithoutExtension(uniqueName)
-                + Path.GetExtension(cVJobApplicationUser.Cv.FileName);
-            saveImageSuccess = await SaveCvToDirectory(cVJobApplicationUser.CvName);
-            if (saveImageSuccess == false)
-                return View("Error");
-            await _context.CVJobApplicationUser.AddAsync(cVJobApplicationUser);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
         }
 
         private async Task<bool> SaveCvToDirectory(string fileName)

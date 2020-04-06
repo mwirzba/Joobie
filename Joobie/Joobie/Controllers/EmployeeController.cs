@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Joobie.Data;
 using Joobie.Models.JobModels;
 using System.Security.Claims;
-using Microsoft.AspNetCore.Authorization;
-using Joobie.Utility;
-using System.IO;
 using Microsoft.AspNetCore.Http;
 using Joobie.ViewModels;
 using Microsoft.AspNetCore.Identity;
@@ -33,7 +27,6 @@ namespace Joobie.Controllers
         }
 
 
-
         public async Task<IActionResult> Applied()
         {
             var claimsIdentity = (ClaimsIdentity)User.Identity;
@@ -46,7 +39,7 @@ namespace Joobie.Controllers
                 .Include(j => j.JobInMiddleTable).ThenInclude(j => j.WorkingHours)
                 .Include(j => j.JobInMiddleTable).ThenInclude(j => j.ApplicationUser)
                 .Where(j => j.EmployeeUserId == userId);
-            var list = applicationDbContext.ToList();
+            var list = await applicationDbContext.ToListAsync();
             return View(list);
         }
 
@@ -79,9 +72,7 @@ namespace Joobie.Controllers
                     TotalItems = (byte)totalJobs
                 }
             };
-
             return View(viewModel);
-
         }
 
         public async Task<IActionResult> Details(long? id)
