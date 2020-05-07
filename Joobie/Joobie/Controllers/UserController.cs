@@ -14,7 +14,7 @@ namespace Joobie.Controllers
 {
 
 
-    [Authorize(Roles = Strings.AdminUser + "," + Strings.ModeratorUser)]
+    [Authorize(Roles = Strings.AdminUser)]
     public class UserController : Controller
     {
         private readonly ApplicationDbContext _db;

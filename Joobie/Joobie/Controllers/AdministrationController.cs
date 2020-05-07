@@ -12,7 +12,7 @@ using Joobie.Utility;
 
 namespace Joobie.Controllers
 {
-    [Authorize(Roles =Strings.AdminUser +","+Strings.ModeratorUser)]
+    [Authorize(Roles =Strings.AdminUser)]
     public class AdministrationController : Controller
     {
         private readonly RoleManager<IdentityRole> roleManager;

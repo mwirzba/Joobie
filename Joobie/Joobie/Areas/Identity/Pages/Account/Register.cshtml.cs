@@ -173,7 +173,7 @@ namespace Joobie.Areas.Identity.Pages.Account
 
                     await _emailSender.SendEmailAsync(Input.Email, "Potwierdź adres e-mail od Joobie :)",
                         $"Proszę o potwierdzenie swojego konta klikając w link <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>Tutaj :)</a>.");
-                    await _signInManager.SignInAsync(user, isPersistent: false);
+                   // await _signInManager.SignInAsync(user, isPersistent: false);
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
                         return RedirectToPage("RegisterConfirmation", new { email = Input.Email });

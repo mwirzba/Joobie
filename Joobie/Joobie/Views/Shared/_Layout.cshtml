@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using Joobie.Utility
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -49,8 +51,11 @@
                 <a class="btn btn-primary btn-space" asp-area="" asp-controller="Categories" asp-action="Index">Kategorie</a>
                 <a class="btn btn-primary btn-space" asp-area="" asp-controller="TypeOfContracts" asp-action="Index">Rodzaje umów</a>
                 <a class="btn btn-primary btn-space" asp-area="" asp-controller="Categories" asp-action="Index">Rodzaje etatów</a>
-                <a class="btn btn-primary btn-space" asp-area="" asp-controller="Administration" asp-action="ListRoles">Role</a>
-                <a class="btn btn-primary btn-space" asp-area="" asp-controller="User" asp-action="Index">Użytkownicy</a>
+                @if (User.IsInRole(Strings.AdminUser))
+                {
+                    <a class="btn btn-primary btn-space" asp-area="" asp-controller="Administration" asp-action="ListRoles">Role</a>
+                    <a class="btn btn-primary btn-space" asp-area="" asp-controller="User" asp-action="Index">Użytkownicy</a>
+                }
             </div>
         </div>
     </div>

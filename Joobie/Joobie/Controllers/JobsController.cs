@@ -178,7 +178,7 @@ namespace Joobie.Controllers
 
             var currentUserId = _userManager.GetUserId(User);
 
-            if(job.UserId != currentUserId)
+            if (User.IsInRole(Strings.CompanyUser) && job.UserId != currentUserId)
             {
                 ViewData["Title"] = "Brak dostępu";
                 return View("~/Views/Shared/AccessDenied.cshtml");
