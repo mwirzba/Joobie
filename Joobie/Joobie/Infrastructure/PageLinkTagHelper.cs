@@ -44,11 +44,11 @@ namespace Joobie.Infrastructure
                 if (i == 1)
                 {
                     TagBuilder prevPage = new TagBuilder("a");
-                    prevPage.AddCssClass(PageClass);
-                    prevPage.InnerHtml.Append("Previous");
+                    prevPage.AddCssClass(PageClass + " pagginationButton");
+                    prevPage.InnerHtml.Append("<");
                     PageUrlValues["page"] = PageModel.CurrentPage-1;
                     if (PageModel.CurrentPage < 2)
-                        prevPage.AddCssClass(PageClassNormal + "disabled");
+                        prevPage.AddCssClass(PageClassNormal + " disabled");
                     else
                     {
                         prevPage.Attributes["href"] = urlHelper.Action(PageAction, PageUrlValues);
@@ -62,7 +62,7 @@ namespace Joobie.Infrastructure
                 tag.Attributes["href"] = urlHelper.Action(PageAction, PageUrlValues);
                 if (PageClassesEnabled)
                 {
-                    tag.AddCssClass(PageClass);
+                    tag.AddCssClass(PageClass + " pagginationButton");
                     tag.AddCssClass(i == PageModel.CurrentPage
                         ? PageClassSelected : PageClassNormal);
 
@@ -72,17 +72,18 @@ namespace Joobie.Infrastructure
             }
 
             TagBuilder nextPage = new TagBuilder("a");
-            nextPage.AddCssClass(PageClass);
-            nextPage.InnerHtml.Append("Next");
+            nextPage.AddCssClass(PageClass + " pagginationButton");
+            nextPage.InnerHtml.Append(">");
             PageUrlValues["page"] = PageModel.CurrentPage +1;
             if (PageModel.CurrentPage == PageModel.TotalPages)
-                nextPage.AddCssClass(PageClassNormal + "disabled");
+                nextPage.AddCssClass(PageClassNormal + " disabled");
             else
             {
                 nextPage.Attributes["href"] = urlHelper.Action(PageAction, PageUrlValues);
                 nextPage.AddCssClass(PageClassNormal);
             }
             result.InnerHtml.AppendHtml(nextPage);
+            result.AddCssClass("paggination");
             output.Content.AppendHtml(result.InnerHtml);
 
         }

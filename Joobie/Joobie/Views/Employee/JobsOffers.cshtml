@@ -15,7 +15,7 @@
                     <form asp-action="Details" method="post">
                         <div class="card flex-row flex-wrap">
                             <div class="card-header border-0">
-                                <img class="img-thumbnail h-100" id="img" style="width: 100px;" src="@Url.Content("~/CompanyIcons/" + job.JobInMiddleTable.ApplicationUser.CompanyImagePath)" onerror="imgError(this);" />
+                                <img class="img-thumbnail h-100" id="img" style="width: 100px;" src="@Url.Content("~/CompanyIcons/" + job.JobInMiddleTable.ApplicationUser.CompanyImagePath)" onerror="this.src='/CompanyIcons/default.png'"/>
                             </div>
                             <div class="card-block px-2">
                                 <h5 class="card-title">
@@ -34,8 +34,6 @@
                 </div>
 
             }
-
-
             <div page-model="@Model.PagingInfo" page-classes-enabled="true"
                  page-class="btn" page-class-normal="btn-secondary"
                  page-class-selected="btn-primary"
@@ -51,15 +49,3 @@
 </div>
 
 
-
-
-@section scripts {
-    <script type="text/javascript">
-
-        function imgError(image) {
-            image.onerror = "";
-            image.src = "/CompanyIcons/default.png";
-            return true;
-        }
-    </script>
-}
