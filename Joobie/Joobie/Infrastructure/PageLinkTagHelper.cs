@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace Joobie.Infrastructure
 {
-    [HtmlTargetElement("div",Attributes = "page-model")]
+    [HtmlTargetElement("ul",Attributes = "page-model")]
     public class PageLinkTagHelper : TagHelper
     {
         private readonly IUrlHelperFactory urlHelperFactory;
@@ -43,23 +43,33 @@ namespace Joobie.Infrastructure
             {
                 if (i == 1)
                 {
-                    TagBuilder prevPage = new TagBuilder("a");
+                    
+
+                    TagBuilder prevPage = new TagBuilder("li");
                     prevPage.AddCssClass(PageClass + " pagginationButton");
-                    prevPage.InnerHtml.Append("<");
+
+                    TagBuilder aPrev = new TagBuilder("a");
+                    aPrev.AddCssClass("page-link");
+                    aPrev.InnerHtml.Append("<");
+
+                  
+
                     PageUrlValues["page"] = PageModel.CurrentPage-1;
                     if (PageModel.CurrentPage < 2)
                         prevPage.AddCssClass(PageClassNormal + " disabled");
                     else
                     {
-                        prevPage.Attributes["href"] = urlHelper.Action(PageAction, PageUrlValues);
+                        aPrev.Attributes["href"] = urlHelper.Action(PageAction, PageUrlValues);
                         prevPage.AddCssClass(PageClassNormal);
                     }
+
+                    prevPage.InnerHtml.AppendHtml(aPrev);
                     result.InnerHtml.AppendHtml(prevPage);
                 }
 
-                TagBuilder tag = new TagBuilder("a");
+                TagBuilder tag = new TagBuilder("li");
                 PageUrlValues["page"] = i;
-                tag.Attributes["href"] = urlHelper.Action(PageAction, PageUrlValues);
+                
                 if (PageClassesEnabled)
                 {
                     tag.AddCssClass(PageClass + " pagginationButton");
@@ -67,21 +77,34 @@ namespace Joobie.Infrastructure
                         ? PageClassSelected : PageClassNormal);
 
                 }
-                tag.InnerHtml.Append((i.ToString()));
+
+                TagBuilder a = new TagBuilder("a");
+                a.AddCssClass("page-link");
+                a.InnerHtml.Append(i.ToString());
+                a.Attributes["href"] = urlHelper.Action(PageAction, PageUrlValues);
+                tag.InnerHtml.AppendHtml(a);
+
                 result.InnerHtml.AppendHtml(tag);
             }
 
-            TagBuilder nextPage = new TagBuilder("a");
+            TagBuilder nextPage = new TagBuilder("li");
             nextPage.AddCssClass(PageClass + " pagginationButton");
-            nextPage.InnerHtml.Append(">");
+
+            TagBuilder aNext = new TagBuilder("a");
+            aNext.AddCssClass("page-link");
+            aNext.InnerHtml.Append(">");
+            
+
+            
             PageUrlValues["page"] = PageModel.CurrentPage +1;
             if (PageModel.CurrentPage == PageModel.TotalPages)
                 nextPage.AddCssClass(PageClassNormal + " disabled");
             else
             {
-                nextPage.Attributes["href"] = urlHelper.Action(PageAction, PageUrlValues);
+                aNext.Attributes["href"] = urlHelper.Action(PageAction, PageUrlValues);
                 nextPage.AddCssClass(PageClassNormal);
             }
+            nextPage.InnerHtml.AppendHtml(aNext);
             result.InnerHtml.AppendHtml(nextPage);
             result.AddCssClass("paggination");
             output.Content.AppendHtml(result.InnerHtml);

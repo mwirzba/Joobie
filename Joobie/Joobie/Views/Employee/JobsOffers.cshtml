@@ -15,7 +15,7 @@
                     <form asp-action="Details" method="post">
                         <div class="card flex-row flex-wrap">
                             <div class="card-header border-0">
-                                <img class="img-thumbnail h-100" id="img" style="width: 100px;" src="@Url.Content("~/CompanyIcons/" + job.JobInMiddleTable.ApplicationUser.CompanyImagePath)" onerror="this.src='/CompanyIcons/default.png'"/>
+                                <img class="img-thumbnail h-100" id="img" style="width: 100px;" src="@Url.Content("~/CompanyIcons/" + job.JobInMiddleTable.ApplicationUser.CompanyImagePath)" onerror="this.src='/CompanyIcons/default.png'" />
                             </div>
                             <div class="card-block px-2">
                                 <h5 class="card-title">
@@ -25,7 +25,7 @@
 
 
                                 <a class="card-text">@job.JobInMiddleTable.ApplicationUser.Name</a><br />
-                                <a class="card-text">@Html.DisplayNameFor(m=>job.JobInMiddleTable.Salary)</a>: <a class="card-text">@job.JobInMiddleTable.Salary</a><br />
+                                <a class="card-text">@Html.DisplayNameFor(m => job.JobInMiddleTable.Salary)</a>: <a class="card-text">@job.JobInMiddleTable.Salary</a><br />
                                 <a class="card-text">@job.JobInMiddleTable.Localization</a>
                                 <div class="w-100"></div>
                             </div>
@@ -34,10 +34,12 @@
                 </div>
 
             }
-            <div page-model="@Model.PagingInfo" page-classes-enabled="true"
-                 page-class="btn" page-class-normal="btn-secondary"
-                 page-class-selected="btn-primary"
-                 class="btn-group pull m-1">
+            <div class="row justify-content-center mt-3">
+                <ul page-model="@Model.PagingInfo" page-classes-enabled="true"
+                    page-class="" page-class-normal="page-item"
+                    page-class-selected="page-item active"
+                    class="pagination pagination-lg">
+                </ul>
             </div>
         }
         else
