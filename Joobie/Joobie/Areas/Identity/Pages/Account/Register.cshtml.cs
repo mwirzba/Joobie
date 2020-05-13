@@ -119,7 +119,7 @@ namespace Joobie.Areas.Identity.Pages.Account
 
                         IdentityResult chkUser = await _userManager.CreateAsync(adminUser, userPWD);
 
-                        //Add default User to Role Admin    
+                        //Add default User to Role admin    
                         if (chkUser.Succeeded)
                         {
                             var result1 = await _userManager.AddToRoleAsync(adminUser, "Admin");
@@ -137,7 +137,7 @@ namespace Joobie.Areas.Identity.Pages.Account
 
                         IdentityResult chkUser = await _userManager.CreateAsync(moderatorUser, userPWD);
 
-                        //Add default User to Role Admin    
+                        //Add default User to Role moderator    
                         if (chkUser.Succeeded)
                         {
                             var result1 = await _userManager.AddToRoleAsync(moderatorUser, "Moderator");
@@ -146,10 +146,40 @@ namespace Joobie.Areas.Identity.Pages.Account
                     if (!await _roleManager.RoleExistsAsync(Strings.EmployeeUser))
                     {
                         await _roleManager.CreateAsync(new IdentityRole(Strings.EmployeeUser));
+                        var employeeUser = new ApplicationUser();
+                        employeeUser.UserName = "pracownik@joobie.com";
+                        employeeUser.Email = "pracownik@joobie.com";
+                        employeeUser.EmailConfirmed = true;
+
+                        string userPWD = "pracownik";
+
+                        IdentityResult chkUser = await _userManager.CreateAsync(employeeUser, userPWD);
+
+                        //Add default User to Role Employee    
+                        if (chkUser.Succeeded)
+                        {
+                            var result1 = await _userManager.AddToRoleAsync(employeeUser, Strings.EmployeeUser);
+                        }
                     }
                     if (!await _roleManager.RoleExistsAsync(Strings.CompanyUser))
                     {
                         await _roleManager.CreateAsync(new IdentityRole(Strings.CompanyUser));
+                        var companyUser = new ApplicationUser();
+                        companyUser.UserName = "pracodawca@joobie.com";
+                        companyUser.Email = "pracodawca@joobie.com";
+                        companyUser.Name = "Firma";
+                        companyUser.Nip = "1231234325235";
+                        companyUser.EmailConfirmed = true;
+
+                        string userPWD = "pracodawca";
+
+                        IdentityResult chkUser = await _userManager.CreateAsync(companyUser, userPWD);
+
+                        //Add default User to Role Company   
+                        if (chkUser.Succeeded)
+                        {
+                            var result1 = await _userManager.AddToRoleAsync(companyUser, Strings.CompanyUser);
+                        }
                     }
 
 

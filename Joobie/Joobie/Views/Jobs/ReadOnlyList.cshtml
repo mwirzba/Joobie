@@ -28,7 +28,7 @@
                                         <p class="card-text">@job.Localization</p>
                                         @if (!User.IsInRole(Strings.AdminUser) && !User.IsInRole(Strings.ModeratorUser) && !User.IsInRole(Strings.CompanyUser))
                                         {
-                                            <a asp-action="Apply" asp-route-id="@job.Id" class="btn btn-primary btn-sm">Aplikuj</a>
+                                            <a asp-action="Apply" asp-route-id="@job.Id" class="btn btn-primary btn-sm" style="margin-bottom: 10px">Aplikuj</a>
                                         }
                                         <br />
                                         <div class="w-100"></div>
