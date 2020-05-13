@@ -183,8 +183,13 @@ body {
 }
 
 
-@media (max-width: 600px) {
+.filter-button {
+    width: 180px;
+    min-width: 100px;
+}
 
+
+@media (max-width: 600px) {
     .filter-toggle {
         margin-left: 100px;
     }

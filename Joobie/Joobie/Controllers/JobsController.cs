@@ -71,6 +71,7 @@ namespace Joobie.Controllers
             var viewModel = new ListViewModel<Job>
             {
                 Items = jobs,
+                Total = totalJobs,
                 PagingInfo = new PagingInfo
                 {
                     CurrentPage = page,

@@ -7,7 +7,8 @@ namespace Joobie.ViewModels
     {
         public IEnumerable<T> Items { get; set; }
         public PagingInfo PagingInfo { get; set; }
+        public int Total { get; internal set; }
 
-      //  public SearchStringSession searchStringSession { get; set; }
+        //  public SearchStringSession searchStringSession { get; set; }
     }
 }
