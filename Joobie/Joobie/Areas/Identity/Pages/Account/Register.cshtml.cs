@@ -110,10 +110,38 @@ namespace Joobie.Areas.Identity.Pages.Account
                     if (!await _roleManager.RoleExistsAsync(Strings.AdminUser))
                     {
                         await _roleManager.CreateAsync(new IdentityRole(Strings.AdminUser));
+                        var adminUser = new ApplicationUser();
+                        adminUser.UserName = "admin@joobie.com";
+                        adminUser.Email = "admin@joobie.com";
+                        adminUser.EmailConfirmed = true;
+
+                        string userPWD = "admin";
+
+                        IdentityResult chkUser = await _userManager.CreateAsync(adminUser, userPWD);
+
+                        //Add default User to Role Admin    
+                        if (chkUser.Succeeded)
+                        {
+                            var result1 = await _userManager.AddToRoleAsync(adminUser, "Admin");
+                        }
                     }
                     if (!await _roleManager.RoleExistsAsync(Strings.ModeratorUser))
                     {
                         await _roleManager.CreateAsync(new IdentityRole(Strings.ModeratorUser));
+                        var moderatorUser = new ApplicationUser();
+                        moderatorUser.UserName = "moderator@joobie.com";
+                        moderatorUser.Email = "moderator@joobie.com";
+                        moderatorUser.EmailConfirmed = true;
+
+                        string userPWD = "moderator";
+
+                        IdentityResult chkUser = await _userManager.CreateAsync(moderatorUser, userPWD);
+
+                        //Add default User to Role Admin    
+                        if (chkUser.Succeeded)
+                        {
+                            var result1 = await _userManager.AddToRoleAsync(moderatorUser, "Moderator");
+                        }
                     }
                     if (!await _roleManager.RoleExistsAsync(Strings.EmployeeUser))
                     {
@@ -123,6 +151,7 @@ namespace Joobie.Areas.Identity.Pages.Account
                     {
                         await _roleManager.CreateAsync(new IdentityRole(Strings.CompanyUser));
                     }
+
 
                     if (role == Strings.AdminUser)
                     {
