@@ -24,9 +24,10 @@
                             <li>
                                 <div class="dropdown-item">
                                     <label>
-                                        <input type="checkbox" asp-for="@Model.Categories[i].Selected" />
+                                        <input type="checkbox" asp-for="@Model.Categories[i].Selected"/>
                                         <label asp-for="@Model.Categories[i].Selected">@Model.Categories[i].Name</label>
-                                        <input type="hidden" asp-for="@Model.Categories[i].Id" />
+                                        <input type="hidden" asp-for="@Model.Categories[i].Id"/>
+                                        <input type="hidden" asp-for="@Model.Categories[i].Name"/>
                                     </label>
                                 </div>
                             </li>
@@ -52,7 +53,7 @@
                             </li>
                         }
                     </ul>
-                    </div>
+                </div>
             </div>
             <div class="col-md-3 col-sm-12 mt-3">
                 <div class="btn-group">
@@ -72,14 +73,16 @@
                             </li>
                         }
                     </ul>
-                    </div>
+                </div>
             </div>
             <div class="col-5 col-md-3 col-sm-12 mt-3">
-                 <button asp-action="ResetSearch" class="btn btn-secondary form-control filter-button">Wyczyść filtry</button>
+                <button asp-action="ResetSearch" class="btn btn-secondary form-control filter-button">Wyczyść filtry</button>
             </div>
+
         </div>
     </div>
 </form>
+
 
 
 <script language="javascript" type="text/javascript">
@@ -90,7 +93,7 @@
         btn.addEventListener('change', () => {
             if (this.checked) {
                 let val = cat.value;
-                
+
             }
         })
     });*/
