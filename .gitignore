@@ -342,3 +342,5 @@ healthchecksdb
 /Joobie/Joobie/vpproject
 /Joobie/Joobie/wwwroot/lib
 /Joobie/Joobie/wwwroot/cVs
+/Joobie/Joobie.Tests
+appsettings.json
