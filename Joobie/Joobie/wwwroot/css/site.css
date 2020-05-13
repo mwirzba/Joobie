@@ -7,6 +7,10 @@ a.navbar-brand {
     word-break: break-all;
 }
 
+#joobie-icon {
+    width:150px;
+}
+
 /* Provide sufficient contrast against white background */
 a {
     color: #0366d6;
@@ -116,6 +120,8 @@ body {
 
 
 
+
+
 .menu-filter-list li {
     display: inline-block;
     cursor: pointer;
@@ -160,6 +166,14 @@ body {
 
 #wrapper.toggled #sidebar-wrapper {
     margin-left: 0;
+}
+
+
+.job-list-container {
+    min-height: 100%; 
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
 }
 
 @media (min-width: 78px) {

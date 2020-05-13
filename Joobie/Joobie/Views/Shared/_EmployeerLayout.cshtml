@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewData["Title"] = "_EmployeerLayout";
+    ViewData["Title"] = "Znajdź pracownika";
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -14,13 +14,16 @@
     <link href="~/lib/Trumbowyg/ui/trumbowyg.min.css" rel="stylesheet" />
 
     <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.css" />
-    <link rel="stylesheet" href="~/css/SITE.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Joobie</a>
+                
+                <a asp-area="" asp-controller="Home" asp-action="Index">
+                    <img id="joobie-icon" src="~/joobie.png" alt="Joobie">
+                </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -40,7 +43,7 @@
         </nav>
     </header>
     <div class="d-flex">
-        <div class="col-10">
+        <div class="col">
             <div class="container">
                 <main role="main" class="pb-3">
                     @RenderBody()
