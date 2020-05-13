@@ -7,51 +7,49 @@
 
 
     <div class="container">
-        <partial name="~/Views/Jobs/Search.cshtml" model=@ViewData["searchSettingViewModel"] />
-        @if (@Model.Items.Any())
-        {
-            @foreach (var job in Model.Items)
+            <partial name="~/Views/Jobs/Search.cshtml" model=@ViewData["searchSettingViewModel"] />
+            @if (@Model.Items.Any())
             {
-                <div class="row mt-2">
-                    <div class="col-md-12 readonly-list-space">
-                        <form asp-action="Details" method="post">
-                            <div class="card flex-row flex-wrap">
-                                <div class="card-header border-0">
-                                    <img class="img-thumbnail h-100" id="img" style="width: 100px;" src="@Url.Content("~/CompanyIcons/" + job.ApplicationUser.CompanyImagePath)" onerror="this.src='/CompanyIcons/default.png'" />
+                @foreach (var job in Model.Items)
+                {
+                    <div class="row mt-2">
+                        <div class="col-md-12 readonly-list-space">
+                            <form asp-action="Details" method="post">
+                                <div class="card flex-row flex-wrap">
+                                    <div class="card-header border-0">
+                                        <img class="img-thumbnail h-100" id="img" style="width: 100px;" src="@Url.Content("~/CompanyIcons/" + job.ApplicationUser.CompanyImagePath)" onerror="this.src='/CompanyIcons/default.png'" />
+                                    </div>
+                                    <div class="card-block px-2">
+                                        <h5 class="card-title">
+                                            <button class="btn btn-link" type="submit">@job.Name</button>
+                                        </h5>
+                                        <input type="hidden" name="id" asp-for="@job.Id" />
+                                        <h6 class="card-subtitle mb-2 text-muted">@job.ApplicationUser.Name</h6>
+                                        <p class="card-text">@job.Localization</p>
+                                        @if (!User.IsInRole(Strings.AdminUser) && !User.IsInRole(Strings.ModeratorUser) && !User.IsInRole(Strings.CompanyUser))
+                                        {
+                                            <a asp-action="Apply" asp-route-id="@job.Id" class="btn btn-primary btn-sm">Aplikuj</a>
+                                        }
+                                        <br />
+                                        <div class="w-100"></div>
+                                    </div>
                                 </div>
-                                <div class="card-block px-2">
-                                    <h5 class="card-title">
-                                        <button class="btn btn-link" type="submit">@job.Name</button>
-                                    </h5>
-                                    <input type="hidden" name="id" asp-for="@job.Id" />
-                                    <h6 class="card-subtitle mb-2 text-muted">@job.ApplicationUser.Name</h6>
-                                    <p class="card-text">@job.Localization</p>
-                                    @if (!User.IsInRole(Strings.AdminUser) && !User.IsInRole(Strings.ModeratorUser) && !User.IsInRole(Strings.CompanyUser))
-                                    {
-                                        <a asp-action="Apply" asp-route-id="@job.Id" class="btn btn-primary btn-sm">Aplikuj</a>
-                                    }
-                                    <br/>
-                                    <div class="w-100"></div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
+                            </form>
+                        </div>
 
+                    </div>
+                }
+                <div class="row justify-content-center mt-3">
+                    <div page-model="@Model.PagingInfo" page-classes-enabled="true"
+                         page-class="btn" page-class-normal="btn-secondary"
+                         page-class-selected="btn-primary"
+                         class="col-4 btn-group pull">
+                    </div>
                 </div>
             }
-            <div class="row justify-content-center">
-                <div page-model="@Model.PagingInfo" page-classes-enabled="true"
-                     page-class="btn" page-class-normal="btn-secondary"
-                     page-class-selected="btn-primary"
-                     class="col-4 btn-group pull">
-                </div>
-            </div>
-           
-        }
-        else
-        {
-            <h2>Niestety nie znaleziono żadnych ofert</h2>
-        }
-
+            else
+            {
+                <h2>Niestety nie znaleziono żadnych ofert</h2>
+            }
 
     </div>

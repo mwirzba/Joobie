@@ -4,74 +4,93 @@
 }
 
 <form asp-action="Index" method="post">
-    <div class="form-row">
-        <div class="col-9 form-row">
-        <div class="col">
-            <input class="form-control" placeholder="Nazwa stanowiska" type="text" asp-for="@Model.SearchString" value="@Model.SearchString" />
+    <div class="row">
+        <div class="input-group">
+            <input class="form-control" placeholder="Stanowisko" type="text" asp-for="@Model.SearchString" value="@Model.SearchString" />
+            <input class="form-control" placeholder="Miasto" type="text" asp-for="@Model.CitySearchString" value="@Model.CitySearchString" />
+            <div class="input-group-append">
+                <button type="submit" class="btn btn-light" id="btnGroupAddon">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
         </div>
-        <div class="col">
-            <input class="form-control" placeholder="Nazwa miasta" type="text" asp-for="@Model.CitySearchString" value="@Model.CitySearchString" />
-        </div>
-        <div class="col">
-            <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Kategorie (@Model.Categories.Where(c => c.Selected == true).Count())</button>
-            <ul class="dropdown-menu">
-                @for (int i = 0; i < Model.Categories.Length; i++)
-                {
-                    <li>
-                        <div class="dropdown-item">
-                            <label>
-                                <input type="checkbox" asp-for="@Model.Categories[i].Selected" />
-                                <label asp-for="@Model.Categories[i].Selected">@Model.Categories[i].Name</label>
-                                <input type="hidden" asp-for="@Model.Categories[i].Id" />
-                                <input type="hidden" asp-for="@Model.Categories[i].Name" />
-                            </label>
-                        </div>
+        <div class="row">
+            <div class="col-auto mt-3">
+                <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Kategorie (@Model.Categories.Where(c => c.Selected == true).Count())</button>
+                <ul class="dropdown-menu multi-column columns-3">
+                    <li class="row">
+                        @{
+                            int index = 0;
+                            int oneColumn = Model.Categories.Length / 3;
+                            @for (int i = 0; i < 3; i++)
+                            {
+                                <div class="col-sm-4">
+                                    <ul class="multi-column-dropdown">
+                                        @for (int j = 0; j < oneColumn + 1; j++)
+                                        {
+                                            @if (index < Model.Categories.Length)
+                                            {
+                                                <li>
+                                                    <div class="dropdown-item">
+                                                        <label>
+                                                            <input type="checkbox" asp-for="@Model.Categories[index].Selected" />
+                                                            <label asp-for="@Model.Categories[index].Selected">@Model.Categories[index].Name</label>
+                                                            <input type="hidden" asp-for="@Model.Categories[index].Id" />
+                                                            <input type="hidden" asp-for="@Model.Categories[index].Name" />
+                                                        </label>
+                                                    </div>
+                                                </li>
+                                                index++;
+                                            }
+
+                                        }
+                                    </ul>
+                                </div>
+                            }
+
+                        }
                     </li>
-                }
-            </ul>
-        </div>
-        <div class="col">
-            <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Rodzaj umowy (@Model.TypesOfContracts.Where(c => c.Selected == true).Count())</button>
-            <ul class="dropdown-menu">
-                @for (int i = 0; i < Model.TypesOfContracts.Length; i++)
-                {
-                    <li>
-                        <div class="dropdown-item">
-                            <label>
-                                <input type="checkbox" asp-for="@Model.TypesOfContracts[i].Selected" />
-                                <label asp-for="@Model.TypesOfContracts[i].Selected">@Model.TypesOfContracts[i].Name</label>
-                                <input type="hidden" asp-for="@Model.TypesOfContracts[i].Id" />
-                                <input type="hidden" asp-for="@Model.TypesOfContracts[i].Name" />
-                            </label>
-                        </div>
-                    </li>
-                }
-            </ul>
-        </div>
-        <div class="col">
-            <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Wymiar pracy (@Model.WorkingHour.Where(c => c.Selected == true).Count())</button>
-            <ul class="dropdown-menu">
-                @for (int i = 0; i < Model.WorkingHour.Length; i++)
-                {
-                    <li>
-                        <div class="dropdown-item">
-                            <label>
-                                <input type="checkbox" asp-for="@Model.WorkingHour[i].Selected" />
-                                <label asp-for="@Model.WorkingHour[i].Selected">@Model.WorkingHour[i].Name</label>
-                                <input type="hidden" asp-for="@Model.WorkingHour[i].Id" />
-                                <input type="hidden" asp-for="@Model.WorkingHour[i].Name" />
-                            </label>
-                        </div>
-                    </li>
-                }
-            </ul>
-        </div>
-        </div>
-        <div class="col-1">
-            <input type="submit" value="Szukaj" class="btn btn-primary form-control" />
-        </div>
-        <div class="col-2 float-lg-right">
-            <button asp-action="ResetSearch" class="btn btn-secondary form-control">Pokaż wszystko</button>
+                </ul>
+            </div>
+            <div class="col-auto mt-3">
+                <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Rodzaj umowy (@Model.TypesOfContracts.Where(c => c.Selected == true).Count())</button>
+                <ul class="dropdown-menu">
+                    @for (int i = 0; i < Model.TypesOfContracts.Length; i++)
+                    {
+                        <li>
+                            <div class="dropdown-item">
+                                <label>
+                                    <input type="checkbox" asp-for="@Model.TypesOfContracts[i].Selected" />
+                                    <label asp-for="@Model.TypesOfContracts[i].Selected">@Model.TypesOfContracts[i].Name</label>
+                                    <input type="hidden" asp-for="@Model.TypesOfContracts[i].Id" />
+                                    <input type="hidden" asp-for="@Model.TypesOfContracts[i].Name" />
+                                </label>
+                            </div>
+                        </li>
+                    }
+                </ul>
+            </div>
+            <div class="col-auto mt-3">
+                <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Wymiar pracy (@Model.WorkingHour.Where(c => c.Selected == true).Count())</button>
+                <ul class="dropdown-menu">
+                    @for (int i = 0; i < Model.WorkingHour.Length; i++)
+                    {
+                        <li>
+                            <div class="dropdown-item">
+                                <label>
+                                    <input type="checkbox" asp-for="@Model.WorkingHour[i].Selected" />
+                                    <label asp-for="@Model.WorkingHour[i].Selected">@Model.WorkingHour[i].Name</label>
+                                    <input type="hidden" asp-for="@Model.WorkingHour[i].Id" />
+                                    <input type="hidden" asp-for="@Model.WorkingHour[i].Name" />
+                                </label>
+                            </div>
+                        </li>
+                    }
+                </ul>
+            </div>
+            <div class="col-auto mt-3">
+                <button asp-action="ResetSearch" class="btn btn-secondary form-control">Wyczyść filtry</button>
+            </div>
         </div>
     </div>
 </form>
