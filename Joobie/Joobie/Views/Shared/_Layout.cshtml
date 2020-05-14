@@ -33,11 +33,28 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <partial name="_LoginPartial" />
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Panel
+                        </button>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" asp-area="" asp-controller="Jobs" asp-action="Index">Oferty</a>
+                            <a class="dropdown-item" asp-area="" asp-controller="Categories" asp-action="Index">Kategorie</a>
+                            <a class="dropdown-item" asp-area="" asp-controller="TypeOfContracts" asp-action="Index">Rodzaje umów</a>
+                            <a class="dropdown-item" asp-area="" asp-controller="Categories" asp-action="Index">Rodzaje etatów</a>
+                            @if (User.IsInRole(Strings.AdminUser))
+                            {
+                                <a class="dropdown-item" asp-area="" asp-controller="Administration" asp-action="ListRoles">Role</a>
+                                <a class="dropdown-item" asp-area="" asp-controller="User" asp-action="Index">Użytkownicy</a>
+                            }
+                        </div>
+                    </div>
                     <ul class="navbar-nav flex-grow-1">
                     </ul>
+
                 </div>
             </div>
-            <button class="btn btn-primary col-1" id="menu-toggle">Menu</button>
+
             <div class="col-2"></div>
         </nav>
     </header>
@@ -47,20 +64,6 @@
                 <main role="main" class="pb-3">
                     @RenderBody()
                 </main>
-            </div>
-        </div>
-        <div class="col-2" id="sidebar-wrapper">
-            <div class="list-group list-group-flush class-space-right">
-                <div class="sidebar-heading text-center">Panel Moderatora </div>
-                <a class="btn btn-primary btn-space" asp-area="" asp-controller="Jobs" asp-action="Index">Oferty</a>
-                <a class="btn btn-primary btn-space" asp-area="" asp-controller="Categories" asp-action="Index">Kategorie</a>
-                <a class="btn btn-primary btn-space" asp-area="" asp-controller="TypeOfContracts" asp-action="Index">Rodzaje umów</a>
-                <a class="btn btn-primary btn-space" asp-area="" asp-controller="Categories" asp-action="Index">Rodzaje etatów</a>
-                @if (User.IsInRole(Strings.AdminUser))
-                {
-                    <a class="btn btn-primary btn-space" asp-area="" asp-controller="Administration" asp-action="ListRoles">Role</a>
-                    <a class="btn btn-primary btn-space" asp-area="" asp-controller="User" asp-action="Index">Użytkownicy</a>
-                }
             </div>
         </div>
     </div>
@@ -79,11 +82,3 @@
     @RenderSection("editor_scripts", required: false)
 </body>
 </html>
-
-<!-- Menu Toggle Script -->
-<script>
-    $("#menu-toggle").click(function (e) {
-        e.preventDefault();
-        $("#wrapper").toggleClass("toggled");
-    });
-</script>
