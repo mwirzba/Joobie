@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Joobie.Utility;
 
 namespace Joobie.Models.JobModels
 {
@@ -28,12 +29,14 @@ namespace Joobie.Models.JobModels
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [Display(Name = "Data dodania")]
+        [AddedDate]
         public DateTime? AddedDate { get; set; }
 
         [Required(ErrorMessage = "Pole wymagane")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [Display(Name = "Termin wygaśnięcia")]
+        [ExpirationDate]
         public DateTime? ExpirationDate { get; set; }
 
 
