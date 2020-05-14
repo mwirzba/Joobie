@@ -4,7 +4,7 @@
 @{
     ViewData["Title"] = "Details";
 }
-<div class="">
+<div class="border backgroundWhite">
     <fieldset disabled>
         <div class="col-md-4 col-sm-10">
             <img class="img-thumbnail h-100" id="img" style="width: 100px;" src="@Url.Content("~/CompanyIcons/" + Model.ApplicationUser.CompanyImagePath)" onerror="this.src='/CompanyIcons/default.png'" />
@@ -18,7 +18,7 @@
             </div>
             <div class="col-md-6 col-sm-12 form-group row">
                 <i class="fas fa-stopwatch" style="padding-right: 10px"></i>
-                <h6>do @Model.ExpirationDate</h6>
+                <h6>do  @Model.ExpirationDate.Value.Date.ToShortDateString()</h6>
             </div>
         </div>
         <div class="form-group row">
@@ -27,7 +27,6 @@
                 <h6>@Model.TypeOfContract.Name</h6>
             </div>
             <div class="col-md-2 col-sm-12 form-group row">
-
                 <i class="fas fa-clock" style="padding-right: 10px"></i>
                 <h6>@Model.WorkingHours.Name</h6>
             </div>
@@ -62,11 +61,11 @@
                     @{
                         if (User.IsInRole(Strings.AdminUser) || User.IsInRole(Strings.ModeratorUser) || (User.IsInRole(Strings.CompanyUser) && Model.UserId == (string)ViewData["userId"]))
                         {
-                            <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-info form-control">Edytuj</a>
+                            <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-info form-control mt-1">Edytuj</a>
                         }
                         else if (!User.IsInRole(Strings.CompanyUser))
                         {
-                            <a asp-action="Apply" asp-route-id="@Model.Id" class="btn btn-info form-control">Aplikuj</a>
+                            <a asp-action="Apply" asp-route-id="@Model.Id" class="btn btn-info form-control mt-1">Aplikuj</a>
                         }
                     }
                 </div>

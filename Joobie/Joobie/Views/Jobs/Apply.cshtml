@@ -6,33 +6,32 @@
 
 <div class="border backgroundWhite">
     <div class="col-7">
-        <h2 class="text-info">Dodaj CV do oferty</h2>
+        <h2 class="text-info">Zamieść CV</h2>
         <br />
     </div>
-    <div class="col-5">
+    <div class="col-5 mt-4">
         <form asp-action="Apply" enctype="multipart/form-data" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="JobInMiddleTableId" value="@Model.JobInMiddleTableId" />
 
-            <div class="input-group">
+            <span asp-validation-for="Cv" class="text-danger font-weight-bold text-center"></span>
+            <div class="input-group mt-2">
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="inputGroupFileAddon01">Dodaj CV</span>
                 </div>
                 <div class="custom-file">
                     <input asp-for="Cv" type="file" class="custom-file-input" id="inputGroupFile01"
                            aria-describedby="inputGroupFileAddon01">
-                    <label class="custom-file-label" for="inputGroupFile01">Wybierz plik</label>
+                    <label class="custom-file-label" for="inputGroupFile01" style="min-width:150px">Wybierz plik</label>
                 </div>
             </div>
 
-            <span asp-validation-for="Cv" class="text-danger"></span>
-
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="row">
-                <div class="col-12">
-                    <input type="submit" value="Wyślij" class="btn btn-info form-control btn-space">
-                    <a asp-action="Details" asp-route-id="@Model.JobInMiddleTableId" class="btn btn-success form-control btn-space">Wróć do szczegółów</a>
-                    <a asp-action="Index" class="btn btn-success form-control btn-space">Wróć do listy ofert</a>
+                <div class="col-12 align-content-center">
+                    <input type="submit" value="Wyślij" class="btn btn-outline-primary form-control btn-space mt-2" style="min-width:150px">
+                    <a asp-action="Details" asp-route-id="@Model.JobInMiddleTableId" class="btn btn-outline-info form-control btn-space mt-2" style="min-width:150px">Szczegóły</a>
+                    <a asp-action="Index" class="btn btn-outline-success form-control btn-space mt-2" style="min-width:150px">Oferty</a>
                 </div>
             </div>
         </form>
