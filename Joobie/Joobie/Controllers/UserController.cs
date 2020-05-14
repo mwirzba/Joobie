@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using Joobie.Data;
 using Joobie.Utility;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;

@@ -3,7 +3,7 @@
     ViewData["Title"] = "Search";
 }
 
-<form asp-action="Index" method="post">
+<form asp-action="Index" asp-controller="Jobs" method="post">
     <div class="row">
         <div class="input-group">
             <input class="form-control" placeholder="Stanowisko" type="text" asp-for="@Model.SearchString" value="@Model.SearchString" />
@@ -78,7 +78,6 @@
             <div class="col-5 col-md-3 col-sm-12 mt-3">
                 <button asp-action="ResetSearch" class="btn btn-secondary form-control filter-button">Wyczyść filtry</button>
             </div>
-
         </div>
     </div>
 </form>

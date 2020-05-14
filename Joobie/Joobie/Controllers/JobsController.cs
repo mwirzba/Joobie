@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -38,7 +39,6 @@ namespace Joobie.Controllers
             _userManager = userManager;
         }
 
-        // GET: Jobs
         public async Task<IActionResult> Index(SearchSettingViewModel searchSettingViewModel,int page=1)
         {
            
@@ -47,7 +47,7 @@ namespace Joobie.Controllers
             {
                 if (_searchStringSession.searchSetting == null)
                 {
-                    searchSettingViewModel = await SetSearchSettingViewModel();
+                    searchSettingViewModel = await GetSearchSettingViewModel();
                     _searchStringSession.SetSearch(searchSettingViewModel);
                 }
             }
@@ -345,7 +345,7 @@ namespace Joobie.Controllers
             predicate.DefaultExpression = j => true;
             if (!string.IsNullOrEmpty(searchSettingViewModel.SearchString))
             {
-                predicate = predicate.And(j => j.Name.Contains(searchSettingViewModel.SearchString));
+                predicate = predicate.And(j => j.Name.ToLower().Contains(searchSettingViewModel.SearchString.Trim().ToLower()));
             }
             if (!string.IsNullOrEmpty(searchSettingViewModel.CitySearchString))
             {
@@ -395,7 +395,7 @@ namespace Joobie.Controllers
             return jobs;
         }
 
-        private async Task<SearchSettingViewModel> SetSearchSettingViewModel()
+        private async Task<SearchSettingViewModel> GetSearchSettingViewModel()
         {
             var categories = await _context.Category.ToListAsync();
             var workingHours = await _context.WorkingHours.ToListAsync();

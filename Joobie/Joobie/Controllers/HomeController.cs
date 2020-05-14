@@ -23,16 +23,33 @@ namespace Joobie.Controllers
     public class HomeController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly SearchStringSession _searchStringSession;
 
         public HomeController(ApplicationDbContext context, SearchStringSession searchStringSession)
         {
             _context = context;
+            _searchStringSession = searchStringSession;
         }
 
-        // GET: Jobs
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            SearchSettingViewModel searchSettingViewModel;
+            try
+            {
+                searchSettingViewModel = await GetSearchSettingViewModel();
+                if (_searchStringSession.searchSetting == null)
+                {
+                    _searchStringSession.SetSearch(searchSettingViewModel);
+                }
+                return View(searchSettingViewModel);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+
+            return RedirectToAction("Error");
+
         }
 
 
@@ -45,6 +62,38 @@ namespace Joobie.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        private async Task<SearchSettingViewModel> GetSearchSettingViewModel()
+        {
+            var categories = await _context.Category.ToListAsync();
+            var workingHours = await _context.WorkingHours.ToListAsync();
+            var typesOfContracts = await _context.TypeOfContract.ToListAsync();
+
+            var searchSettingViewModel = new SearchSettingViewModel
+            {
+                Categories = new Filter[categories.Count],
+                TypesOfContracts = new Filter[typesOfContracts.Count],
+                WorkingHour = new Filter[workingHours.Count]
+            };
+
+            for (int i = 0; i < categories.Count; i++)
+            {
+                searchSettingViewModel.Categories[i] =
+                    new Filter { Id = categories[i].Id, Name = categories[i].Name, Selected = false };
+            }
+            for (int i = 0; i < workingHours.Count; i++)
+            {
+                searchSettingViewModel.WorkingHour[i] =
+                    new Filter { Id = workingHours[i].Id, Name = workingHours[i].Name, Selected = false };
+            }
+            for (int i = 0; i < typesOfContracts.Count; i++)
+            {
+                searchSettingViewModel.TypesOfContracts[i] =
+                    new Filter { Id = typesOfContracts[i].Id, Name = typesOfContracts[i].Name, Selected = false };
+            }
+
+            return searchSettingViewModel;
         }
 
 

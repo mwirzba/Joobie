@@ -26,7 +26,10 @@
                                             <a asp-action="Details" asp-route-id="@job.Id" class="btn btn-link" style="margin-bottom: 10px">@job.Name</a>
                                         </h5>
                                         <h6 class="card-subtitle mb-2 text-muted">@job.ApplicationUser.Name</h6>
-                                        <p class="card-text">@job.Localization</p>
+                                        <p class="card-text">
+                                            @job.Localization
+                                        </p>
+
                                         @if (!User.IsInRole(Strings.AdminUser) && !User.IsInRole(Strings.ModeratorUser) && !User.IsInRole(Strings.CompanyUser))
                                         {
                                             <a asp-action="Apply" asp-route-id="@job.Id" class="btn btn-primary"  style="margin-bottom: 10px">Aplikuj</a>
@@ -36,7 +39,6 @@
                                     </div>
                                 </div>
                         </div>
-
                     </div>
                 }
          <div class="row justify-content-center mt-3">
@@ -46,9 +48,9 @@
                          class="pagination pagination-lg">
              </ul>
           </div>
-                }
-                else
-                {
-                <h2>Niestety nie znaleziono żadnych ofert</h2>
-                }
-    </div>
+    }
+    else
+    {
+    <h2>Niestety nie znaleziono żadnych ofert</h2>
+    }
+</div>

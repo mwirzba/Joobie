@@ -4,7 +4,7 @@
 }
 
     <div class="row mt-4">
-        <h2>Twoje Aplikacje</h2>
+        <h2 class="text-info">Twoje aplikacje</h2>
     </div>
 
 
@@ -15,37 +15,37 @@
             @foreach (var job in Model.Items)
             {
                 <div class="col-md-12 readonly-list-space">
-                        <div class="card flex-row flex-wrap">
-                            <div class="card-header border-0">
-                                <img class="img-thumbnail h-100" id="img" style="width: 100px;" src="@Url.Content("~/CompanyIcons/" + job.JobInMiddleTable.ApplicationUser.CompanyImagePath)" onerror="this.src='/CompanyIcons/default.png'" />
-                            </div>
-                            <div class="card-block px-2">
-                                <h5 class="card-title">
-                                    <a asp-action="Details" asp-controller="Jobs" asp-route-id="@job.JobInMiddleTable.Id" class="btn btn-link" style="margin-bottom: 10px">@job.JobInMiddleTable.Name</a>
-                                </h5>
-                                <a class="card-text">@job.JobInMiddleTable.ApplicationUser.Name</a><br />
-                                <a class="card-text">@Html.DisplayNameFor(m => job.JobInMiddleTable.Salary)</a>: <a class="card-text">@job.JobInMiddleTable.Salary</a><br />
-                                <a class="card-text">@job.JobInMiddleTable.Localization</a>
-                                <div class="w-100"></div>
-                            </div>
+                    <div class="card flex-row flex-wrap">
+                        <div class="card-header border-0">
+                            <img class="img-thumbnail h-100" id="img" style="width: 100px;" src="@Url.Content("~/CompanyIcons/" + job.JobInMiddleTable.ApplicationUser.CompanyImagePath)" onerror="this.src='/CompanyIcons/default.png'" />
                         </div>
+                        <div class="card-block px-2">
+                            <h5 class="card-title">
+                                <a asp-action="Details" asp-controller="Jobs" asp-route-id="@job.JobInMiddleTable.Id" class="btn btn-link" style="margin-bottom: 10px">@job.JobInMiddleTable.Name</a>
+                            </h5>
+                            <a class="card-text">@job.JobInMiddleTable.ApplicationUser.Name</a><br />
+                            <a class="card-text">@Html.DisplayNameFor(m => job.JobInMiddleTable.Salary)</a>: <a class="card-text">@job.JobInMiddleTable.Salary</a><br />
+                            <a class="card-text">@job.JobInMiddleTable.Localization</a>
+                            <div class="w-100"></div>
+                        </div>
+                    </div>
                 </div>
-
             }
+            <div class="row mt-3 justify-content-center">
+                <ul page-model="@Model.PagingInfo" page-classes-enabled="true"
+                    page-class="" page-class-normal="page-item"
+                    page-class-selected="page-item active"
+                    class="pagination pagination-lg">
+                </ul>
+            </div>
         }
         else
         {
-            <h2>Niestety nie znaleziono żadnych ofert</h2>
+            <h3 class="mt-3">Nie zaaplikowano jeszcze na żadną ofertę.</h3>
         }
     </div>
 
-    <div class="row mt-3 justify-content-center">
-        <ul page-model="@Model.PagingInfo" page-classes-enabled="true"
-            page-class="" page-class-normal="page-item"
-            page-class-selected="page-item active"
-            class="pagination pagination-lg">
-        </ul>
-    </div>
+  
 
 </div>
 
