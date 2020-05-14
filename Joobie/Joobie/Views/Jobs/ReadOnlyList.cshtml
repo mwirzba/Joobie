@@ -17,27 +17,24 @@
                 {
                     <div class="row mt-2">
                         <div class="col-md-12 readonly-list-space">
-                            <form asp-action="Details" method="post">
                                 <div class="card flex-row flex-wrap">
                                     <div class="card-header border-0">
                                         <img class="img-thumbnail h-100" id="img" style="width: 100px;" src="@Url.Content("~/CompanyIcons/" + job.ApplicationUser.CompanyImagePath)" onerror="this.src='/CompanyIcons/default.png'" />
                                     </div>
                                     <div class="card-block px-2">
                                         <h5 class="card-title">
-                                            <button class="btn btn-link" type="submit">@job.Name</button>
+                                            <a asp-action="Details" asp-route-id="@job.Id" class="btn btn-link" style="margin-bottom: 10px">@job.Name</a>
                                         </h5>
-                                        <input type="hidden" name="id" asp-for="@job.Id" />
                                         <h6 class="card-subtitle mb-2 text-muted">@job.ApplicationUser.Name</h6>
                                         <p class="card-text">@job.Localization</p>
                                         @if (!User.IsInRole(Strings.AdminUser) && !User.IsInRole(Strings.ModeratorUser) && !User.IsInRole(Strings.CompanyUser))
                                         {
-                                            <button asp-action="Apply" asp-route-id="@job.Id" class="btn btn-primary"  style="margin-bottom: 10px">Aplikuj</button>
+                                            <a asp-action="Apply" asp-route-id="@job.Id" class="btn btn-primary"  style="margin-bottom: 10px">Aplikuj</a>
                                         }
                                         <br />
                                         <div class="w-100"></div>
                                     </div>
                                 </div>
-                            </form>
                         </div>
 
                     </div>

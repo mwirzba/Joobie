@@ -3,34 +3,32 @@
     ViewData["Title"] = "Twoje Aplikacje";
 }
 
-<h1>Twoje Aplikacje</h1>
+    <div class="row mt-4">
+        <h2>Twoje Aplikacje</h2>
+    </div>
+
 
 <div class="container">
-    <div class="row">
+    <div class="row mt-4">
         @if (@Model.Items.Any())
         {
             @foreach (var job in Model.Items)
             {
                 <div class="col-md-12 readonly-list-space">
-                    <form asp-action="Details" method="post">
                         <div class="card flex-row flex-wrap">
                             <div class="card-header border-0">
                                 <img class="img-thumbnail h-100" id="img" style="width: 100px;" src="@Url.Content("~/CompanyIcons/" + job.JobInMiddleTable.ApplicationUser.CompanyImagePath)" onerror="this.src='/CompanyIcons/default.png'" />
                             </div>
                             <div class="card-block px-2">
                                 <h5 class="card-title">
-                                    <label class="btn btn-link">@job.JobInMiddleTable.Name</label>
+                                    <a asp-action="Details" asp-controller="Jobs" asp-route-id="@job.JobInMiddleTable.Id" class="btn btn-link" style="margin-bottom: 10px">@job.JobInMiddleTable.Name</a>
                                 </h5>
-                                <input type="hidden" name="id" asp-for="@job.JobInMiddleTable.Id" />
-
-
                                 <a class="card-text">@job.JobInMiddleTable.ApplicationUser.Name</a><br />
                                 <a class="card-text">@Html.DisplayNameFor(m => job.JobInMiddleTable.Salary)</a>: <a class="card-text">@job.JobInMiddleTable.Salary</a><br />
                                 <a class="card-text">@job.JobInMiddleTable.Localization</a>
                                 <div class="w-100"></div>
                             </div>
                         </div>
-                    </form>
                 </div>
 
             }

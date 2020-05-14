@@ -3,7 +3,7 @@
     ViewData["Title"] = "JobsOffers";
     Layout = "_EmployeerLayout";
 }
-    <div class="row">
+    <div class="row mt-4">
         <div class="col-6">
             <h2 class="text-info">Twoje oferty pracy</h2>
         </div>
@@ -23,7 +23,7 @@
     {
         @foreach (var job in Model.Items)
         {
-            <div class="row">
+            <div class="row mt-4">
                 <div class="col-md-12 readonly-list-space">
 
                     <div class="card flex-row flex-wrap">
@@ -32,7 +32,7 @@
                         </div>
                         <div class="card-block px-2">
                             <h5 class="card-title">
-                                @job.Name
+                                <a asp-action="Details" asp-route-id="@job.Id" class="btn btn-link" style="margin-bottom: 10px">@job.Name</a>
                             </h5>
                             @if (@job.CVJobApplicationUser.Any())
                             {

@@ -96,7 +96,7 @@ namespace Joobie.Controllers
         }
 
 
-        public async Task<IActionResult> Details(long? id)
+        public async Task<IActionResult> Details([FromRouteAttribute] long? id)
         {
             if (id == null)
             {
