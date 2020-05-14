@@ -48,15 +48,9 @@
                             <div class="form-row align-content-lg-start">
                                 @if (@job.CVJobApplicationUser.Any())
                                 {
-                                    <form class="col-auto" asp-action="Details" method="post">
-                                        <button class="btn btn-link" type="submit">Zobacz aplikacje.</button>
-                                        <input type="hidden" name="id" asp-for="@job.Id" />
-                                    </form>
+                                    <a asp-action="Details" class="btn btn-link" asp-route-id="@job.Id">Zobacz aplikacje.</a>
                                 }
-                                <form class="col-auto" asp-controller="Jobs" asp-action="Details" method="post">
-                                    <button class="btn btn-link" type="submit">Szczegóły oferty</button>
-                                    <input type="hidden" name="id" asp-for="@job.Id" />
-                                </form>
+                                <a asp-action="Details" asp-controller="Jobs" class="btn btn-link" asp-route-id="@job.Id">Szczegóły oferty.</a> 
                             </div>
                             <div class="w-100"></div>
                         </div>

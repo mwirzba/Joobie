@@ -219,7 +219,7 @@ body {
         columns: 1;
         -webkit-columns: 1;
         -moz-columns: 1;
-        max-height: 300px;
+        max-height: 230px;
         overflow-y: hidden;
         break-inside: avoid;
     }
