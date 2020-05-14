@@ -4,42 +4,77 @@
 }
 
 
-    <div class="container mt-4 ">
+    <div class="container my-4 ">
         <form asp-action="Index" asp-controller="Jobs" method="post">
-            <div class="row">
-                <div class="col-md-3 col-sm-12 media-margin-top">
-                    <input class="form-control form-control-lg" placeholder="Stanowisko" type="text" asp-for="@Model.SearchString" value="@Model.SearchString" />
+            <h1>Z nami znajdziesz to, czego szukasz!</h1>
+            <div class="card-deck">
+                
+                    <div class="card" style="width: 18rem;">
+                        <img class="card-img-top" src="~/index_card_1.jpg" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title">Wiele możliwości</h5>
+                            <p class="card-text">Pomożemy Tobie znaleźć wymarzoną pracę!</p>
+                        </div>
+                    </div>
+                    <div class="card" style="width: 18rem;">
+                        <img class="card-img-top" src="~/index_card_1.jpg" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title">Wiele możliwości</h5>
+                            <p class="card-text">Pomożemy Tobie znaleźć wymarzoną pracę!</p>
+                        </div>
+                    </div>
+                    <div class="card" style="width: 18rem;">
+                        <img class="card-img-top" src="~/index_card_1.jpg" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title">Wiele możliwości</h5>
+                            <p class="card-text">Pomożemy Tobie znaleźć wymarzoną pracę!</p>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-md-3 col-sm-12 media-margin-top">
-                    <input class="form-control form-control-lg" placeholder="Miasto" type="text" asp-for="@Model.CitySearchString" value="@Model.CitySearchString" />
-                </div>
-                <div class="col-md-3 col-sm-12 media-margin-top">
-                    <button type="submit" class="btn btn-primary btn-lg" id="btnGroupAddon">
-                        Szukaj ofert
-                    </button>
-                </div>
-                @for (int i = 0; i < Model.Categories.Length; i++)
-                {
-                    <input type="hidden" asp-for="@Model.Categories[i].Selected" value="false" />
-                    <input type="hidden" asp-for="@Model.Categories[i].Id" />
-                    <input type="hidden" asp-for="@Model.Categories[i].Name" />
-                }
 
-                @for (int i = 0; i < Model.TypesOfContracts.Length; i++)
-                {
+          
+          <div class="card border-dark mb-3"  >
+              <div class="card-header">
+                  Wyszukaj ofertę pracy
+              </div>
+              <div class="card-body">
+                  <div class="row">
 
-                    <input type="hidden" asp-for="@Model.TypesOfContracts[i].Selected" value="false" />
-                    <input type="hidden" asp-for="@Model.TypesOfContracts[i].Id" />
-                    <input type="hidden" asp-for="@Model.TypesOfContracts[i].Name" />
-                }
+                      <div class="col-md-3 col-sm-12 media-margin-top">
+                          <input class="form-control form-control-lg" placeholder="Stanowisko" type="text" asp-for="@Model.SearchString" value="@Model.SearchString" />
+                      </div>
+                      <div class="col-md-3 col-sm-12 media-margin-top">
+                          <input class="form-control form-control-lg" placeholder="Miasto" type="text" asp-for="@Model.CitySearchString" value="@Model.CitySearchString" />
+                      </div>
+                      <div class="col-md-3 col-sm-12 media-margin-top">
+                          <button type="submit" class="btn btn-primary btn-lg" id="btnGroupAddon">
+                              Szukaj ofert
+                          </button>
+                      </div>
+                      @for (int i = 0; i < Model.Categories.Length; i++)
+                      {
+                          <input type="hidden" asp-for="@Model.Categories[i].Selected" value="false" />
+                          <input type="hidden" asp-for="@Model.Categories[i].Id" />
+                          <input type="hidden" asp-for="@Model.Categories[i].Name" />
+                      }
 
-                @for (int i = 0; i < Model.WorkingHour.Length; i++)
-                {
-                    <input type="hidden" asp-for="@Model.WorkingHour[i].Selected" value="false" />
-                    <input type="hidden" asp-for="@Model.WorkingHour[i].Id" />
-                    <input type="hidden" asp-for="@Model.WorkingHour[i].Name" />
-                }
+                      @for (int i = 0; i < Model.TypesOfContracts.Length; i++)
+                      {
 
-        </div>
+                          <input type="hidden" asp-for="@Model.TypesOfContracts[i].Selected" value="false" />
+                          <input type="hidden" asp-for="@Model.TypesOfContracts[i].Id" />
+                          <input type="hidden" asp-for="@Model.TypesOfContracts[i].Name" />
+                      }
+
+                      @for (int i = 0; i < Model.WorkingHour.Length; i++)
+                      {
+                          <input type="hidden" asp-for="@Model.WorkingHour[i].Selected" value="false" />
+                          <input type="hidden" asp-for="@Model.WorkingHour[i].Id" />
+                          <input type="hidden" asp-for="@Model.WorkingHour[i].Name" />
+                      }
+
+                  </div>
+              </div>
+            </div>
     </form>
 </div>
