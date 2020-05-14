@@ -54,12 +54,14 @@ namespace Joobie.Areas.Identity.Pages.Account
 
         public class InputModel
         {
-            [Required]
+
+            [Required(ErrorMessage = "Adres email jest wymagany")]
             [EmailAddress(ErrorMessage = "Zły format adresu email")]
             [Display(Name = "Email")]
             public string Email { get; set; }
 
-            [Required]
+
+            [Required(ErrorMessage = "Hasło jest wymagane")]
             [StringLength(100, ErrorMessage = "{0} musi mieć co najmniej {2} znaków i maksymanie {1} znaków", MinimumLength = 6)]
             [DataType(DataType.Password)]
             [Display(Name = "Hasło")]

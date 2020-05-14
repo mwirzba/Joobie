@@ -15,7 +15,7 @@ namespace Joobie.Models
 
         public string Id { get; set; }
 
-        [Required(ErrorMessage = "Role Name is required")]
+        [Required(ErrorMessage = "Rola jest wymagana")]
         public string RoleName { get; set; }
 
         public List<string> Users { get; set; }
