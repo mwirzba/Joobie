@@ -18,11 +18,12 @@
 }
 
 <div class="container">
-    <div class="row">
-        @if (@Model.Items.Any())
+
+    @if (@Model.Items.Any())
+    {
+        @foreach (var job in Model.Items)
         {
-            @foreach (var job in Model.Items)
-            {
+            <div class="row">
                 <div class="col-md-12 readonly-list-space">
 
                     <div class="card flex-row flex-wrap">
@@ -62,24 +63,27 @@
                     </div>
 
                 </div>
-
-            }
-
-            <div class="row justify-content-center mt-3">
-                <ul page-model="@Model.PagingInfo" page-classes-enabled="true"
-                    page-class="" page-class-normal="page-item"
-                    page-class-selected="page-item active"
-                    class="pagination pagination-lg">
-                </ul>
             </div>
         }
-        else
-        {
 
-            <h2 style="width: 100%">Niestety nie znaleziono żadnych ofert</h2>
+        <div class="row mt-3 justify-content-center">
+            <ul page-model="@Model.PagingInfo" page-classes-enabled="true"
+                page-class="" page-class-normal="page-item"
+                page-class-selected="page-item active"
+                class="pagination pagination-lg">
+            </ul>
+        </div>
 
-        }
-    </div>
+
+    }
+    else
+    {
+
+        <h2 style="width: 100%">Niestety nie znaleziono żadnych ofert</h2>
+
+    }
+
+
 
 </div>
 
