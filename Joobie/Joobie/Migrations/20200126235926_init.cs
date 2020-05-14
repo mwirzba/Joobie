@@ -270,7 +270,13 @@ namespace Joobie.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Discriminator", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName", "CompanyImagePath", "Name", "Nip" },
-                values: new object[] { "31d98481-9339-4e36-b3d4-c8f7e7ab3256", 0, "e5fbd409-c106-4492-8ed1-deeb2da3a7af", "ApplicationUser", "DefaultUser@gmail.com", true, true, null, null, "DEFAULTUSER@GMAIL.COM", "AQAAAAEAACcQAAAAEKQK0227340I7E9mRrWOJJwBpOyDx6zuZ9iN06nmNGJZkEyHl7ZZdBgxhtulSzn69Q==", null, false, "PBSCMSVSUTGUUIVILSKHSXF2HIQ2OXW6", false, "DefaultUser@gmail.com", null, "DefaultCompany", "DefaultNip" });
+                values: new object[,]{
+                    { "31d98481-9339-4e36-b3d4-c8f7e7ab3256", 0, "e5fbd409-c106-4492-8ed1-deeb2da3a7af", "ApplicationUser", "DefaultUser@gmail.com", true, true, null, null, "DEFAULTUSER@GMAIL.COM", "AQAAAAEAACcQAAAAEKQK0227340I7E9mRrWOJJwBpOyDx6zuZ9iN06nmNGJZkEyHl7ZZdBgxhtulSzn69Q==", null, false, "PBSCMSVSUTGUUIVILSKHSXF2HIQ2OXW6", false, "DefaultUser@gmail.com", "qfnqqlmr.jpg", "Millenium", "5340135475" },
+                    { "69dacfbb-ce2f-4782-9ddc-8bc5fce20784", 0, "16ba960a-e35d-4606-9068-b27daf171409", "ApplicationUser", "ing@joobie.com", true, true, null, "ING@JOOBIE.COM", "ING@JOOBIE.COM", "AQAAAAEAACcQAAAAEJEaFHdgx+/dqxRoPYL6gwMTaEsHj5ewG/y6YUMpjfQuhBg1ivsHx/9//4kpfYWkVA==", null, false, "MWZDLJCRUDAYEF4YFQYBJO7VWGJUMTBL", false, "ing@joobie.com", "ing.jpg", "ING Bank Śląski", "6340135475" },
+                    { "7c76f70b-fe41-4c9c-82b8-eac1ceb588c6", 0, "b107eb62-afcf-4d1b-b890-b92a3227dea4", "ApplicationUser", "sii@joobie.com", true, true, null, "SII@JOOBIE.COM", "SII@JOOBIE.COM", "AQAAAAEAACcQAAAAEJjEJ7glArsfmJ+e2cZNTd9glkbyJSMGl8ZOazdqADF9TXFTcJo3mBFuXa0g+vatBA==", null, false, "E2TRNHI2AURTC4T66DBYKAOJ5WMHIBEF", false, "sii@joobie.com", "sii.jpg", "SII", "5252352907" }  }
+                );
+            //hasło dla ing to 123456
+            //hasło dla default usera to Admin123!
 
             migrationBuilder.InsertData(
                 table: "Category",
