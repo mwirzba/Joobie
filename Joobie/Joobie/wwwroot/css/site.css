@@ -11,10 +11,6 @@ a.navbar-brand {
     width:150px;
 }
 
-.auth-input-width {
-    min-width: 150px;
-}
-
 
 /* Provide sufficient contrast against white background */
 a {

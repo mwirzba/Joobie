@@ -15,7 +15,7 @@
                     <label asp-for="Input.Email" class="col-form-label"></label>
                 </div>
                 <div class="col-md-5">
-                    <input asp-for="Input.Email" class="form-control auth-input-width" />
+                    <input asp-for="Input.Email" class="form-control" style="min-width:150px" />
                 </div>
                 <span asp-validation-for="Input.Email" class="text-danger"></span>
         </div>
@@ -25,7 +25,7 @@
                 <label asp-for="Input.Password" class="col-form-label"></label>
             </div>
             <div class="col-md-5">
-                <input asp-for="Input.Password" class="form-control auth-input-width" />
+                <input asp-for="Input.Password" class="form-control" style="min-width:150px" />
             </div>
             <span asp-validation-for="Input.Password" class="text-danger"></span>
         </div>

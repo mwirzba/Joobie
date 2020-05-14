@@ -8,7 +8,7 @@
 
     <form method="post" asp-route-returnUrl="@Model.ReturnUrl" enctype="multipart/form-data">
         <div class="border backgroundWhite row">
-            <div class="col-6">
+            <div class="col">
                 <h1>@ViewData["Title"]</h1>
                 <hr />
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -17,8 +17,8 @@
                     <div class="col-md-2">
                         <label asp-for="Input.Email" class="col-form-label"></label>
                     </div>
-                    <div class="col-md-5">
-                        <input asp-for="Input.Email" class="form-control auth-input-width" />
+                    <div class="col-md-5" >
+                        <input asp-for="Input.Email" class="form-control" style="min-width:150px" />
                     </div>
                     <span asp-validation-for="Input.Email" class="text-danger"></span>
                 </div>
@@ -28,7 +28,7 @@
                         <label asp-for="Input.Password" class="col-form-label"></label>
                     </div>
                     <div class="col-md-5">
-                        <input asp-for="Input.Password" class="form-control auth-input-width" />
+                        <input asp-for="Input.Password" class="form-control" style="min-width:150px" />
                     </div>
                     <span asp-validation-for="Input.Password" class="text-danger"></span>
                 </div>
@@ -39,7 +39,7 @@
                         <label asp-for="Input.ConfirmPassword" class="col-form-label"></label>
                     </div>
                     <div class="col-md-5">
-                        <input asp-for="Input.ConfirmPassword" class="form-control auth-input-width" />
+                        <input asp-for="Input.ConfirmPassword" class="form-control" style="min-width:150px" />
                     </div>
                     <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
                 </div>
@@ -54,23 +54,23 @@
                             <label asp-for="Input.Name" class="col-form-label"></label>
                         </div>
                         <div class="col-md-5">
-                            <input asp-for="Input.Name" class="form-control auth-input-width" />
+                            <input asp-for="Input.Name" class="form-control" style="min-width:150px" />
 
                         </div>
                         <span asp-validation-for="Input.Name" class="text-danger"></span>
                     </div>
                     <div class="form-group row">
                         <div class="col-md-2">
-                            <label asp-for="Input.Nip" class="col-form-label auth-input-width"></label>
+                            <label asp-for="Input.Nip" class="col-form-label"></label>
                         </div>
                         <div class="col-md-5">
-                            <input asp-for="Input.Nip" class="form-control auth-input-width" />
+                            <input asp-for="Input.Nip" class="form-control" style="min-width:150px" />
                         </div>
                         <span asp-validation-for="Input.Nip" class="text-danger"></span>
                     </div>
 
                     <div class="form-group row">
-                        <div class="input-group" style="min-width: 200px">
+                        <div class="input-group" style="min-width: 280px">
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="inputGroupFileAddon01">Ustaw ikone firmy</span>
                             </div>
@@ -109,8 +109,8 @@
                 }
 
                 <div class="form-group row">
-                    <div class="col-8 offset-4">
-                        <button type="submit" class="btn btn-primary form-control">Zarejestruj</button>
+                    <div class="col-md-5 offset-md-2">
+                        <button type="submit" class="btn btn-primary form-control" style="min-width:150px">Zarejestruj</button>
                     </div>
                 </div>
             </div>
