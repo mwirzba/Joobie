@@ -23,10 +23,10 @@
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <a asp-area="" asp-controller="Home" asp-action="Index">
-                <img id="joobie-icon" src="~/joobie.png" alt="Joobie">
-            </a>
             <div class="container">
+                <a asp-area="" asp-controller="Home" asp-action="Index">
+                    <img id="joobie-icon" src="~/joobie.png" alt="Joobie">
+                </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -36,7 +36,6 @@
                     <ul class="navbar-nav flex-grow-1">
                     </ul>
                 </div>
-
             </div>
             <button class="btn btn-primary col-1" id="menu-toggle">Menu</button>
             <div class="col-2"></div>
@@ -73,7 +72,7 @@
         </div>
     </footer>
     <script src="~/lib/jquery/jquery.js"></script>
-    <script src="~/lib/bootstrap/js/bootstrap.js"></script>
+    <script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
 
     @RenderSection("Scripts", required: false)
