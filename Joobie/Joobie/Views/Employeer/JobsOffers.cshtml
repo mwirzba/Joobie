@@ -8,7 +8,7 @@
             <h2 class="text-info">Twoje oferty pracy</h2>
         </div>
         <div class="col-6 text-right">
-            <a asp-action="Create" asp-controller="Jobs" class="btn btn-info"><i class="fas fa-plus"></i> &nbsp; Dodaj nowa oferte</a>
+            <a asp-action="Create" asp-controller="Jobs" class="btn btn-info"><i class="fas fa-plus"></i> &nbsp; Dodaj nową ofertę</a>
         </div>        
     </div>
 
@@ -49,12 +49,12 @@
                                 @if (@job.CVJobApplicationUser.Any())
                                 {
                                     <form class="col-auto" asp-action="Details" method="post">
-                                        <button class="btn btn-link" type="submit">Zobacz aplikacje</button>
+                                        <button class="btn btn-link" type="submit">Zobacz aplikacje.</button>
                                         <input type="hidden" name="id" asp-for="@job.Id" />
                                     </form>
                                 }
                                 <form class="col-auto" asp-controller="Jobs" asp-action="Details" method="post">
-                                    <button class="btn btn-link" type="submit">Szczegóły</button>
+                                    <button class="btn btn-link" type="submit">Szczegóły oferty</button>
                                     <input type="hidden" name="id" asp-for="@job.Id" />
                                 </form>
                             </div>
@@ -79,7 +79,7 @@
     else
     {
 
-        <h2 style="width: 100%">Niestety nie znaleziono żadnych ofert</h2>
+        <h3 style="width: 100%" class="mt-3">Niestety nie znaleziono żadnych ofert.</h3>
 
     }
 

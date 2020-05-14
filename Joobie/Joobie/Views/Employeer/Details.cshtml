@@ -4,14 +4,15 @@
     Layout = "_EmployeerLayout";
 }
 
-<h1>Details</h1>
+<div class="row mt-4">
+    <h2 class="text-info">Lista aplikacji</h2>
+</div>
 
 
 <div class="container">
     <div class="row">
         @if (@Model.CVJobApplicationUser.Any())
         {
-
             @foreach (var job in Model.CVJobApplicationUser)
             {
                 <div class="col-md-12 readonly-list-space">
@@ -22,8 +23,8 @@
                         <div class="card-block px-2">
                             <form asp-action="Download">
                                 <h5 class="card-title">
-                                        <button class="btn btn-link" type="submit">Pobierz CV</button>
-                                        <input type="hidden" name="cvPath" asp-for="@job.CvName" />
+                                    <button class="btn btn-link" type="submit">Pobierz CV</button>
+                                    <input type="hidden" name="cvPath" asp-for="@job.CvName" />
                                 </h5>
                             </form>
                             <h6 class="card-subtitle mb-2 text-muted">Nazwa użytkownika: @job.EmployeeUser.Email</h6>
