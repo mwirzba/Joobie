@@ -17,11 +17,11 @@
                 <div class="col-md-12 readonly-list-space">
                     <div class="card flex-row flex-wrap">
                         <div class="card-header border-0">
-                            <img class="img-thumbnail h-90 mt-3" id="img" style="width: 110px;" src="@Url.Content("~/CompanyIcons/" + job.JobInMiddleTable.ApplicationUser.CompanyImagePath)" onerror="this.src='/CompanyIcons/default.png'" />
+                            <img class="img-thumbnail h-80 mt-3" id="img" style="width: 110px;" src="@Url.Content("~/CompanyIcons/" + job.JobInMiddleTable.ApplicationUser.CompanyImagePath)" onerror="this.src='/CompanyIcons/default.png'" />
                         </div>
                         <div class="card-block px-2">
                             <h5 class="card-title">
-                                <a asp-action="Details" asp-controller="Jobs" asp-route-id="@job.JobInMiddleTable.Id" class="btn btn-link" style="margin-bottom: 10px">@job.JobInMiddleTable.Name</a>
+                                <a asp-action="Details" asp-controller="Jobs" asp-route-id="@job.JobInMiddleTable.Id" class="btn btn-link" style="margin-bottom: 10px; font-weight:bold">@job.JobInMiddleTable.Name</a>
                             </h5>
                             <a class="card-text">@job.JobInMiddleTable.ApplicationUser.Name</a><br />
                             <a class="card-text">@Html.DisplayNameFor(m => job.JobInMiddleTable.Salary)</a>: <a class="card-text">@job.JobInMiddleTable.Salary</a><br />

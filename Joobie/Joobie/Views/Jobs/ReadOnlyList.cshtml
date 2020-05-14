@@ -19,14 +19,18 @@
                         <div class="col-md-12 readonly-list-space">
                                 <div class="card flex-row flex-wrap">
                                     <div class="card-header border-0">
-                                        <img class="img-thumbnail h-80  mt-3" id="img" style="width: 110px;" src="@Url.Content("~/CompanyIcons/" + job.ApplicationUser.CompanyImagePath)" onerror="this.src='/CompanyIcons/default.png'" />
+                                        <img class="img-thumbnail h-80 mt-3" id="img" style="width: 110px;" src="@Url.Content("~/CompanyIcons/" + job.ApplicationUser.CompanyImagePath)" onerror="this.src='/CompanyIcons/default.png'" />
                                     </div>
-                                    <div class="card-block px-2">
-                                        <h5 class="card-title">
-                                            <a asp-action="Details" asp-route-id="@job.Id" class="btn btn-link" style="margin-bottom: 10px">@job.Name</a>
+                                    <div class="card-block px-2 ml-3">
+                                        <h5 class="card-title">                            
+                                            <a asp-action="Details" asp-route-id="@job.Id" class="btn btn-link" style="margin-bottom: 10px; font-weight:bold">@job.Name</a>
                                         </h5>
-                                        <h6 class="card-subtitle mb-2 text-muted">@job.ApplicationUser.Name</h6>
+                                        <h6 class="card-subtitle mb-2 text-muted">
+                                            <i class="far fa-building"></i>
+                                            @job.ApplicationUser.Name
+                                        </h6>
                                         <p class="card-text">
+                                            <i class="fas fa-map-marker-alt" style="padding-right: 10px"></i>
                                             @job.Localization
                                         </p>
 
