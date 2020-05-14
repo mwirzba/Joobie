@@ -11,21 +11,21 @@
         <div asp-validation-summary="All" class="text-danger"></div>
 
         <div class="form-group row">
-            <div class="col-2">
-                <label asp-for="Input.Email" class="col-form-label"></label>
-            </div>
-            <div class="col-5">
-                <input asp-for="Input.Email" class="form-control" />
-            </div>
-            <span asp-validation-for="Input.Email" class="text-danger"></span>
+                <div class="col-md-2">
+                    <label asp-for="Input.Email" class="col-form-label"></label>
+                </div>
+                <div class="col-md-5">
+                    <input asp-for="Input.Email" class="form-control auth-input-width" />
+                </div>
+                <span asp-validation-for="Input.Email" class="text-danger"></span>
         </div>
 
         <div class="form-group row">
-            <div class="col-2">
+            <div class="col-md-2">
                 <label asp-for="Input.Password" class="col-form-label"></label>
             </div>
-            <div class="col-5">
-                <input asp-for="Input.Password" class="form-control" />
+            <div class="col-md-5">
+                <input asp-for="Input.Password" class="form-control auth-input-width" />
             </div>
             <span asp-validation-for="Input.Password" class="text-danger"></span>
         </div>
@@ -33,14 +33,14 @@
         <div class="form-group">
             <div class="checkbox">
                 <label asp-for="Input.RememberMe">
-                    <input asp-for="Input.RememberMe" />
+                    <input asp-for="Input.RememberMe"/>
                     <label>Zapamiętaj mnie</label>
                 </label>
             </div>
         </div>
         <div class="form-group row">
-            <div class="col-5 offset-2">
-                <button type="submit" class="btn btn-primary form-control">Zaloguj</button>
+            <div class="col-md-5 offset-md-2">
+                <button type="submit" class="btn btn-primary form-control auth-input-width">Zaloguj</button>
             </div>
         </div>
         <div class="form-group">

@@ -31,7 +31,7 @@
                                         <p class="card-text">@job.Localization</p>
                                         @if (!User.IsInRole(Strings.AdminUser) && !User.IsInRole(Strings.ModeratorUser) && !User.IsInRole(Strings.CompanyUser))
                                         {
-                                            <a asp-action="Apply" asp-route-id="@job.Id" class="btn btn-primary btn-sm" style="margin-bottom: 10px">Aplikuj</a>
+                                            <button asp-action="Apply" asp-route-id="@job.Id" class="btn btn-primary"  style="margin-bottom: 10px">Aplikuj</button>
                                         }
                                         <br />
                                         <div class="w-100"></div>
@@ -54,5 +54,7 @@
                 {
                 <h2>Niestety nie znaleziono żadnych ofert</h2>
                 }
+
+                <button class="btn btn-primary">XD</button>
 
             </div>

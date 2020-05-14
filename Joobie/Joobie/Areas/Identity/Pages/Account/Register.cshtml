@@ -14,33 +14,32 @@
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
                 <div class="form-group row">
-                    <div class="col-4">
+                    <div class="col-md-2">
                         <label asp-for="Input.Email" class="col-form-label"></label>
                     </div>
-                    <div class="col-8">
-                        <input asp-for="Input.Email" class="form-control" />
-
+                    <div class="col-md-5">
+                        <input asp-for="Input.Email" class="form-control auth-input-width" />
                     </div>
                     <span asp-validation-for="Input.Email" class="text-danger"></span>
                 </div>
 
                 <div class="form-group row">
-                    <div class="col-4">
+                    <div class="col-md-2">
                         <label asp-for="Input.Password" class="col-form-label"></label>
                     </div>
-                    <div class="col-8">
-                        <input asp-for="Input.Password" class="form-control" />
+                    <div class="col-md-5">
+                        <input asp-for="Input.Password" class="form-control auth-input-width" />
                     </div>
                     <span asp-validation-for="Input.Password" class="text-danger"></span>
                 </div>
 
 
                 <div class="form-group row">
-                    <div class="col-4">
+                    <div class="col-md-2">
                         <label asp-for="Input.ConfirmPassword" class="col-form-label"></label>
                     </div>
-                    <div class="col-8">
-                        <input asp-for="Input.ConfirmPassword" class="form-control" />
+                    <div class="col-md-5">
+                        <input asp-for="Input.ConfirmPassword" class="form-control auth-input-width" />
                     </div>
                     <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
                 </div>
@@ -51,43 +50,44 @@
                 </div>
                 <div id="autoUpdate" class="autoUpdate">
                     <div class="form-group row">
-                        <div class="col-4">
+                        <div class="col-md-2">
                             <label asp-for="Input.Name" class="col-form-label"></label>
                         </div>
-                        <div class="col-8">
-                            <input asp-for="Input.Name" class="form-control" />
+                        <div class="col-md-5">
+                            <input asp-for="Input.Name" class="form-control auth-input-width" />
 
                         </div>
                         <span asp-validation-for="Input.Name" class="text-danger"></span>
                     </div>
                     <div class="form-group row">
-                        <div class="col-4">
-                            <label asp-for="Input.Nip" class="col-form-label"></label>
+                        <div class="col-md-2">
+                            <label asp-for="Input.Nip" class="col-form-label auth-input-width"></label>
                         </div>
-                        <div class="col-8">
-                            <input asp-for="Input.Nip" class="form-control" />
+                        <div class="col-md-5">
+                            <input asp-for="Input.Nip" class="form-control auth-input-width" />
                         </div>
                         <span asp-validation-for="Input.Nip" class="text-danger"></span>
                     </div>
 
-                    <div class="form-group">
-                        <div class="input-group mb-3">
+                    <div class="form-group row">
+                        <div class="input-group" style="min-width: 200px">
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="inputGroupFileAddon01">Ustaw ikone firmy</span>
                             </div>
                             <div class="custom-file">
                                 <input asp-for="Input.Image" type="file" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
-                                <label class="custom-file-label" for="inputGroupFile01">Wybierz grafike</label>
+                                <label class="custom-file-label overflow-auto" for="inputGroupFile01">Wybierz grafike</label>
                             </div>
                         </div>
                         <span asp-validation-for="Input.Image" class="text-danger"></span>
                     </div>
+
                 </div>
 
                 @if (User.IsInRole(Strings.ModeratorUser) || User.IsInRole(Strings.AdminUser))
                 {
                     <div class="form-group row">
-                        <div class="col-2">
+                        <div class="col-md-2">
                         </div>
                         @if (User.IsInRole(Strings.AdminUser))
                         {
@@ -113,9 +113,13 @@
                         <button type="submit" class="btn btn-primary form-control">Zarejestruj</button>
                     </div>
                 </div>
-
             </div>
-            <div class="col-5"><br /><br /><br />Rejestrując się na stronie wyrażasz zgodę na przetwarzanie danych osobowych zgodnie z Rozporządzeniem Parlamentu Europejskiego i Rady (UE) 2016/679 z dnia 27 kwietnia 2016 r. w sprawie ochrony osób fizycznych w związku z przetwarzaniem danych osobowych i w sprawie swobodnego przepływu takich danych oraz uchylenia dyrektywy 95/46/WE (RODO).</div>
+            <div class="col-md-5 align-self-center">
+                    Rejestrując się na stronie wyrażasz zgodę na przetwarzanie danych osobowych
+                    zgodnie z Rozporządzeniem Parlamentu Europejskiego i Rady (UE) 2016/679 z dnia 27
+                    kwietnia 2016 r. w sprawie ochrony osób fizycznych w związku z przetwarzaniem
+                    danych osobowych i w sprawie swobodnego przepływu takich danych oraz uchylenia dyrektywy 95/46/WE (RODO).
+            </div>
         </div>
     </form>
 
