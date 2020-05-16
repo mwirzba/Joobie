@@ -29,7 +29,7 @@ namespace Joobie.Controllers
         private const string _cVFilePath = "/Joobie/Joobie/wwwroot/cVs";
         private readonly SearchStringSession _searchStringSession;
         private readonly UserManager<IdentityUser> _userManager;
-        private static byte _pageSize = 5; 
+        private static byte _pageSize = 20; 
 
         public JobsController(ApplicationDbContext context,
             SearchStringSession searchStringSession, UserManager<IdentityUser> userManager)

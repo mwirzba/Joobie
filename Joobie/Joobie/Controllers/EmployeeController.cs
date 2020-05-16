@@ -17,7 +17,7 @@ namespace Joobie.Controllers
         private readonly ApplicationDbContext _context;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly string _downloadPath = "/Joobie/Joobie/wwwroot/cVs/";
-        private static byte _pageSize = 5;
+        private static byte _pageSize = 10;
 
         public EmployeeController(ApplicationDbContext context,
             UserManager<IdentityUser> userManager)
