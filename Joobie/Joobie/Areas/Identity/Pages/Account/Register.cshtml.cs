@@ -252,6 +252,10 @@ namespace Joobie.Areas.Identity.Pages.Account
 
                         ModelState.AddModelError(string.Empty, "Adres Email jest już zajęty");
                     }
+                    else if(error.Description.Contains("The Email field is not a valid e-mail address"))
+                    {
+                        ModelState.AddModelError(string.Empty, "Adres Email nie jest poprawny");
+                    }
                     else
                     {
                         ModelState.AddModelError(string.Empty, error.Description);
