@@ -96,8 +96,7 @@ namespace Joobie.Areas.Identity.Pages.Account
             returnUrl = returnUrl ?? Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
-            {
-               
+            {               
                 var user = new ApplicationUser
                 {
                     UserName = Input.Email,
@@ -105,7 +104,9 @@ namespace Joobie.Areas.Identity.Pages.Account
                     Name = Input.Name,
                     Nip = Input.Nip,
                 };
+
                 var result = await _userManager.CreateAsync(user, Input.Password);
+
                 if (result.Succeeded)
                 {
 
@@ -247,7 +248,14 @@ namespace Joobie.Areas.Identity.Pages.Account
                 }
                 foreach (var error in result.Errors)
                 {
-                    ModelState.AddModelError(string.Empty, error.Description);
+                    if(error.Description.Contains("User name")){
+
+                        ModelState.AddModelError(string.Empty, "Adres Email jest już zajęty");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, error.Description);
+                    }
                 }
             }
 
