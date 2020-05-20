@@ -8,3 +8,9 @@ Technologies used:
  * Razor 
  * Bootstrap 
  * javascript,jquery
+
+This project has similar functionalities to job portals.
+This project is a job portal for employees and employers.
+It allows an employee to search for a job and apply a cv.
+Employer can place a job advertisement and check cv list from candidates.
+
